@@ -95,7 +95,7 @@ export default class Boot extends Phaser.Scene {
    */
   create() {
     window.onclick = () => {
-      this.scene.start('level');
+      this.scene.start('inicio');
     }
   }
 }
