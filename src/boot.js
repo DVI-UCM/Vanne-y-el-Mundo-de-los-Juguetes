@@ -17,7 +17,6 @@ export default class Boot extends Phaser.Scene {
    * Carga de los assets del juego
    */
   preload() {
-    // Con setPath podemos establecer el prefijo que se añadirá a todos los load que aparecen a continuación
     var progressBar = this.add.graphics();
     var progressBox = this.add.graphics();
     var width = this.cameras.main.width;
@@ -47,7 +46,19 @@ export default class Boot extends Phaser.Scene {
       }
     });
     percentText.setOrigin(0.5, 0.5);
+
+    var startText = this.make.text({
+      x: width / 2,
+      y: height / 2 - 15, 
+      text: '',
+      style: {
+        font: '18px monospace',
+        fill: '#ffffff'
+      }
+    });
+    startText.setOrigin(0.5, 0.5);
     
+    // Con setPath podemos establecer el prefijo que se añadirá a todos los load que aparecen a continuación
     this.load.setPath('assets/sprites/');
     this.load.image('platform', 'platform.png');
     this.load.image('base', 'base.png');
@@ -69,23 +80,12 @@ export default class Boot extends Phaser.Scene {
     this.load.on('complete', function () {
         console.log('complete');
 
-        var startText = this.make.text({
-          x: width / 2,
-          y: height / 2 + 50, 
-          text: 'Haz click para empezar',
-          style: {
-            font: '18px monospace',
-            fill: '#ffffff'
-          }
-        }).bind(this);
-        startText.setOrigin(0.5, 0.5);
+        progressBar.destroy();
+        progressBox.destroy();
+        loadingText.destroy();
+        percentText.destroy();
 
-        window.addEventListener('click', function () {
-          progressBar.destroy();
-          progressBox.destroy();
-          loadingText.destroy();
-          percentText.destroy();
-        });
+        startText.setText('Haz click para empezar')
     });
   }
 
@@ -94,6 +94,8 @@ export default class Boot extends Phaser.Scene {
    * nivel del juego
    */
   create() {
-    this.scene.start('level');
+    window.onclick = () => {
+      this.scene.start('level');
+    }
   }
 }
