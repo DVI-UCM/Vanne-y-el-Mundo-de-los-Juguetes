@@ -1,6 +1,31 @@
 <!DOCTYPE html>
 <html lang="es">
 
+<style>
+    input[type=button] {
+        background-color: rgba(4, 175, 197, 0.603);
+        border: 5px outset rgb(4, 175, 197);
+        border-radius: 3px;
+        color: black; 
+        text-align: center;
+        font-size: 40px;
+        width:50%;
+        height: 100px;
+        margin-top: 20px;
+        align-items: center;
+        justify-content: center;
+        cursor: pointer;
+    }
+
+    h1 {
+        font-size:60px;
+    }
+    div.center {
+        text-align: center;
+    }
+
+</style>
+
 <head>
     <meta charset="UTF-8">
     <link rel="shortcut icon" href="assets/sprites/player.png" type="image/png" />
@@ -8,12 +33,22 @@
     <link rel="stylesheet" href="./css/game.css">
     <script src="./lib/phaser.min.js"></script>
 
-    <title>¡Juego con Phaser!</title>
+    <title>Vanne y el mundo de los juegos</title>
 </head>
 
 <body>
-    <h1>Juego con Phaser</h1>
+    <h1>Vanne y el mundo de los juegos</h1>
     <script src="./src/game.js" type="module"></script>
+    <div>
+        <div class="centrado">
+            <input type="button" value="NUEVA PARTIDA" onclick="msg()">
+        </div>
+        <div>
+            <input type="button" value="CONTINUAR PARTIDA" onclick="msg()">
+        </div>
+
+    </div>
+
 </body>
 
 </html>
