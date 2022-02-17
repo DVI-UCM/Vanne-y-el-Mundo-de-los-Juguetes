@@ -18,11 +18,75 @@ export default class Boot extends Phaser.Scene {
    */
   preload() {
     // Con setPath podemos establecer el prefijo que se añadirá a todos los load que aparecen a continuación
+    var progressBar = this.add.graphics();
+    var progressBox = this.add.graphics();
+    var width = this.cameras.main.width;
+    var height = this.cameras.main.height;
+
+    progressBox.fillStyle(0x222222, 0.8);
+    progressBox.fillRect((width / 2) - (320/2), (height / 2) - 30, 320, 30);
+
+    var loadingText = this.make.text({
+        x: width / 2,
+        y: height / 2 - 50,
+        text: 'Loading...',
+        style: {
+            font: '20px monospace',
+            fill: '#ffffff'
+        }
+    });
+    loadingText.setOrigin(0.5, 0.5);
+
+    var percentText = this.make.text({
+      x: width / 2,
+      y: height / 2 - 15,
+      text: '0%',
+      style: {
+          font: '18px monospace',
+          fill: '#ffffff'
+      }
+    });
+    percentText.setOrigin(0.5, 0.5);
+    
     this.load.setPath('assets/sprites/');
     this.load.image('platform', 'platform.png');
     this.load.image('base', 'base.png');
     this.load.image('star', 'star.png');
     this.load.image('player', 'player.png');
+
+    this.load.on('progress', function (value) {
+      console.log(value);
+      progressBar.clear();
+      progressBar.fillStyle(0xffffff, 1);
+      progressBar.fillRect((width / 2) - (320/2), (height / 2) - 30, 320 * value, 30);
+      percentText.setText(parseInt(value * 100) + '%');
+    });
+              
+    this.load.on('fileprogress', function (file) {
+        console.log(file.src);
+    });
+
+    this.load.on('complete', function () {
+        console.log('complete');
+
+        var startText = this.make.text({
+          x: width / 2,
+          y: height / 2 + 50, 
+          text: 'Haz click para empezar',
+          style: {
+            font: '18px monospace',
+            fill: '#ffffff'
+          }
+        }).bind(this);
+        startText.setOrigin(0.5, 0.5);
+
+        window.addEventListener('click', function () {
+          progressBar.destroy();
+          progressBox.destroy();
+          loadingText.destroy();
+          percentText.destroy();
+        });
+    });
   }
 
   /**
