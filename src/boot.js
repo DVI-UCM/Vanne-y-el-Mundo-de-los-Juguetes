@@ -52,7 +52,7 @@ export default class Boot extends Phaser.Scene {
       y: height / 2 - 15, 
       text: '',
       style: {
-        font: '18px monospace',
+        font: '18px bungee',
         fill: '#ffffff'
       }
     });
