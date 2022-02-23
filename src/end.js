@@ -10,6 +10,13 @@ export default class End extends Phaser.Scene {
   constructor() {
     super({ key: 'end' });
   }
+  init(){
+
+  }
+
+  preload(){
+
+  }
 
   /**
    * Creación de la escena. Tan solo contiene el texto que indica que el juego se ha acabado

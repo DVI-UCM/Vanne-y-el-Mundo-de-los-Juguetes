@@ -6,8 +6,20 @@ export default class Inicio extends Phaser.Scene {
       super({ key: 'inicio' });
     }
 
+    init(){
+
+    }
+
+    preload(){
+
+    }
+
     create() {
         
+    }
+
+    update(time,delta){
+
     }
 
     over(){
