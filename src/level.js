@@ -17,6 +17,14 @@ export default class Level extends Phaser.Scene {
     super({ key: 'level' });
   }
 
+
+  init(){
+
+  }
+
+  preload(){
+
+  }
   /**
    * Creación de los elementos de la escena principal de juego
    */
@@ -31,6 +39,10 @@ export default class Level extends Phaser.Scene {
     new Platform(this, this.player, this.bases, 150, 100);
     new Platform(this, this.player, this.bases, 850, 100);
     this.spawn();
+  }
+
+  update(){
+    
   }
 
   /**

@@ -13,6 +13,10 @@ export default class Boot extends Phaser.Scene {
     super({ key: 'boot' });
   }
 
+  init(){
+
+  }
+  
   /**
    * Carga de los assets del juego
    */

@@ -6,11 +6,16 @@ export default class Inicio extends Phaser.Scene {
       super({ key: 'inicio' });
     }
 
+    init(){
+
+    }
+
     preload() {
       this.load.setPath('assets/sprites/');
 
       this.load.image('button-1', 'blue_button02.png')
       this.load.image('button-2', 'blue_button03.png')
+    
     }
 
     create() {
@@ -25,4 +30,13 @@ export default class Inicio extends Phaser.Scene {
         this.scene.start("level");
       }, this);
     }
+
+    update(time,delta){
+
+    }
+
+    over(){
+      
+    }
+    
 }  
