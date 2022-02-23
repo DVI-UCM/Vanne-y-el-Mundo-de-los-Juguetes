@@ -6,19 +6,23 @@ export default class Inicio extends Phaser.Scene {
       super({ key: 'inicio' });
     }
 
+    preload() {
+      this.load.setPath('assets/sprites/');
+
+      this.load.image('button-1', 'blue_button02.png')
+      this.load.image('button-2', 'blue_button03.png')
+    }
+
     create() {
-        
-    }
+      this.startBtn = this.add.sprite(400, 300, 'button-1',).setInteractive();
 
-    over(){
-      
-    }
+      this.startBtn.on('pointerdown', function (){
+        this.startBtn.setTexture('button-2');
+      }, this);
 
-    out(){
-
-    }
-
-    up(){
-
+      this.startBtn.on('pointerup', function(){
+        this.startBtn.setTexture('button-1');
+        this.scene.start("level");
+      }, this);
     }
 }  
