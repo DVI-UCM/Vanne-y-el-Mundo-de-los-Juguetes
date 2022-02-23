@@ -15,6 +15,8 @@ export default class Player extends Phaser.GameObjects.Sprite {
     super(scene, x, y, 'player');
     this.score = 0;
     this.scene.add.existing(this);
+    this.scale.x = 10;
+    this.scale.y = 10;
     this.scene.physics.add.existing(this);
     // Queremos que el jugador no se salga de los límites del mundo
     this.body.setCollideWorldBounds();
