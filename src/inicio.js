@@ -19,7 +19,15 @@ export default class Inicio extends Phaser.Scene {
     }
 
     create() {
-      this.startBtn = this.add.sprite(400, 300, 'button-1',).setInteractive();
+      var width = this.cameras.main.width / 2;
+      var height = this.cameras.main.height / 2;
+      
+      this.startBtn = this.add.sprite(width, height - 40, 'button-1',).setInteractive();
+      this.continueBtn = this.add.sprite(width, height + 40, 'button-1',).setInteractive();
+
+      //startText = this.add.text(0, 0, "Start new game", {font: "32px Arial", fill: "#ff0044"})
+      //startText.x = this.startBtn.x
+      //startText.y = this.startText.y
 
       this.startBtn.on('pointerdown', function (){
         this.startBtn.setTexture('button-2');
@@ -27,6 +35,15 @@ export default class Inicio extends Phaser.Scene {
 
       this.startBtn.on('pointerup', function(){
         this.startBtn.setTexture('button-1');
+        this.scene.start("level");
+      }, this);
+
+      this.continueBtn.on('pointerdown', function (){
+        this.continueBtn.setTexture('button-2');
+      }, this);
+
+      this.continueBtn.on('pointerup', function(){
+        this.continueBtn.setTexture('button-1');
         this.scene.start("level");
       }, this);
     }
