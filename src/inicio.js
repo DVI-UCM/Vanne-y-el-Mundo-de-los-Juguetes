@@ -25,9 +25,13 @@ export default class Inicio extends Phaser.Scene {
       this.startBtn = this.add.sprite(width, height - 40, 'button-1',).setInteractive();
       this.continueBtn = this.add.sprite(width, height + 40, 'button-1',).setInteractive();
 
-      //startText = this.add.text(0, 0, "Start new game", {font: "32px Arial", fill: "#ff0044"})
-      //startText.x = this.startBtn.x
-      //startText.y = this.startText.y
+      var startText = this.add.text(0, 0, "Start new game", {font: "16px Arial", fill: "#ffffff"}).setOrigin(0.5 , 0.5);
+      startText.x = this.startBtn.x;
+      startText.y = this.startBtn.y;
+
+      var continueText = this.add.text(0, 0, "Continue game", {font: "16px Arial", fill: "#ffffff"}).setOrigin(0.5 , 0.5);
+      continueText.x = this.continueBtn.x;
+      continueText.y = this.continueBtn.y;
 
       this.startBtn.on('pointerdown', function (){
         this.startBtn.setTexture('button-2');
