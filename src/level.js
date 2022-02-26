@@ -23,7 +23,7 @@ export default class Level extends Phaser.Scene {
   }
 
   preload(){
-
+    this.load.atlas('player', 'assets/sprites/ninjagirl.png', 'assets/sprites/ninjagirl_atlas.json');
   }
   /**
    * Creación de los elementos de la escena principal de juego
@@ -32,7 +32,16 @@ export default class Level extends Phaser.Scene {
     this.stars = 10;
     this.bases = this.add.group();
     this.player = new Player(this, 200, 300);
-
+  
+    this.player.anims.create({
+      key: 'idle',
+      frames: this.player.anims.generateFrameNames('player', { prefix: 'idle__00',
+      start: 0,
+      end: 9}),
+      frameRate: 9, // Velocidad de la animación
+      repeat: -1    // Animación en bucle
+    });
+    
     new Platform(this, this.player, this.bases, 150, 350);
     new Platform(this, this.player, this.bases, 850, 350);
     new Platform(this, this.player, this.bases, 500, 200);
@@ -42,7 +51,7 @@ export default class Level extends Phaser.Scene {
   }
 
   update(){
-    
+    this.player.anims.play('idle', true);
   }
 
   /**

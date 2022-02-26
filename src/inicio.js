@@ -33,23 +33,23 @@ export default class Inicio extends Phaser.Scene {
       continueText.x = this.continueBtn.x;
       continueText.y = this.continueBtn.y;
 
-      this.startBtn.on('pointerdown', function (){
+      this.startBtn.on('pointerdown', () => {
         this.startBtn.setTexture('button-2');
-      }, this);
+      });
 
-      this.startBtn.on('pointerup', function(){
+      this.startBtn.on('pointerup', () => {
         this.startBtn.setTexture('button-1');
         this.scene.start("level");
-      }, this);
+      });
 
-      this.continueBtn.on('pointerdown', function (){
+      this.continueBtn.on('pointerdown', () => {
         this.continueBtn.setTexture('button-2');
-      }, this);
+      });
 
-      this.continueBtn.on('pointerup', function(){
+      this.continueBtn.on('pointerup', () => {
         this.continueBtn.setTexture('button-1');
         this.scene.start("level");
-      }, this);
+      });
     }
 
     update(time,delta){
