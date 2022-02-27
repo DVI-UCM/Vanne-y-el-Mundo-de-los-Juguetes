@@ -13,13 +13,43 @@ export default class Player extends Phaser.GameObjects.Sprite {
    */
   constructor(scene, x, y) {
     super(scene, x, y, 'player');
+
+    this.anims.create({
+      key: 'idle',
+      frames: this.anims.generateFrameNames('player', { prefix: 'idle__00',
+      start: 0,
+      end: 9}),
+      frameRate: 10, // Velocidad de la animación
+      repeat: -1    // Animación en bucle
+    });
+
+    this.anims.create({
+      key: 'run',
+      frames: this.anims.generateFrameNames('player', { prefix: 'run__00',
+      start: 0,
+      end: 9}),
+      frameRate: 15, // Velocidad de la animación
+      repeat: -1    // Animación en bucle
+    });
+
+    this.anims.create({
+      key: 'jump',
+      frames: this.anims.generateFrameNames('player', { prefix: 'jump__00',
+      start: 0,
+      end: 9}),
+      frameRate: 15, // Velocidad de la animación
+      repeat: -1    // Animación en bucle
+    });
+
+    this.anims.play('idle', true);
+
     this.score = 0;
     this.scene.add.existing(this);
     this.scene.physics.add.existing(this);
     // Queremos que el jugador no se salga de los límites del mundo
     this.body.setCollideWorldBounds();
     this.speed = 300;
-    this.jumpSpeed = -400;
+    this.jumpSpeed = -600;
     this.setScale(.35);
     // Esta label es la UI en la que pondremos la puntuación del jugador
     this.label = this.scene.add.text(10, 10, "");
@@ -51,16 +81,32 @@ export default class Player extends Phaser.GameObjects.Sprite {
    */
   preUpdate(t,dt) {
     super.preUpdate(t,dt);
+    
     if (this.cursors.up.isDown && this.body.onFloor()) {
       this.body.setVelocityY(this.jumpSpeed);
     }
     if (this.cursors.left.isDown) {
+      this.flipX = true;
       this.body.setVelocityX(-this.speed);
+      if(this.body.onFloor())
+        this.anims.play('run', true);
+      else
+        this.anims.play('jump', true);
     }
     else if (this.cursors.right.isDown) {
+      this.flipX = false;
       this.body.setVelocityX(this.speed);
+      if(this.body.onFloor())
+        this.anims.play('run', true);
+      else
+        this.anims.play('jump', true)
     }
     else {
+      if(this.body.onFloor()){
+        this.anims.play('idle', true);
+      }else {
+          this.anims.play('jump', true);
+      }
       this.body.setVelocityX(0);
     }
   }
