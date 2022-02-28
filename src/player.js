@@ -41,6 +41,23 @@ export default class Player extends Phaser.GameObjects.Sprite {
       repeat: -1    // Animación en bucle
     });
 
+    this.anims.create({
+      key: 'slide',
+      frames: this.anims.generateFrameNames('player', { prefix: 'slide__00',
+      start: 0,
+      end: 9}),
+      frameRate: 15, // Velocidad de la animación
+      repeat: 0    // Animación en bucle
+    });
+
+    this.anims.create({
+      key: 'attack',
+      frames: this.anims.generateFrameNames('player', { prefix: 'attack__00',
+      start: 0,
+      end: 9}),
+      frameRate: 15 , // Velocidad de la animación
+    });
+
     this.anims.play('idle', true);
 
     this.score = 0;
@@ -89,7 +106,10 @@ export default class Player extends Phaser.GameObjects.Sprite {
       this.flipX = true;
       this.body.setVelocityX(-this.speed);
       if(this.body.onFloor())
-        this.anims.play('run', true);
+        if(this.cursors.down.isDown)
+          this.anims.play('slide', true);
+        else
+          this.anims.play('run', true);
       else
         this.anims.play('jump', true);
     }
@@ -97,11 +117,17 @@ export default class Player extends Phaser.GameObjects.Sprite {
       this.flipX = false;
       this.body.setVelocityX(this.speed);
       if(this.body.onFloor())
+        if(this.cursors.down.isDown)
+        this.anims.play('slide', true);
+        else
         this.anims.play('run', true);
       else
         this.anims.play('jump', true)
     }
-    else {
+    else if (this.cursors.space.isDown) {
+        this.anims.play('attack', true)
+    }
+    else{
       if(this.body.onFloor()){
         this.anims.play('idle', true);
       }else {
