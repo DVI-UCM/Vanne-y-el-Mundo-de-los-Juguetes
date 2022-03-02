@@ -58,6 +58,14 @@ export default class Player extends Phaser.GameObjects.Sprite {
       frameRate: 15 , // Velocidad de la animación
     });
 
+    this.anims.create({
+      key: 'jump_attack',
+      frames: this.anims.generateFrameNames('player', { prefix: 'jump_attack__00',
+      start: 0,
+      end: 9}),
+      frameRate: 15 , // Velocidad de la animación
+    });
+
     this.anims.play('idle', true);
 
     this.score = 0;
@@ -124,17 +132,21 @@ export default class Player extends Phaser.GameObjects.Sprite {
       else
         this.anims.play('jump', true)
     }
-    else if (this.cursors.space.isDown) {
+    else if (this.cursors.space.isDown && this.body.onFloor()) {
         this.anims.play('attack', true)
     }
     else{
       if(this.body.onFloor()){
         this.anims.play('idle', true);
       }else {
+        if(this.cursors.space.isDown)
+          this.anims.play('jump_attack', true);
+        else
           this.anims.play('jump', true);
       }
       this.body.setVelocityX(0);
     }
+    
   }
   
 }
