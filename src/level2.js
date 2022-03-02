@@ -9,12 +9,12 @@ import Player from './player.js';
  * El juego termina cuando el jugador ha recogido 10 estrellas.
  * @extends Phaser.Scene
  */
-export default class Level extends Phaser.Scene {
+export default class Level2 extends Phaser.Scene {
   /**
    * Constructor de la escena
    */
   constructor() {
-    super({ key: 'level' });
+    super({ key: 'level2' });
   }
 
 
@@ -29,15 +29,14 @@ export default class Level extends Phaser.Scene {
    * Creación de los elementos de la escena principal de juego
    */
   create() {
-    this.stars = 1;
+    this.stars = 5;
     this.bases = this.add.group();
     this.player = new Player(this, 500, 500);
     
-    new Platform(this, this.player, this.bases, 150, 350);
-    new Platform(this, this.player, this.bases, 850, 350);
-    new Platform(this, this.player, this.bases, 500, 250);
-    new Platform(this, this.player, this.bases, 150, 150);
-    new Platform(this, this.player, this.bases, 850, 150);
+    new Platform(this, this.player, this.bases, 500, 350);
+    new Platform(this, this.player, this.bases, 850, 250);
+    new Platform(this, this.player, this.bases, 500, 150);
+    new Platform(this, this.player, this.bases, 150, 250);
     this.spawn();
   }
 
@@ -62,7 +61,7 @@ export default class Level extends Phaser.Scene {
   starPickt (base) {
     this.player.point();
       if (this.player.score == this.stars) {
-        this.scene.start('level2');
+        this.scene.start('end');
       }
       else {
         let s = this.bases.children.entries;
