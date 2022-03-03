@@ -10,6 +10,7 @@ import Player from './player.js';
  * @extends Phaser.Scene
  */
 export default class Level extends Phaser.Scene {
+  
   /**
    * Constructor de la escena
    */
@@ -23,16 +24,24 @@ export default class Level extends Phaser.Scene {
   }
 
   preload(){
-    
+    this.load.image("background", "assets/sprites/tilemap_nivel1_background.png")
   }
   /**
    * Creación de los elementos de la escena principal de juego
    */
   create() {
+    let background = this.add.tileSprite(0, 0, 0, 0, "background").setOrigin(0,0);
+    background.displayHeight = this.sys.game.config.height;
+    background.scaleX = background.scaleY; 
+
     this.stars = 10;
     this.bases = this.add.group();
     this.player = new Player(this, 200, 300);
     
+    this.physics.world.setBounds(0, 0, background.displayWidth, background.displayHeight);
+    this.cameras.main.setBounds(0, 0, background.displayWidth, background.displayHeight);
+    this.cameras.main.startFollow(this.player);
+
     new Platform(this, this.player, this.bases, 150, 350);
     new Platform(this, this.player, this.bases, 850, 350);
     new Platform(this, this.player, this.bases, 500, 200);
@@ -44,6 +53,7 @@ export default class Level extends Phaser.Scene {
   update(){
 
   }
+  
 
   /**
    * Genera una estrella en una de las bases del escenario
