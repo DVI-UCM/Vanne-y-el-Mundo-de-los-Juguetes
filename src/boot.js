@@ -68,7 +68,9 @@ export default class Boot extends Phaser.Scene {
     this.load.image('base', 'base.png');
     this.load.image('star', 'star.png');
     this.load.atlas('player', 'ninjagirl.png', 'ninjagirl_atlas.json');
+    this.load.atlas('calabaza', 'calabaza.png', 'calabaza.json');
     this.load.image('ant','ant.png');
+    
 
     this.load.on('progress', function (value) {
       console.log(value);

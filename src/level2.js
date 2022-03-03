@@ -1,6 +1,8 @@
 import Platform from './platform.js';
 import Player from './player.js';
 import Ant from './ant.js';
+import Calabaza from './calabaza.js';
+
 
 /**
  * Escena principal del juego. La escena se compone de una serie de plataformas 
@@ -34,6 +36,8 @@ export default class Level2 extends Phaser.Scene {
     this.bases = this.add.group();
     this.player = new Player(this, 500, 500);
     this.ant = new Ant(this,0,500);
+    this.calabaza = new Calabaza(this,0,500);
+
     new Platform(this, this.player, this.bases, 500, 350);
     new Platform(this, this.player, this.bases, 850, 250);
     new Platform(this, this.player, this.bases, 500, 150);

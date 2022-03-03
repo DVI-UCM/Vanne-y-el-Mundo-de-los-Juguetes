@@ -1,6 +1,7 @@
 import Platform from './platform.js';
 import Player from './player.js';
 
+
 /**
  * Escena principal del juego. La escena se compone de una serie de plataformas 
  * sobre las que se sitúan las bases en las podrán aparecer las estrellas. 
@@ -32,7 +33,7 @@ export default class Level extends Phaser.Scene {
     this.stars = 1;
     this.bases = this.add.group();
     this.player = new Player(this, 500, 500);
-    
+
     new Platform(this, this.player, this.bases, 150, 350);
     new Platform(this, this.player, this.bases, 850, 350);
     new Platform(this, this.player, this.bases, 500, 250);
