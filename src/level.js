@@ -25,7 +25,9 @@ export default class Level extends Phaser.Scene {
   }
 
   preload(){
-    this.load.image("background", "assets/sprites/tilemap_nivel1_background.png")
+    this.load.image("background", "assets/sprites/tilemap_nivel1_background.png");
+    this.load.image("brick", "assets/sprites/brickSpecial08.png");
+
   }
   /**
    * Creación de los elementos de la escena principal de juego
@@ -36,49 +38,21 @@ export default class Level extends Phaser.Scene {
     background.scaleX = background.scaleY; 
 
     this.stars = 1;
-    this.bases = this.add.group();
+    //this.bases = this.add.group();
     this.player = new Player(this, 500, 500);
+    this.btnLevels = this.physics.add.staticSprite(270, 295, 'brick');
+    //this.physics.add.collider(this.btnLevels, this.player);
+
     
     this.physics.world.setBounds(0, 0, background.displayWidth, background.displayHeight);
     this.cameras.main.setBounds(0, 0, background.displayWidth, background.displayHeight);
     this.cameras.main.startFollow(this.player);
 
-    new Platform(this, this.player, this.bases, 150, 350);
-    new Platform(this, this.player, this.bases, 850, 350);
-    new Platform(this, this.player, this.bases, 500, 250);
-    new Platform(this, this.player, this.bases, 150, 150);
-    new Platform(this, this.player, this.bases, 850, 150);
-    this.spawn();
   }
 
   update(){
-
-  }
-  
-
-  /**
-   * Genera una estrella en una de las bases del escenario
-   * @param {Array<Base>} from Lista de bases sobre las que se puede crear una estrella
-   * Si es null, entonces se crea aleatoriamente sobre cualquiera de las bases existentes
-   */
-  spawn(from = null) {
-    Phaser.Math.RND.pick(from || this.bases.children.entries).spawn();
-  }
-
-  /**
-   * Método que se ejecuta al coger una estrella. Se pasa la base
-   * sobre la que estaba la estrella cogida para evitar repeticiones
-   * @param {Base} base La base sobre la que estaba la estrella que se ha cogido
-   */
-  starPickt (base) {
-    this.player.point();
-      if (this.player.score == this.stars) {
-        this.scene.start('level2');
-      }
-      else {
-        let s = this.bases.children.entries;
-        this.spawn(s.filter(o => o !== base));
-
-      }
+    this.physics.collide(this.btnLevels, this.player, () => {
+      this.scene.start('levelSelector');
+    });
   }
 }
