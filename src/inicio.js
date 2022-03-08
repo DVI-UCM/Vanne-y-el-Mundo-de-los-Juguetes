@@ -39,7 +39,7 @@ export default class Inicio extends Phaser.Scene {
 
       this.startBtn.on('pointerup', () => {
         this.startBtn.setTexture('button-1');
-        this.scene.start("level");
+        this.scene.start("lobby");
       });
 
       this.continueBtn.on('pointerdown', () => {
@@ -48,16 +48,7 @@ export default class Inicio extends Phaser.Scene {
 
       this.continueBtn.on('pointerup', () => {
         this.continueBtn.setTexture('button-1');
-        this.scene.start("level");
+        this.scene.start("lobby");
       });
     }
-
-    update(time,delta){
-
-    }
-
-    over(){
-      
-    }
-    
 }  

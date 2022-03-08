@@ -12,12 +12,12 @@ import Calabaza from './calabaza.js';
  * El juego termina cuando el jugador ha recogido 10 estrellas.
  * @extends Phaser.Scene
  */
-export default class Level2 extends Phaser.Scene {
+export default class Level1 extends Phaser.Scene {
   /**
    * Constructor de la escena
    */
   constructor() {
-    super({ key: 'level2' });
+    super({ key: 'level1' });
   }
 
 

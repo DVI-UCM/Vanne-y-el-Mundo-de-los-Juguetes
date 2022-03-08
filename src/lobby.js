@@ -10,13 +10,13 @@ import Player from './player.js';
  * El juego termina cuando el jugador ha recogido 10 estrellas.
  * @extends Phaser.Scene
  */
-export default class Level extends Phaser.Scene {
+export default class Lobby extends Phaser.Scene {
   
   /**
    * Constructor de la escena
    */
   constructor() {
-    super({ key: 'level' });
+    super({ key: 'lobby' });
   }
 
 
