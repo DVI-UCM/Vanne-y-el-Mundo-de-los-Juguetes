@@ -1,6 +1,4 @@
-import Platform from './platform.js';
 import Player from './player.js';
-
 
 /**
  * Escena principal del juego. La escena se compone de una serie de plataformas 
@@ -38,10 +36,8 @@ export default class Lobby extends Phaser.Scene {
     background.scaleX = background.scaleY; 
 
     this.stars = 1;
-    //this.bases = this.add.group();
     this.player = new Player(this, 500, 500);
     this.btnLevels = this.physics.add.staticSprite(270, 295, 'brick');
-    //this.physics.add.collider(this.btnLevels, this.player);
 
     
     this.physics.world.setBounds(0, 0, background.displayWidth, background.displayHeight);

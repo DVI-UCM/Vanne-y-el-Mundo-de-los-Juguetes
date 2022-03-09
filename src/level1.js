@@ -1,6 +1,5 @@
 import Platform from './platform.js';
 import Player from './player.js';
-import Ant from './ant.js';
 import Calabaza from './calabaza.js';
 
 
@@ -35,7 +34,6 @@ export default class Level1 extends Phaser.Scene {
     this.stars = 5;
     this.bases = this.add.group();
     this.player = new Player(this, 500, 500);
-    this.ant = new Ant(this,0,500);
     this.calabaza = new Calabaza(this,0,500);
 
     new Platform(this, this.player, this.bases, 500, 350);
@@ -43,6 +41,7 @@ export default class Level1 extends Phaser.Scene {
     new Platform(this, this.player, this.bases, 500, 150);
     new Platform(this, this.player, this.bases, 150, 250);
     this.spawn();
+
   }
 
   update(){
@@ -75,7 +74,6 @@ export default class Level1 extends Phaser.Scene {
       }
   }
 
-  
   calabazaChoca (base) {
     this.player.muere();
   }

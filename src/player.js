@@ -73,8 +73,8 @@ export default class Player extends Phaser.GameObjects.Sprite {
       frames: this.anims.generateFrameNames('player', { prefix: 'dead__00',
       start: 0,
       end: 9}),
-      frameRate: 10 , // Velocidad de la animación
-      repeat: -1    // Animación en bucle
+      frameRate: 10, // Velocidad de la animación
+      repeat: 0    // Animación en bucle
     });
 
     this.anims.play('idle', true);
@@ -112,9 +112,9 @@ export default class Player extends Phaser.GameObjects.Sprite {
   muere(){
     this.body.setVelocityX(0);
     this.body.setVelocityY(0);
-    this.flipX = false;
+    //this.flipX = false;
     this.muerte = true;
-    //this.anims.play('dead', true);
+    this.anims.play('dead');
     //this.label.text = 'Has muerto: ' + this.score;
   }
 
@@ -167,13 +167,13 @@ export default class Player extends Phaser.GameObjects.Sprite {
       this.body.setVelocityX(0);
 
       
-    }
+    }  
 
     if(this.muerte){
       this.anims.play('dead', true);
     }
-    
-   
+
+
   }
   
 }
