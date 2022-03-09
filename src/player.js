@@ -1,4 +1,6 @@
 import Star from './star.js';
+import Calabaza from './calabaza.js';
+
 /**
  * Clase que representa el jugador del juego. El jugador se mueve por el mundo usando los cursores.
  * También almacena la puntuación o número de estrellas que ha recogido hasta el momento.
@@ -66,6 +68,15 @@ export default class Player extends Phaser.GameObjects.Sprite {
       frameRate: 15 , // Velocidad de la animación
     });
 
+    this.anims.create({
+      key: 'dead',
+      frames: this.anims.generateFrameNames('player', { prefix: 'dead__00',
+      start: 0,
+      end: 9}),
+      frameRate: 10 , // Velocidad de la animación
+      repeat: -1    // Animación en bucle
+    });
+
     this.anims.play('idle', true);
 
     this.score = 0;
@@ -96,6 +107,15 @@ export default class Player extends Phaser.GameObjects.Sprite {
    */
   updateScore() {
     this.label.text = 'Score: ' + this.score;
+  }
+
+  muere(){
+    this.body.setVelocityX(0);
+    this.body.setVelocityY(0);
+    this.flipX = false;
+    this.muerte = true;
+    //this.anims.play('dead', true);
+    //this.label.text = 'Has muerto: ' + this.score;
   }
 
   /**
@@ -145,8 +165,15 @@ export default class Player extends Phaser.GameObjects.Sprite {
           this.anims.play('jump', true);
       }
       this.body.setVelocityX(0);
+
+      
+    }
+
+    if(this.muerte){
+      this.anims.play('dead', true);
     }
     
+   
   }
   
 }

@@ -15,13 +15,22 @@ export default class Player extends Phaser.GameObjects.Sprite {
     super(scene, x, y, 'calabaza');
 
     this.anims.create({
-      key: 'run',
-      frames: this.anims.generateFrameNames('calabaza', { prefix: 'run__00',
+      key: 'idle',
+      frames: this.anims.generateFrameNames('calabaza', { prefix: 'idle__00',
       start: 0,
-      end: 7}),
+      end: 9}),
       frameRate: 10, // Velocidad de la animación
       repeat: -1    // Animación en bucle
     });
+
+    this.anims.create({
+        key: 'run',
+        frames: this.anims.generateFrameNames('calabaza', { prefix: 'run__00',
+        start: 0,
+        end: 7}),
+        frameRate: 10, // Velocidad de la animación
+        repeat: -1    // Animación en bucle
+      });
 
     this.anims.play('run', true);
     
@@ -53,12 +62,19 @@ export default class Player extends Phaser.GameObjects.Sprite {
   preUpdate(t,dt) {
     super.preUpdate(t,dt);
     if(this.body.x == 0){
-        this.flipX = false;
         this.body.setVelocityX(this.speed);
     }
     if(this.body.x == 930){
-        this.flipX = true;
         this.body.setVelocityX(-this.speed);
+        this.flipX = true;
+        this.anims.play('run', true);
+    }
+
+    if (this.scene.physics.overlap(this.scene.player, this)) {
+        this.body.setVelocityX(0);
+        this.anims.play('idle', true);
+        this.scene.calabazaChoca(this.base);
+        //this.destroy();
     }
   }
   

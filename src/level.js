@@ -1,7 +1,7 @@
 import Platform from './platform.js';
 import Player from './player.js';
-import Ant from './ant.js';
 import Calabaza from './calabaza.js';
+
 
 
 /**
@@ -12,12 +12,13 @@ import Calabaza from './calabaza.js';
  * El juego termina cuando el jugador ha recogido 10 estrellas.
  * @extends Phaser.Scene
  */
-export default class Level1 extends Phaser.Scene {
+export default class Level extends Phaser.Scene {
+  
   /**
    * Constructor de la escena
    */
   constructor() {
-    super({ key: 'level1' });
+    super({ key: 'level' });
   }
 
 
@@ -26,28 +27,36 @@ export default class Level1 extends Phaser.Scene {
   }
 
   preload(){
-    
+    this.load.image("background", "assets/sprites/tilemap_nivel1_background.png")
   }
   /**
    * Creación de los elementos de la escena principal de juego
    */
   create() {
-    this.stars = 5;
+    let background = this.add.tileSprite(0, 0, 0, 0, "background").setOrigin(0,0);
+    background.displayHeight = this.sys.game.config.height;
+    background.scaleX = background.scaleY; 
+
+    this.stars = 1;
     this.bases = this.add.group();
     this.player = new Player(this, 500, 500);
-    this.ant = new Ant(this,0,500);
-    this.calabaza = new Calabaza(this,0,500);
+    
+    this.physics.world.setBounds(0, 0, background.displayWidth, background.displayHeight);
+    this.cameras.main.setBounds(0, 0, background.displayWidth, background.displayHeight);
+    this.cameras.main.startFollow(this.player);
 
-    new Platform(this, this.player, this.bases, 500, 350);
-    new Platform(this, this.player, this.bases, 850, 250);
-    new Platform(this, this.player, this.bases, 500, 150);
-    new Platform(this, this.player, this.bases, 150, 250);
+    new Platform(this, this.player, this.bases, 150, 350);
+    new Platform(this, this.player, this.bases, 850, 350);
+    new Platform(this, this.player, this.bases, 500, 250);
+    new Platform(this, this.player, this.bases, 150, 150);
+    new Platform(this, this.player, this.bases, 850, 150);
     this.spawn();
   }
 
   update(){
 
   }
+  
 
   /**
    * Genera una estrella en una de las bases del escenario
@@ -65,8 +74,8 @@ export default class Level1 extends Phaser.Scene {
    */
   starPickt (base) {
     this.player.point();
-      if (this.player.score == this.stars/*&& this.ant.die*/) {
-        this.scene.start('end');
+      if (this.player.score == this.stars) {
+        this.scene.start('level2');
       }
       else {
         let s = this.bases.children.entries;
@@ -74,10 +83,4 @@ export default class Level1 extends Phaser.Scene {
 
       }
   }
-
-  
-  calabazaChoca (base) {
-    this.player.muere();
-  }
-  
 }

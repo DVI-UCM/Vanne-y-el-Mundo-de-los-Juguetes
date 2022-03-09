@@ -326,7 +326,7 @@
             }
         },
         {
-            "filename": "idle_(1)",
+            "filename": "idle__000",
             "frame": {
                 "w": 579,
                 "h": 763,
@@ -339,7 +339,7 @@
             }
         },
         {
-            "filename": "idle_(2)",
+            "filename": "idle__001",
             "frame": {
                 "w": 579,
                 "h": 763,
@@ -352,7 +352,7 @@
             }
         },
         {
-            "filename": "idle_(3)",
+            "filename": "idle__002",
             "frame": {
                 "w": 579,
                 "h": 763,
@@ -365,7 +365,7 @@
             }
         },
         {
-            "filename": "idle_(4)",
+            "filename": "idle__003",
             "frame": {
                 "w": 579,
                 "h": 763,
@@ -378,7 +378,7 @@
             }
         },
         {
-            "filename": "idle_(5)",
+            "filename": "idle__004",
             "frame": {
                 "w": 579,
                 "h": 763,
@@ -391,7 +391,7 @@
             }
         },
         {
-            "filename": "idle_(7)",
+            "filename": "idle__006",
             "frame": {
                 "w": 579,
                 "h": 763,
@@ -404,7 +404,7 @@
             }
         },
         {
-            "filename": "idle_(6)",
+            "filename": "idle__005",
             "frame": {
                 "w": 579,
                 "h": 763,
@@ -417,7 +417,7 @@
             }
         },
         {
-            "filename": "idle_(8)",
+            "filename": "idle__007",
             "frame": {
                 "w": 579,
                 "h": 763,
@@ -430,7 +430,7 @@
             }
         },
         {
-            "filename": "idle_(9)",
+            "filename": "idle__008",
             "frame": {
                 "w": 579,
                 "h": 763,
@@ -443,7 +443,7 @@
             }
         },
         {
-            "filename": "idle_(10)",
+            "filename": "idle__009",
             "frame": {
                 "w": 579,
                 "h": 763,
