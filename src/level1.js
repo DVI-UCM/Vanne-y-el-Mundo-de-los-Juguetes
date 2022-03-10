@@ -25,12 +25,20 @@ export default class Level1 extends Phaser.Scene {
   }
 
   preload(){
-    
+    this.load.image("chuche", "assets/sprites/chuche.png");
+
   }
   /**
    * Creación de los elementos de la escena principal de juego
    */
   create() {
+    let image = this.add.image(this.cameras.main.width / 2, this.cameras.main.height / 2, 'chuche')
+    let scaleX = this.cameras.main.width / image.width
+    let scaleY = this.cameras.main.height / image.height
+    let scale = Math.max(scaleX, scaleY)
+    image.setScale(scale).setScrollFactor(0)  
+
+
     this.stars = 5;
     this.bases = this.add.group();
     this.player = new Player(this, 500, 500);
