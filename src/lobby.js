@@ -73,7 +73,7 @@ export default class Lobby extends Phaser.Scene {
 
   chooseLevel(btn) {
     //var level = "level" + toString(btn.levelNumber);
-    this.scene.start("level1");
+    this.scene.start("level2");
   }
 
   showLevelSelector() {
