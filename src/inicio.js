@@ -13,8 +13,8 @@ export default class Inicio extends Phaser.Scene {
     preload() {
       this.load.setPath('assets/sprites/');
 
-      this.load.image('button-1', 'blue_button02.png')
-      this.load.image('button-2', 'blue_button03.png')
+      this.load.image('button-1', 'blue_button02.png');
+      this.load.image('button-2', 'blue_button03.png');
     
     }
 
@@ -25,11 +25,11 @@ export default class Inicio extends Phaser.Scene {
       this.startBtn = this.add.sprite(width, height - 40, 'button-1',).setInteractive();
       this.continueBtn = this.add.sprite(width, height + 40, 'button-1',).setInteractive();
 
-      var startText = this.add.text(0, 0, "Start new game", {font: "16px Arial", fill: "#ffffff"}).setOrigin(0.5 , 0.5);
+      var startText = this.add.text(0, 0, "Empezar juego nuevo", {font: "16px Arial", fill: "#ffffff"}).setOrigin(0.5 , 0.5);
       startText.x = this.startBtn.x;
       startText.y = this.startBtn.y;
 
-      var continueText = this.add.text(0, 0, "Continue game", {font: "16px Arial", fill: "#ffffff"}).setOrigin(0.5 , 0.5);
+      var continueText = this.add.text(0, 0, "Continuar juego", {font: "16px Arial", fill: "#ffffff"}).setOrigin(0.5 , 0.5);
       continueText.x = this.continueBtn.x;
       continueText.y = this.continueBtn.y;
 
