@@ -49,7 +49,10 @@ export default class Lobby extends Phaser.Scene {
     this.load.image('7', 'Number7.png');
     this.load.image('8', 'Number8.png');
     this.load.image('9', 'Number9.png');
-
+    this.load.image('music1', 'music1.png');
+    this.load.image('music2', 'music2.png');
+    this.load.image('mute1', 'mute1.png');
+    this.load.image('mute2', 'mute2.png');
   }
   /**
    * Creación de los elementos de la escena principal de juego
@@ -62,6 +65,7 @@ export default class Lobby extends Phaser.Scene {
     this.is_levelSelector = false;
     this.graphics_levels;
     this.levelThumbsGroup = this.physics.add.staticGroup();
+
     this.is_exit = false;
     this.graphics_exit;
     this.exitInfo;
@@ -69,6 +73,10 @@ export default class Lobby extends Phaser.Scene {
     this.okText;
     this.cancelBtn;
     this.cancelText;
+
+    this.is_settings = false;
+    this.is_muted = false;
+    this.graphics_settings;
 
     this.player = new Player(this, 500, 500);
 
@@ -79,6 +87,16 @@ export default class Lobby extends Phaser.Scene {
       }
       else{
         this.destroyLevelSelector();
+      }
+    });
+
+    this.btnSettings = this.physics.add.staticSprite(616, 277, 'brick');
+    this.physics.add.collider(this.btnSettings, this.player, () => {
+      if(!this.is_settings){
+        this.showSettings();
+      }
+      else{
+        this.destroySettings();
       }
     });
 
@@ -113,7 +131,9 @@ export default class Lobby extends Phaser.Scene {
     for(let i = 0; i < 3; i ++){
       for(let j = 0; j < 3; j ++){  
         let levelNumber = i*3 + j + 1;
-        let levelThumb = this.addButton(j*100 + 100, i*100 + 100, levelNumber, () => {
+        let levelThumb = this.add.sprite(j*100 + 100, i*100 + 100, levelNumber).setOrigin(0).setInteractive();
+        levelThumb.on('pointerdown', function (ptr)       { this.setScale(0.9, 0.9) } );
+        levelThumb.on('pointerup', () => {
           var level = "level" + levelNumber;
           this.scene.start(level);
         });
@@ -129,12 +149,50 @@ export default class Lobby extends Phaser.Scene {
     this.is_levelSelector = false;
   }
 
+  showSettings(){
+    this.graphics_settings = this.add.graphics({x: this.btnSettings.x, y: this.btnSettings.y - 200}).fillRoundedRect(0, 0, 300, 200, 32).fillStyle(0xE2AB4B, 0.5);
+    //si is_muted = true (1) --> se asigna la textura mute
+    let texture1  = ['music1', 'mute1'];
+    let texture2 = ['music2', 'mute2'];
+    let index; 
+
+    if(this.is_muted)
+      index = 1;
+    else
+      index = 0;
+
+    this.musicBtn = this.add.sprite(this.graphics_settings.x + 50, this.graphics_settings.y + 40, texture1[index]).setInteractive();
+    this.musicBtn.setOrigin(0).setScale(2);
+
+    this.musicBtn.on('pointerdown', () => {
+      this.musicBtn.setTexture(texture2[index]);
+    });
+    this.musicBtn.on('pointerup', () => {
+      this.is_muted = !this.is_muted;
+      if(this.is_muted)
+       index = 1;
+      else
+       index = 0;
+      this.musicBtn.setTexture(texture1[index]);
+    });
+    
+    this.is_settings = true;
+  }
+
+  destroySettings(){
+    this.graphics_settings.clear();
+    this.musicBtn.destroy();
+
+    this.is_settings = false;
+  }
+
   showExitNotice(){
     this.graphics_exit = this.add.graphics({x: this.btnExit.x - 300, y: this.btnExit.y - 200}).fillRoundedRect(0, 0, 300, 200, 32).fillStyle(0xE2AB4B, 0.5);
+    this.exitInfo = this.add.text(this.graphics_exit.x + 50, this.graphics_exit.y + 40, "¿Seguro que quieres salir?", {font: "16px Arial", fill: "#ffffff"}).setOrigin(0);
+
     this.okBtn = this.add.sprite(this.graphics_exit.x + 85, this.graphics_exit.y + 150, 'button-1').setInteractive();
+    this.okText = this.add.text(this.okBtn.x, this.okBtn.y, "Salir", {font: "16px Arial", fill: "#ffffff"}).setOrigin();
     this.okBtn.setScale(.65);
-    this.cancelBtn = this.add.sprite(this.graphics_exit.x + 215, this.graphics_exit.y + 150, 'button-1',).setInteractive();
-    this.cancelBtn.setScale(.65);
 
     this.okBtn.on('pointerdown', () => {
       this.okBtn.setTexture('button-2');
@@ -143,6 +201,12 @@ export default class Lobby extends Phaser.Scene {
       this.okBtn.setTexture('button-1');
       this.scene.start("inicio");
     });
+
+
+    this.cancelBtn = this.add.sprite(this.graphics_exit.x + 215, this.graphics_exit.y + 150, 'button-1',).setInteractive();
+    this.cancelText = this.add.text(this.cancelBtn.x, this.cancelBtn.y, "Cancelar", {font: "16px Arial", fill: "#ffffff"}).setOrigin();
+    this.cancelBtn.setScale(.65);
+
     this.cancelBtn.on('pointerdown', () => {
       this.cancelBtn.setTexture('button-2');
     });
@@ -151,9 +215,6 @@ export default class Lobby extends Phaser.Scene {
       this.destroyExitNotice();
     });
 
-    this.exitInfo = this.add.text(this.graphics_exit.x + 50, this.graphics_exit.y + 40, "¿Seguro que quieres salir?", {font: "16px Arial", fill: "#ffffff"}).setOrigin(0);
-    this.okText = this.add.text(this.okBtn.x, this.okBtn.y, "Salir", {font: "16px Arial", fill: "#ffffff"}).setOrigin();
-    this.cancelText = this.add.text(this.cancelBtn.x, this.cancelBtn.y, "Cancelar", {font: "16px Arial", fill: "#ffffff"}).setOrigin();
     this.is_exit = true;
   }
 

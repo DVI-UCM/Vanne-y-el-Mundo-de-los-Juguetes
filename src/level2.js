@@ -30,21 +30,39 @@ export default class Level2 extends Phaser.Scene {
    * Creación de los elementos de la escena principal de juego
    */
   create() {
-    let image = this.add.image(this.cameras.main.width / 2, this.cameras.main.height / 2, 'blanco')
-    let scaleX = this.cameras.main.width / image.width
-    let scaleY = this.cameras.main.height / image.height
-    let scale = Math.max(scaleX, scaleY)
-    image.setScale(scale).setScrollFactor(0)  
+    let image = this.add.image(this.cameras.main.width / 2, this.cameras.main.height / 2, 'blanco');
+    let scaleX = this.cameras.main.width / image.width;
+    let scaleY = this.cameras.main.height / image.height;
+    let scale = Math.max(scaleX, scaleY);
+    image.setScale(scale).setScrollFactor(0);
+    
+    let exit = this.add.image(this.cameras.main.width - 20, 20, "exit").setInteractive();
+    exit.setDepth(1);
+    exit.on('pointerdown', function (ptr) { this.setScale(0.9, 0.9) } );
+    exit.on('pointerup', () => {
+      this.scene.start("lobby");
+    });
+
+    let fullScreen = this.add.image(this.cameras.main.width - 50, 20, "fullScreen").setInteractive();
+    fullScreen.on('pointerdown', function (ptr) { this.setScale(0.9, 0.9) } );
+    fullScreen.on('pointerup', () => {
+      if (this.scale.isFullscreen){
+        fullScreen.setTexture("fullScreen");
+        this.scale.stopFullscreen();
+      }
+      else{
+        fullScreen.setTexture("fullScreen2");
+          this.scale.startFullscreen();
+      }
+    });
 
     this.stars = 3;
-    //this.bases = this.add.group();
     this.player = new Player(this, 0, 420);
     this.player.body.setAllowGravity(false);
+
     //Crear el marco del laberinto
     this.marco();
     this.nivel();
-    //this.spawn();
-
   }
 
   update(){

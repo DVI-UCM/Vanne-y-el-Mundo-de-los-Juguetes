@@ -62,6 +62,11 @@ export default class Boot extends Phaser.Scene {
     });
     startText.setOrigin(0.5, 0.5);
     
+    this.load.setPath('assets/sprites/gui');
+    this.load.image("exit", "grey_crossGrey.png");
+    this.load.image("fullScreen", "full_screen.png");
+    this.load.image("fullScreen2", "full_screen2.png");
+
     // Con setPath podemos establecer el prefijo que se añadirá a todos los load que aparecen a continuación
     this.load.setPath('assets/sprites/');
     this.load.image('platform', 'platform.png');
@@ -71,7 +76,7 @@ export default class Boot extends Phaser.Scene {
     this.load.atlas('player', 'ninjagirl.png', 'ninjagirl_atlas.json');
     this.load.atlas('calabaza', 'calabaza.png', 'calabaza.json');
     this.load.image('ant','ant.png');
-    
+  
 
     this.load.on('progress', function (value) {
       console.log(value);
@@ -93,7 +98,7 @@ export default class Boot extends Phaser.Scene {
         loadingText.destroy();
         percentText.destroy();
 
-        startText.setText('Haz click para empezar')
+        startText.setText('Haz click para empezar');
     });
   }
 

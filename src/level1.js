@@ -26,18 +26,35 @@ export default class Level1 extends Phaser.Scene {
 
   preload(){
     this.load.image("chuche", "assets/sprites/chuche.png");
-
   }
   /**
    * Creación de los elementos de la escena principal de juego
    */
   create() {
-    let image = this.add.image(this.cameras.main.width / 2, this.cameras.main.height / 2, 'chuche')
-    let scaleX = this.cameras.main.width / image.width
-    let scaleY = this.cameras.main.height / image.height
-    let scale = Math.max(scaleX, scaleY)
-    image.setScale(scale).setScrollFactor(0)  
+    let image = this.add.image(this.cameras.main.width / 2, this.cameras.main.height / 2, 'chuche');
+    let scaleX = this.cameras.main.width / image.width;
+    let scaleY = this.cameras.main.height / image.height;
+    let scale = Math.max(scaleX, scaleY);
+    image.setScale(scale).setScrollFactor(0);  
 
+    let exit = this.add.image(this.cameras.main.width - 20, 20, "exit").setInteractive();
+    exit.on('pointerdown', function (ptr) { this.setScale(0.9, 0.9) } );
+    exit.on('pointerup', () => {
+      this.scene.start("lobby");
+    });
+
+    let fullScreen = this.add.image(this.cameras.main.width - 50, 20, "fullScreen").setInteractive();
+    fullScreen.on('pointerdown', function (ptr) { this.setScale(0.9, 0.9) } );
+    fullScreen.on('pointerup', () => {
+      if (this.scale.isFullscreen){
+        fullScreen.setTexture("fullScreen");
+        this.scale.stopFullscreen();
+      }
+      else{
+        fullScreen.setTexture("fullScreen2");
+          this.scale.startFullscreen();
+      }
+    });
 
     this.stars = 5;
     this.bases = this.add.group();
