@@ -4,7 +4,6 @@ import Inicio from './inicio.js';
 import Lobby from './lobby.js';
 import Level1 from './level1.js';
 import Level2 from './level2.js';
-import LevelSelector from './levelSelector.js'
 /**
  * Inicio del juego en Phaser. Creamos el archivo de configuración del juego y creamos
  * la clase Game de Phaser, encargada de crear e iniciar el juego.
@@ -19,12 +18,12 @@ let config = {
         autoCenter: Phaser.Scale.CENTER_HORIZONTALLY
     },
     pixelArt: true,
-    scene: [Boot, Inicio, Lobby, LevelSelector, Level1, Level2, End],
+    scene: [Boot, Inicio, Lobby, Level1, Level2, End],
     physics: {
         default: 'arcade',
         arcade: {
             gravity: { y: 700 },
-            debug: false
+            debug: true
         }
     }
 };

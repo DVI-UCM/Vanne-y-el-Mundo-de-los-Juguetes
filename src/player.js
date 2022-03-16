@@ -133,11 +133,12 @@ export default class Player extends Phaser.GameObjects.Sprite {
     if (this.cursors.left.isDown) {
       this.flipX = true;
       this.body.setVelocityX(-this.speed);
-      if(this.body.onFloor())
+      if(this.body.onFloor()){
         if(this.cursors.down.isDown)
           this.anims.play('slide', true);
         else
           this.anims.play('run', true);
+      }
       else
         this.anims.play('jump', true);
     }
@@ -175,5 +176,5 @@ export default class Player extends Phaser.GameObjects.Sprite {
 
 
   }
-  
+
 }

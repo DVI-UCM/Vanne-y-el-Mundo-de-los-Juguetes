@@ -20,7 +20,6 @@ export default class Level2 extends Phaser.Scene {
 
 
   init(){
-
   }
 
   preload(){
@@ -37,10 +36,10 @@ export default class Level2 extends Phaser.Scene {
     let scale = Math.max(scaleX, scaleY)
     image.setScale(scale).setScrollFactor(0)  
 
-
     this.stars = 3;
     //this.bases = this.add.group();
     this.player = new Player(this, 0, 420);
+    this.player.body.setAllowGravity(false);
     //Crear el marco del laberinto
     this.marco();
     this.nivel();

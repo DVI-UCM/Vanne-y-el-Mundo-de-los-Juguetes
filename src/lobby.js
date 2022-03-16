@@ -1,4 +1,3 @@
-import LevelSelector from './levelSelector.js';
 import Player from './player.js';
 
 /**
@@ -171,5 +170,5 @@ export default class Lobby extends Phaser.Scene {
   update(){
     
   }
-  
+
 }

@@ -109,12 +109,12 @@ export default class Player extends Phaser.GameObjects.Sprite {
   preUpdate(t,dt) {
     super.preUpdate(t,dt);
     
-    if (this.cursors.up.isDown && this.body.onFloor()) {
+    if (this.cursors.up.isDown) {
       this.body.setVelocityY(-this.speed);
       this.anims.play('run', true);
     }
 
-    if (this.cursors.down.isDown && this.body.onFloor()){
+    if (this.cursors.down.isDown){
       this.body.setVelocityY(this.speed);
       this.anims.play('run', true);
     }
@@ -137,8 +137,6 @@ export default class Player extends Phaser.GameObjects.Sprite {
     if(this.muerte){
       this.anims.play('dead', true);
     }
-
-
   }
   
 }
