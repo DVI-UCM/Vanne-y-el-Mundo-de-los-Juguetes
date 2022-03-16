@@ -10,14 +10,17 @@ export default class Platform extends Phaser.GameObjects.Sprite {
    * Constructor de la Plataforma
    * @param {Phaser.Scene} scene Escena a la que pertenece la plataforma
    * @param {Player} player Jugador del juego
+   * @param {Player} ghost Jugador del juego
    * @param {number} x Coordenada x
    * @param {number} y Coordenada y
    */
-  constructor(scene, player,x, y) {
+  constructor(scene, player, ghost, x, y) {
     super(scene, x, y, 'lego_verde');
     this.scene.add.existing(this);
     this.scene.physics.add.existing(this, true);
-    this.scene.physics.add.collider(this, player);    
+    this.scene.physics.add.collider(this, player); 
+    this.scene.physics.add.collider(this, ghost);    
+  
   }
 
 }
