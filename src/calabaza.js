@@ -61,19 +61,22 @@ export default class Player extends Phaser.GameObjects.Sprite {
    */
   preUpdate(t,dt) {
     super.preUpdate(t,dt);
-    if(this.body.x == 0){
-        this.body.setVelocityX(this.speed);
-    }
-    if(this.body.x == 930){
-        this.flipX = true;
-        this.body.setVelocityX(-this.speed);
-        this.anims.play('run', true);
-    }
+    this.body.collideWorldBounds=true;
+    this.body.onWorldBounds=true;
 
-    if (this.scene.physics.overlap(this.scene.player, this)) {
+    this.scene.physics.world.on('worldbounds', (body, up, down, left, right)=>{
+      if(left || right){
+        this.flipX = !this.flipX;
+        this.speed = -this.speed;
+        this.body.setVelocity(this.speed);
+      }
+    });
+
+    if (this.scene.physics.collide(this.scene.player, this)) {
         this.body.setVelocityX(0);
         this.anims.play('idle', true);
-        this.scene.calabazaChoca(this.base);
+        this.scene.player.muere();
+        //this.scene.calabazaChoca(this.base);
         //this.destroy();
     }
   }
