@@ -25,15 +25,20 @@ export default class Player extends Phaser.GameObjects.Sprite {
     this.setScale(.06);
     // Esta label es la UI en la que pondremos la puntuación del jugador
     this.label = this.scene.add.text(10, 10, "");
+
+    this.col = false;  
+
   }
 
-
-  
   /**
    * Actualiza la UI con la puntuación actual
    */
   updateDie(a) {
     this.die = a;
+  }
+
+  onCollision(){
+    this.col = true;  
   }
 
   /**
@@ -56,3 +61,22 @@ export default class Player extends Phaser.GameObjects.Sprite {
   }
   
 }
+
+  /*
+    // if(this.col){
+    //     this.flipX = true;
+    //     this.body.setVelocityX(-this.speed);
+    // }
+    // this.col = false;
+
+    /*
+    this.body.setVelocityX(this.speed);
+
+    if(this.physics.collide(this, this.scene.wall)){
+        this.flipX = true;
+        this.body.setVelocityX(-this.speed);
+    }
+    */
+
+  
+  
