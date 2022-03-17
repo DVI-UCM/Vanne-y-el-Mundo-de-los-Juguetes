@@ -82,21 +82,25 @@ export default class Lobby extends Phaser.Scene {
 
     this.btnLevels = this.physics.add.staticSprite(270, 295, 'brick');
     this.physics.add.collider(this.btnLevels, this.player, () => {
-      if(!this.is_levelSelector){
-        this.showLevelSelector();
-      }
-      else{
-        this.destroyLevelSelector();
+      if(this.player.body.touching.up){
+        if(!this.is_levelSelector){
+          this.showLevelSelector();
+        }
+        else{
+          this.destroyLevelSelector();
+        }
       }
     });
 
     this.btnSettings = this.physics.add.staticSprite(616, 277, 'brick');
     this.physics.add.collider(this.btnSettings, this.player, () => {
-      if(!this.is_settings){
-        this.showSettings();
-      }
-      else{
-        this.destroySettings();
+      if(this.player.body.touching.up){
+        if(!this.is_settings){
+          this.showSettings();
+        }
+        else{
+          this.destroySettings();
+        }
       }
     });
 
@@ -110,11 +114,13 @@ export default class Lobby extends Phaser.Scene {
         ease: 'Cubic.easeOut',
         repeat: 0
       });*/
-      if(!this.is_exit){
-        this.showExitNotice();
-      }
-      else{
-        this.destroyExitNotice();
+      if(this.player.body.touching.up){
+        if(!this.is_exit){
+          this.showExitNotice();
+        }
+        else{
+          this.destroyExitNotice();
+        }
       }
     });
 
@@ -144,7 +150,7 @@ export default class Lobby extends Phaser.Scene {
   }
 
   destroyLevelSelector(){
-    this.levelThumbsGroup.clear(true);
+    this.levelThumbsGroup.clear(true, true);
     this.graphics_levels.clear();
     this.is_levelSelector = false;
   }

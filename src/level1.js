@@ -66,7 +66,7 @@ export default class Level1 extends Phaser.Scene {
     new Platform(this, this.player, this.bases, 500, 150);
     new Platform(this, this.player, this.bases, 150, 250);
     this.spawn();
-
+ 
   }
 
   update(){
@@ -89,7 +89,7 @@ export default class Level1 extends Phaser.Scene {
    */
   starPickt (base) {
     this.player.point();
-      if (this.player.score == this.stars/*&& this.ant.die*/) {
+      if (this.player.score == this.stars) {
         this.scene.start('end');
       }
       else {
@@ -99,8 +99,8 @@ export default class Level1 extends Phaser.Scene {
       }
   }
 
-  calabazaChoca (base) {
+  /*calabazaChoca () {
     this.player.muere();
-  }
+  }*/
   
 }
