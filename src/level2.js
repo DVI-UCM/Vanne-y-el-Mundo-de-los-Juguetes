@@ -25,7 +25,7 @@ export default class Level2 extends Phaser.Scene {
   }
 
   preload(){
-    this.load.image("lego", "assets/sprites/fondoLego.png");
+    this.load.image("lego", "assets/sprites/fondoPrueba.png");
 
   }
   /**
@@ -37,11 +37,11 @@ export default class Level2 extends Phaser.Scene {
     background.scaleX = background.scaleY; 
     background.setScrollFactor(0);
 
-    //let image = this.add.image(this.cameras.main.width / 2, this.cameras.main.height / 2, 'lego');
-    //let scaleX = this.cameras.main.width / image.width;
-    //let scaleY = this.cameras.main.height / image.height;
-    //let scale = Math.max(scaleX, scaleY);
-    //image.setScale(scale).setScrollFactor(0);
+    let image = this.add.image(this.cameras.main.width / 2, this.cameras.main.height / 2, 'lego');
+    let scaleX = this.cameras.main.width / image.width;
+    let scaleY = this.cameras.main.height / image.height;
+    let scale = Math.max(scaleX, scaleY);
+    image.setScale(scale).setScrollFactor(0);
     
     let exit = this.add.image(this.cameras.main.width - 20, 20, "exit").setInteractive();
     exit.setDepth(1);
@@ -77,13 +77,14 @@ export default class Level2 extends Phaser.Scene {
     this.nivel();
 
     this.physics.add.collider(this.walls, this.player);
-    this.physics.add.collider(this.walls, this.ghost);
+    this.physics.add.collider(this.walls, this.ghost, () => {
+      this.ghost.onCollision();
+    });
     this.physics.add.collider(this.player, this.ghost);
 
   }
 
   update(){
-
   }
 
   /**

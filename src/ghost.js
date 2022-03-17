@@ -1,4 +1,5 @@
 import Star from './star.js';
+import Level2 from './level2.js';
 /**
  * Clase que representa el jugador del juego. El jugador se mueve por el mundo usando los cursores.
  * También almacena la puntuación o número de estrellas que ha recogido hasta el momento.
@@ -19,14 +20,14 @@ export default class Player extends Phaser.GameObjects.Sprite {
     this.scene.add.existing(this);
     this.scene.physics.add.existing(this);
     // Queremos que el jugador no se salga de los límites del mundo
-    this.body.setCollideWorldBounds();
+    // this.body.setCollideWorldBounds();
     this.speed = 200;
     this.jumpSpeed = -600;
     this.setScale(.06);
     // Esta label es la UI en la que pondremos la puntuación del jugador
     this.label = this.scene.add.text(10, 10, "");
 
-    this.col = false;  
+    this.body.setVelocityX(this.speed);
 
   }
 
@@ -38,7 +39,9 @@ export default class Player extends Phaser.GameObjects.Sprite {
   }
 
   onCollision(){
-    this.col = true;  
+    this.flipX = !this.flipX;
+    this.speed = -this.speed;
+    this.body.setVelocityX(this.speed);
   }
 
   /**
@@ -49,34 +52,21 @@ export default class Player extends Phaser.GameObjects.Sprite {
    */
   preUpdate(t,dt) {
     super.preUpdate(t,dt);
+    this.body.collideWorldBounds=true;
+    this.body.onWorldBounds=true;
 
-    if(this.body.x == 800){
-        this.flipX = false;
-        this.body.setVelocityX(this.speed);
-    }
-    if(this.body.x == 930){
-        this.flipX = true;
-        this.body.setVelocityX(-this.speed);
-    }
+    // if(this.body.x == 800){
+    //      this.flipX = false;
+    //      this.body.setVelocityX(this.speed);
+    // }
+    // if(this.body.x == 930){
+    //      this.flipX = true;
+    //      this.body.setVelocityX(-this.speed);
+    // }
   }
   
 }
 
-  /*
-    // if(this.col){
-    //     this.flipX = true;
-    //     this.body.setVelocityX(-this.speed);
-    // }
-    // this.col = false;
-
-    /*
-    this.body.setVelocityX(this.speed);
-
-    if(this.physics.collide(this, this.scene.wall)){
-        this.flipX = true;
-        this.body.setVelocityX(-this.speed);
-    }
-    */
 
   
   
