@@ -1,4 +1,3 @@
-import Star from './star.js';
 import Level2 from './level2.js';
 /**
  * Clase que representa el jugador del juego. El jugador se mueve por el mundo usando los cursores.
@@ -13,7 +12,7 @@ export default class Player extends Phaser.GameObjects.Sprite {
    * @param {number} y Coordenada Y
    */
   constructor(scene, x, y) {
-    super(scene, x, y, 'ghost', 'ghost2');
+    super(scene, x, y, 'ghost2');
 
 
     this.die = false;
