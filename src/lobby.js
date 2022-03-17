@@ -151,29 +151,41 @@ export default class Lobby extends Phaser.Scene {
 
   showSettings(){
     this.graphics_settings = this.add.graphics({x: this.btnSettings.x, y: this.btnSettings.y - 200}).fillRoundedRect(0, 0, 300, 200, 32).fillStyle(0xE2AB4B, 0.5);
+    
     //si is_muted = true (1) --> se asigna la textura mute
     let texture1  = ['music1', 'mute1'];
     let texture2 = ['music2', 'mute2'];
     let index; 
+    let text;
 
-    if(this.is_muted)
+    if(this.is_muted){
       index = 1;
-    else
+      text = "Música: Off";
+    }
+    else {
       index = 0;
-
+      text = "Música: On";
+    }
     this.musicBtn = this.add.sprite(this.graphics_settings.x + 50, this.graphics_settings.y + 40, texture1[index]).setInteractive();
     this.musicBtn.setOrigin(0).setScale(2);
+
+    this.musicText = this.add.text(this.musicBtn.x + 80, this.musicBtn.y + 15, text, {font: "16px Arial", fill: "#ffffff"}).setOrigin(0.5);
 
     this.musicBtn.on('pointerdown', () => {
       this.musicBtn.setTexture(texture2[index]);
     });
     this.musicBtn.on('pointerup', () => {
       this.is_muted = !this.is_muted;
-      if(this.is_muted)
-       index = 1;
-      else
-       index = 0;
+      if(this.is_muted){
+        index = 1;
+        text = "Música: Off";
+      }
+      else {
+        index = 0;
+        text = "Música: On";
+      }
       this.musicBtn.setTexture(texture1[index]);
+      this.musicText.setText(text);
     });
     
     this.is_settings = true;
@@ -182,6 +194,7 @@ export default class Lobby extends Phaser.Scene {
   destroySettings(){
     this.graphics_settings.clear();
     this.musicBtn.destroy();
+    this.musicText.destroy();
 
     this.is_settings = false;
   }
