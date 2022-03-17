@@ -77,6 +77,10 @@ export default class Boot extends Phaser.Scene {
     this.load.atlas('calabaza', 'calabaza.png', 'calabaza.json');
     this.load.image('ant','ant.png');
     this.load.image('ghost','ghost.png');
+    this.load.spritesheet('player_idle', 'player/idle_spritesheet.png', {frameWidth: 58, frameHeight: 100});
+    this.load.spritesheet('player_run', 'player/run_spritesheet.png', {frameWidth: 75, frameHeight: 104});
+    this.load.spritesheet('player_jump', 'player/jump_spritesheet.png', {frameWidth: 80, frameHeight: 109});
+
 
     this.load.on('progress', function (value) {
       console.log(value);

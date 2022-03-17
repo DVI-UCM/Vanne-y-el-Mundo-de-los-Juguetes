@@ -18,18 +18,14 @@ export default class Player extends Phaser.GameObjects.Sprite {
 
     this.anims.create({
       key: 'idle',
-      frames: this.anims.generateFrameNames('player', { prefix: 'idle__00',
-      start: 0,
-      end: 9}),
+      frames: 'player_idle',
       frameRate: 10, // Velocidad de la animación
       repeat: -1    // Animación en bucle
     });
 
     this.anims.create({
       key: 'run',
-      frames: this.anims.generateFrameNames('player', { prefix: 'run__00',
-      start: 0,
-      end: 9}),
+      frames: 'player_run',
       frameRate: 15, // Velocidad de la animación
       repeat: -1    // Animación en bucle
     });
@@ -67,8 +63,7 @@ export default class Player extends Phaser.GameObjects.Sprite {
     // Queremos que el jugador no se salga de los límites del mundo
     this.body.setCollideWorldBounds();
     this.speed = 200;
-    //this.jumpSpeed = -600;
-    this.setScale(.35);
+    this.setScale(.95);
     // Esta label es la UI en la que pondremos la puntuación del jugador
     this.label = this.scene.add.text(10, 10, "");
     this.cursors = this.scene.input.keyboard.createCursorKeys();
@@ -108,6 +103,7 @@ export default class Player extends Phaser.GameObjects.Sprite {
    */
   preUpdate(t,dt) {
     super.preUpdate(t,dt);
+    this.body.setVelocity(0, 0);
     
     if (this.cursors.up.isDown) {
       this.body.setVelocityY(-this.speed);
@@ -123,15 +119,17 @@ export default class Player extends Phaser.GameObjects.Sprite {
       this.flipX = true;
       this.body.setVelocityX(-this.speed);
       this.anims.play('run', true);
+      this.body.setOffset(8, 2);
     }
     else if (this.cursors.right.isDown) {
       this.flipX = false;
       this.body.setVelocityX(this.speed);
       this.anims.play('run', true);
-
+      this.body.setOffset(10, 2);
     }
     else{
       this.anims.play('idle', true);
+      this.body.setOffset(0);
     }
 
     if(this.muerte){

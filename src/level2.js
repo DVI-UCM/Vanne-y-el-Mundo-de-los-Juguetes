@@ -66,7 +66,7 @@ export default class Level2 extends Phaser.Scene {
 
     this.stars = 3;
     this.walls = this.physics.add.staticGroup();
-    this.player = new Player(this, 0, 420);
+    this.player = new Player(this, 0, 412);
     this.ghost = new Ghost(this, 800, 420);
 
     this.player.body.setAllowGravity(false);

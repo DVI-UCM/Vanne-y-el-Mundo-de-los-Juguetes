@@ -14,31 +14,25 @@ export default class Player extends Phaser.GameObjects.Sprite {
    * @param {number} y Coordenada Y
    */
   constructor(scene, x, y) {
-    super(scene, x, y, 'player');
+    super(scene, x, y, 'player_idle');
 
     this.anims.create({
       key: 'idle',
-      frames: this.anims.generateFrameNames('player', { prefix: 'idle__00',
-      start: 0,
-      end: 9}),
+      frames: 'player_idle',
       frameRate: 10, // Velocidad de la animación
       repeat: -1    // Animación en bucle
     });
 
     this.anims.create({
       key: 'run',
-      frames: this.anims.generateFrameNames('player', { prefix: 'run__00',
-      start: 0,
-      end: 9}),
+      frames: 'player_run',
       frameRate: 15, // Velocidad de la animación
       repeat: -1    // Animación en bucle
     });
 
     this.anims.create({
       key: 'jump',
-      frames: this.anims.generateFrameNames('player', { prefix: 'jump__00',
-      start: 0,
-      end: 9}),
+      frames: 'player_jump',
       frameRate: 15, // Velocidad de la animación
       repeat: -1    // Animación en bucle
     });
@@ -71,10 +65,10 @@ export default class Player extends Phaser.GameObjects.Sprite {
     this.anims.create({
       key: 'dead',
       frames: this.anims.generateFrameNames('player', { prefix: 'dead__00',
-      start: 0,
-      end: 9}),
+        start: 0,
+        end: 9}),
       frameRate: 10, // Velocidad de la animación
-      repeat: 0    // Animación en bucle
+      repeat: 1
     });
 
     this.anims.play('idle', true);
@@ -86,11 +80,12 @@ export default class Player extends Phaser.GameObjects.Sprite {
     this.body.setCollideWorldBounds();
     this.speed = 300;
     this.jumpSpeed = -600;
-    this.setScale(.35);
+
     // Esta label es la UI en la que pondremos la puntuación del jugador
     this.label = this.scene.add.text(10, 10, "");
     this.cursors = this.scene.input.keyboard.createCursorKeys();
     this.updateScore();
+    
   }
 
   /**
@@ -114,7 +109,8 @@ export default class Player extends Phaser.GameObjects.Sprite {
     this.body.setVelocityY(0);
     //this.flipX = false;
     this.muerte = true;
-    this.anims.play('dead');
+    this.anims.play('dead', true);
+    //this.scene.scene.start('end');
     //this.label.text = 'Has muerto: ' + this.score;
   }
 
@@ -129,52 +125,56 @@ export default class Player extends Phaser.GameObjects.Sprite {
     
     if (this.cursors.up.isDown && this.body.onFloor()) {
       this.body.setVelocityY(this.jumpSpeed);
+      this.anims.play('jump', true);
     }
+
     if (this.cursors.left.isDown) {
       this.flipX = true;
       this.body.setVelocityX(-this.speed);
       if(this.body.onFloor()){
         if(this.cursors.down.isDown)
           this.anims.play('slide', true);
-        else
+        else{
           this.anims.play('run', true);
+          this.body.setOffset(8, 0);
+        }
       }
-      else
-        this.anims.play('jump', true);
     }
     else if (this.cursors.right.isDown) {
       this.flipX = false;
       this.body.setVelocityX(this.speed);
-      if(this.body.onFloor())
+
+      if(this.body.onFloor()){
         if(this.cursors.down.isDown)
-        this.anims.play('slide', true);
-        else
-        this.anims.play('run', true);
-      else
-        this.anims.play('jump', true)
+          this.anims.play('slide', true);
+        else{
+          this.anims.play('run', true);
+          this.body.setOffset(10, 0);
+        }
+      }
+      else{
+        this.anims.play('jump', true);
+      }
     }
-    else if (this.cursors.space.isDown && this.body.onFloor()) {
-        this.anims.play('attack', true)
+    else if (this.cursors.space.isDown){
+      if(this.body.onFloor()) 
+        this.anims.play('attack', true);
+      else
+        this.anims.play('jump_attack', true);
     }
     else{
       if(this.body.onFloor()){
         this.anims.play('idle', true);
-      }else {
-        if(this.cursors.space.isDown)
-          this.anims.play('jump_attack', true);
-        else
-          this.anims.play('jump', true);
+        this.body.setOffset(0);
+      }
+      else {
+        this.anims.play('jump', true);
       }
       this.body.setVelocityX(0);
-
-      
     }  
 
     if(this.muerte){
       this.anims.play('dead', true);
     }
-
-
   }
-
 }
