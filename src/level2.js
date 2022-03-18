@@ -1,10 +1,7 @@
 import Wall from './wall.js';
-import Player from './playerAerial.js';
+import PlayerAerial from './playerAerial.js';
 import Ghost from './ghost.js';
-import Ghost2 from './ghost2.js';
-
-
-
+//import Ghost2 from './ghost2.js';
 
 /**
  * Escena principal del juego. La escena se compone de una serie de plataformas 
@@ -68,13 +65,16 @@ export default class Level2 extends Phaser.Scene {
 
     this.stars = 3;
     this.walls = this.physics.add.staticGroup();
-    this.player = new Player(this, 0, 412);
-    this.ghost = new Ghost(this, 800, 420);
-    this.ghost2 = new Ghost2(this, 350, 200);
+    this.ghosts = this.physics.add.group();
 
+    this.player = new PlayerAerial(this, 0, 412);
+    this.ghost1 = new Ghost(this, 800, 420, 'ghost');
+    this.ghost2 = new Ghost(this, 350, 200, 'ghost2');
+    this.ghosts.add(this.ghost1);
+    this.ghosts.add(this.ghost2);
 
     this.player.body.setAllowGravity(false);
-    this.ghost.body.setAllowGravity(false);
+    this.ghost1.body.setAllowGravity(false);
     this.ghost2.body.setAllowGravity(false);
 
 
@@ -82,16 +82,23 @@ export default class Level2 extends Phaser.Scene {
     this.marco();
     this.nivel();
 
-    this.physics.add.collider(this.walls, this.player);
-    this.physics.add.collider(this.walls, this.ghost, () => {
-      this.ghost.onCollision();
+    this.physics.add.collider(this.player, this.walls);
+    //this.physics.add.collider(this.ghosts, this.walls); 
+    this.physics.add.collider(this.ghosts, this.walls, (child) => {
+      child.onCollision();
     });
-    this.physics.add.collider(this.walls, this.ghost2, () => {
+    /*this.physics.add.collider(this.walls, this.ghost2, () => {
       this.ghost2.onCollision();
+    }); */
+    /* this.physics.add.collider(this.player, this.ghost);
+    this.physics.add.collider(this.player, this.ghost2); */
+    this.physics.add.collider(this.player, this.ghosts, () => {
+      this.player.body.setVelocityX(0);
+      //this.anims.play('idle', true);
+      this.player.muere();
+      //this.scene.calabazaChoca(this.base);
+      //this.destroy();
     });
-    this.physics.add.collider(this.player, this.ghost);
-    this.physics.add.collider(this.player, this.ghost2);
-
 
   }
 

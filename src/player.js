@@ -64,11 +64,9 @@ export default class Player extends Phaser.GameObjects.Sprite {
 
     this.anims.create({
       key: 'dead',
-      frames: this.anims.generateFrameNames('player', { prefix: 'dead__00',
-        start: 0,
-        end: 9}),
-      frameRate: 10, // Velocidad de la animación
-      repeat: 1
+      frames: 'player_dead',
+      frameRate: 5, // Velocidad de la animación
+      repeat: 0
     });
 
     this.anims.play('idle', true);
@@ -105,11 +103,10 @@ export default class Player extends Phaser.GameObjects.Sprite {
   }
 
   muere(){
-    this.body.setVelocityX(0);
-    this.body.setVelocityY(0);
-    //this.flipX = false;
+    this.body.setVelocity(0, 0);
     this.muerte = true;
-    this.anims.play('dead', true);
+    this.anims.play('dead');
+    this.body.setOffset(35, 0);
     //this.scene.scene.start('end');
     //this.label.text = 'Has muerto: ' + this.score;
   }
@@ -122,59 +119,61 @@ export default class Player extends Phaser.GameObjects.Sprite {
    */
   preUpdate(t,dt) {
     super.preUpdate(t,dt);
-    
-    if (this.cursors.up.isDown && this.body.onFloor()) {
-      this.body.setVelocityY(this.jumpSpeed);
-      this.anims.play('jump', true);
-    }
 
-    if (this.cursors.left.isDown) {
-      this.flipX = true;
-      this.body.setVelocityX(-this.speed);
-      if(this.body.onFloor()){
-        if(this.cursors.down.isDown)
-          this.anims.play('slide', true);
-        else{
-          this.anims.play('run', true);
-          this.body.setOffset(8, 0);
+    if(!this.muerte){
+      if(this.cursors.up.isDown && this.body.onFloor()) {
+        this.body.setVelocityY(this.jumpSpeed);
+        this.anims.play('jump', true);
+      }
+
+      if (this.cursors.left.isDown) {
+        this.flipX = true;
+        this.body.setVelocityX(-this.speed);
+        if(this.body.onFloor()){
+          if(this.cursors.down.isDown)
+            this.anims.play('slide', true);
+          else{
+            this.anims.play('run', true);
+            this.body.setOffset(8, 2);
+          }
         }
       }
-    }
-    else if (this.cursors.right.isDown) {
-      this.flipX = false;
-      this.body.setVelocityX(this.speed);
+      else if (this.cursors.right.isDown) {
+        this.flipX = false;
+        this.body.setVelocityX(this.speed);
 
-      if(this.body.onFloor()){
-        if(this.cursors.down.isDown)
-          this.anims.play('slide', true);
-        else{
-          this.anims.play('run', true);
-          this.body.setOffset(10, 0);
+        if(this.body.onFloor()){
+          if(this.cursors.down.isDown)
+            this.anims.play('slide', true);
+          else{
+            this.anims.play('run', true);
+            this.body.setOffset(10, 2);
+          }
         }
+        else{
+          this.anims.play('jump', true);
+        }
+      }
+      else if (this.cursors.space.isDown){
+        if(this.body.onFloor()) 
+          this.anims.play('attack', true);
+        else
+          this.anims.play('jump_attack', true);
       }
       else{
-        this.anims.play('jump', true);
-      }
-    }
-    else if (this.cursors.space.isDown){
-      if(this.body.onFloor()) 
-        this.anims.play('attack', true);
-      else
-        this.anims.play('jump_attack', true);
-    }
-    else{
-      if(this.body.onFloor()){
-        this.anims.play('idle', true);
-        this.body.setOffset(0);
-      }
-      else {
-        this.anims.play('jump', true);
-      }
-      this.body.setVelocityX(0);
-    }  
+        if(this.body.onFloor()){
+          this.anims.play('idle', true);
+          this.body.setOffset(0);
+        }
+        else {
+          this.anims.play('jump', true);
+        }
+        this.body.setVelocityX(0);
+      }  
 
-    if(this.muerte){
-      this.anims.play('dead', true);
+      if(this.muerte){
+        this.anims.play('dead', true);
+      }
     }
   }
 }

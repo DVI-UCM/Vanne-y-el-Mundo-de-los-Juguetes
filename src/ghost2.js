@@ -11,7 +11,7 @@ export default class Player extends Phaser.GameObjects.Sprite {
    * @param {number} x Coordenada X
    * @param {number} y Coordenada Y
    */
-  constructor(scene, x, y) {
+  /* constructor(scene, x, y) {
     super(scene, x, y, 'ghost2');
 
 
@@ -28,12 +28,12 @@ export default class Player extends Phaser.GameObjects.Sprite {
 
     this.body.setVelocityX(this.speed);
 
-  }
+  } */
 
   /**
    * Actualiza la UI con la puntuación actual
    */
-  updateDie(a) {
+  /* updateDie(a) {
     this.die = a;
   }
 
@@ -42,22 +42,18 @@ export default class Player extends Phaser.GameObjects.Sprite {
     this.speed = -this.speed;
     this.body.setVelocityX(this.speed);
   }
-
+ */
   /**
    * Métodos preUpdate de Phaser. En este caso solo se encarga del movimiento del jugador.
    * Como se puede ver, no se tratan las colisiones con las estrellas, ya que estas colisiones 
    * ya son gestionadas por la estrella (no gestionar las colisiones dos veces)
    * @override
    */
-  preUpdate(t,dt) {
+  /* preUpdate(t,dt) {
     super.preUpdate(t,dt);
     this.body.collideWorldBounds=true;
     this.body.onWorldBounds=true;
 
-  }
+  } */
   
 }
-
-
-  
-  

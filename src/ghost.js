@@ -4,7 +4,7 @@ import Level2 from './level2.js';
  * Clase que representa el jugador del juego. El jugador se mueve por el mundo usando los cursores.
  * También almacena la puntuación o número de estrellas que ha recogido hasta el momento.
  */
-export default class Player extends Phaser.GameObjects.Sprite {
+export default class Ghost extends Phaser.GameObjects.Sprite {
   
   /**
    * Constructor del jugador
@@ -12,9 +12,8 @@ export default class Player extends Phaser.GameObjects.Sprite {
    * @param {number} x Coordenada X
    * @param {number} y Coordenada Y
    */
-  constructor(scene, x, y) {
-    super(scene, x, y, 'ghost', 'ghost2');
-
+  constructor(scene, x, y, key) {
+    super(scene, x, y, key);
 
     this.die = false;
     this.scene.add.existing(this);
@@ -22,18 +21,13 @@ export default class Player extends Phaser.GameObjects.Sprite {
     // Queremos que el jugador no se salga de los límites del mundo
     // this.body.setCollideWorldBounds();
     this.speed = 200;
-    this.jumpSpeed = -600;
     this.setScale(.06);
     // Esta label es la UI en la que pondremos la puntuación del jugador
     this.label = this.scene.add.text(10, 10, "");
 
     this.body.setVelocityX(this.speed);
-
   }
 
-  /**
-   * Actualiza la UI con la puntuación actual
-   */
   updateDie(a) {
     this.die = a;
   }
@@ -55,6 +49,10 @@ export default class Player extends Phaser.GameObjects.Sprite {
     this.body.collideWorldBounds=true;
     this.body.onWorldBounds=true;
 
+    /*if (this.scene.physics.collide(this.scene.player, this)) {
+      this.body.setVelocityX(0);
+      this.scene.player.muere();
+    }*/
   }
   
 }
