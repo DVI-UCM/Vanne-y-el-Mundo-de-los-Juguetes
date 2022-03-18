@@ -11,12 +11,12 @@ import Calabaza from './calabaza.js';
  * El juego termina cuando el jugador ha recogido 10 estrellas.
  * @extends Phaser.Scene
  */
-export default class Level1 extends Phaser.Scene {
+export default class Level3 extends Phaser.Scene {
   /**
    * Constructor de la escena
    */
   constructor() {
-    super({ key: 'level1' });
+    super({ key: 'level3' });
   }
 
 
@@ -25,33 +25,42 @@ export default class Level1 extends Phaser.Scene {
   }
 
   preload(){
-    this.load.image("chuche", "assets/sprites/chuche.png");
-  }
+    this.game.load.image('fondo1carreras', 'assets/fondo1carreras.png');
+    this.game.load.image('fondo2carreras', 'assets/fondo2carreras.png');
+    this.game.load.image('fondo3carreras', 'assets/fondo3carreras.png');  }
   /**
    * Creación de los elementos de la escena principal de juego
    */
   create() {
-    let image = this.add.image(this.cameras.main.width / 2, this.cameras.main.height / 2, 'chuche');
+
+    //Enable Arcade Physics
+    this.game.physics.startSystem(Phaser.Physics.ARCADE);
+
+    this.fondo1carreras = this.game.add.tileSprite(0,
+    this.game.height - this.game.cache.getImage('fondo1carreras').height,
+    this.game.width,
+    this.game.cache.getImage('fondo1carreras').height,
+    'fondo1carreras'
+    );
+    this.fondo2carreras = this.game.add.tileSprite(0,
+    this.game.height - this.game.cache.getImage('fondo2carreras').height,
+    this.game.width,
+    this.game.cache.getImage('fondo2carreras').height,
+    'fondo2carreras'
+);
+this.fondo3carreras = this.game.add.tileSprite(0,
+    this.game.height - this.game.cache.getImage('fondo3carreras').height,
+    this.game.width,
+    this.game.cache.getImage('fondo3carreras').height,
+    'fondo3carreras'
+);
+    /*
+    let image = this.add.image(this.cameras.main.width / 2, this.cameras.main.height / 2, 'fondocoches');
     let scaleX = this.cameras.main.width / image.width;
     let scaleY = this.cameras.main.height / image.height;
     let scale = Math.max(scaleX, scaleY);
     
-    //image.setScale(scale).setScrollFactor(0);  
-
-    //parallax
-    this.chuche = this.game.add.tileSprite(0,
-        this.game.height - this.game.cache.getImage('chuche').height,
-        this.game.width,
-        this.game.cache.getImage('chuche').height,
-        'chuche'
-    );
-
-    let exit = this.add.image(this.cameras.main.width - 20, 20, "exit").setInteractive();
-    exit.on('pointerdown', function (ptr) { this.setScale(0.9, 0.9) } );
-    exit.on('pointerup', () => {
-      this.scene.start("lobby");
-    });
-
+    image.setScale(scale).setScrollFactor(0);  
     let fullScreen = this.add.image(this.cameras.main.width - 50, 20, "fullScreen").setInteractive();
     fullScreen.on('pointerdown', function (ptr) { this.setScale(0.9, 0.9) } );
     fullScreen.on('pointerup', () => {
@@ -64,8 +73,15 @@ export default class Level1 extends Phaser.Scene {
           this.scale.startFullscreen();
       }
     });
+    */
 
-    this.stars = 5;
+    let exit = this.add.image(this.cameras.main.width - 20, 20, "exit").setInteractive();
+    exit.on('pointerdown', function (ptr) { this.setScale(0.9, 0.9) } );
+    exit.on('pointerup', () => {
+      this.scene.start("lobby");
+    });
+
+
     //this.bases = this.add.group();
     this.player = new Player(this, 500, 500);
     this.calabaza = new Calabaza(this,0,500);
@@ -79,11 +95,9 @@ export default class Level1 extends Phaser.Scene {
   }
 
   update(){
-
-    //parallax
-    this.chuche.tilePosition.x -=0.4;
-
-
+    this.fondo1carreras.tilePosition.x -= 0.05;
+    this.fondo2carreras.tilePosition.x -= 0.3;
+    this.fondo3carreras.tilePosition.x -= 0.75;
 
   }
 
