@@ -1,7 +1,6 @@
 import Wall from './wall.js';
 import PlayerAerial from './playerAerial.js';
 import Ghost from './ghost.js';
-//import Ghost2 from './ghost2.js';
 
 /**
  * Escena principal del juego. La escena se compone de una serie de plataformas 
@@ -83,21 +82,12 @@ export default class Level2 extends Phaser.Scene {
     this.nivel();
 
     this.physics.add.collider(this.player, this.walls);
-    //this.physics.add.collider(this.ghosts, this.walls); 
     this.physics.add.collider(this.ghosts, this.walls, (child) => {
       child.onCollision();
     });
-    /*this.physics.add.collider(this.walls, this.ghost2, () => {
-      this.ghost2.onCollision();
-    }); */
-    /* this.physics.add.collider(this.player, this.ghost);
-    this.physics.add.collider(this.player, this.ghost2); */
     this.physics.add.collider(this.player, this.ghosts, () => {
       this.player.body.setVelocityX(0);
-      //this.anims.play('idle', true);
       this.player.muere();
-      //this.scene.calabazaChoca(this.base);
-      //this.destroy();
     });
 
   }
