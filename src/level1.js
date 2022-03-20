@@ -106,7 +106,13 @@ export default class Level1 extends Phaser.Scene {
     //this.spawn();
 
   }
-
+  endGame(completed = false) {
+    if(! completed) {
+      this.scene.start('gameover');
+    } else {
+      this.scene.start('congratulations');
+    }
+  }
   update(){
     //parallax
     //this.chuche.tilePositionX -=0.4;

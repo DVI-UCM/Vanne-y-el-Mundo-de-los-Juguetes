@@ -34,7 +34,7 @@ export default class Lobby extends Phaser.Scene {
 
   preload(){
     this.load.setPath('assets/sprites'); 
-    this.load.image("background", "tilemap_nivel1_background.png");
+    this.load.image("backgroundLobby", "tilemap_nivel1_background.png");
     this.load.image("brick", "brickSpecial08.png");
     this.load.image('button-1', 'blue_button02.png');
     this.load.image('button-2', 'blue_button03.png');
@@ -58,7 +58,7 @@ export default class Lobby extends Phaser.Scene {
    * Creación de los elementos de la escena principal de juego
    */
   create() {
-    let background = this.add.tileSprite(0, 0, 0, 0, "background").setOrigin(0,0);
+    let background = this.add.tileSprite(0, 0, 0, 0, "backgroundLobby").setOrigin(0,0);
     background.displayHeight = this.sys.game.config.height;
     background.scaleX = background.scaleY; 
 

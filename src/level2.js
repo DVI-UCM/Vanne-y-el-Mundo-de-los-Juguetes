@@ -88,10 +88,17 @@ export default class Level2 extends Phaser.Scene {
     this.physics.add.collider(this.player, this.ghosts, () => {
       this.player.body.setVelocityX(0);
       this.player.muere();
+      this.endGame();
     });
 
   }
-
+  endGame(completed = false) {
+    if(! completed) {
+      this.scene.start('gameover');
+    } else {
+      this.scene.start('congratulations');
+    }
+  }
   update(){
   }
 
@@ -112,7 +119,7 @@ export default class Level2 extends Phaser.Scene {
   starPickt (base) {
     this.player.point();
       if (this.player.score == this.stars && (this.player.x == 980 && this.player.y ==60)) {
-        this.scene.start('end');
+        this.endGame(true);
       }
       else {
         let s = this.bases.children.entries;
