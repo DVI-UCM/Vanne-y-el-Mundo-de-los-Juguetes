@@ -23,23 +23,28 @@ export default class Player extends Phaser.GameObjects.Sprite {
     });
 
     this.anims.create({
-        key: 'run',
-        frames: this.anims.generateFrameNames('calabaza', { prefix: 'run__00',
-        start: 0,
-        end: 7}),
-        frameRate: 10, // Velocidad de la animación
-        repeat: -1    // Animación en bucle
-      });
+      key: 'run',
+      frames: this.anims.generateFrameNames('calabaza', { prefix: 'run__00',
+      start: 0,
+      end: 7}),
+      frameRate: 10, // Velocidad de la animación
+      repeat: -1    // Animación en bucle
+    });
+
 
     this.anims.play('run', true);
-    
     this.die = false;
+  
     this.scene.add.existing(this);
     this.scene.physics.add.existing(this);
+    
     // Queremos que el jugador no se salga de los límites del mundo
     this.body.setCollideWorldBounds(true, 0, 0);
+    
     this.speed = 100;
+    
     this.setScale(.15);
+    this.body.setVelocityX(this.speed);
   }
 
  
@@ -58,8 +63,6 @@ export default class Player extends Phaser.GameObjects.Sprite {
     this.body.collideWorldBounds=true;
     this.body.onWorldBounds=true;
 
-    this.body.setVelocityX(this.speed);
-
     this.scene.physics.world.on('worldbounds', (body, up, down, left, right) => {
       if(left || right){
         this.flipX = !this.flipX;
@@ -67,14 +70,6 @@ export default class Player extends Phaser.GameObjects.Sprite {
         this.body.setVelocityX(this.speed);
       }
     });
-
-    if (this.scene.physics.collide(this.scene.player, this)) {
-        this.body.setVelocityX(0);
-        this.anims.play('idle', true);
-        this.scene.player.muere();
-        //this.scene.calabazaChoca(this.base);
-        //this.destroy();
-    }
   }
   
 }
