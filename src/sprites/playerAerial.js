@@ -46,15 +46,6 @@ export default class PlayerAerial extends Phaser.GameObjects.Sprite {
       frameRate: 15 , // Velocidad de la animación
     });
 
-    /* this.anims.create({
-      key: 'dead',
-      frames: this.anims.generateFrameNames('player', { prefix: 'dead__00',
-      start: 0,
-      end: 9}),
-      frameRate: 10, // Velocidad de la animación
-      repeat: 0    // Animación en bucle
-    }); */
-
     this.anims.create({
       key: 'dead',
       frames: 'player_dead',
@@ -67,10 +58,12 @@ export default class PlayerAerial extends Phaser.GameObjects.Sprite {
     this.score = 0;
     this.scene.add.existing(this);
     this.scene.physics.add.existing(this);
+
     // Queremos que el jugador no se salga de los límites del mundo
     this.body.setCollideWorldBounds();
     this.speed = 200;
     this.setScale(.95);
+
     // Esta label es la UI en la que pondremos la puntuación del jugador
     this.label = this.scene.add.text(10, 10, "");
     this.cursors = this.scene.input.keyboard.createCursorKeys();

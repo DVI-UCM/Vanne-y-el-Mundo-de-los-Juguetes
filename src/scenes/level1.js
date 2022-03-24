@@ -153,7 +153,15 @@ export default class Level1 extends Phaser.Scene {
 
     //this.spawn();
 
+
+    this.physics.add.collider(this.player, this.calabaza, () => {
+      this.calabaza.body.setVelocity(0);
+      this.calabaza.anims.play('idle', true);
+      this.player.muere();
+    });
+
   }
+  
   endGame(completed = false) {
     if(! completed) {
       this.scene.start('gameover');
