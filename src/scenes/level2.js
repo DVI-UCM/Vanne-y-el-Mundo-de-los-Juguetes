@@ -1,6 +1,7 @@
 import Wall from '../sprites/wall.js';
 import PlayerAerial from '../sprites/playerAerial.js';
 import Ghost from '../sprites/ghost.js';
+import Laser from '../sprites/laser.js';
 
 /**
  * Escena principal del juego. La escena se compone de una serie de plataformas 
@@ -25,7 +26,6 @@ export default class Level2 extends Phaser.Scene {
   preload(){
     
     this.load.image("lego", "assets/sprites/fondoPrueba.png");
-    this.load.image("shoot_light", "assets/sprites/shoot_blue.png");
   }
   /**
    * Creación de los elementos de la escena principal de juego
@@ -73,21 +73,30 @@ export default class Level2 extends Phaser.Scene {
       allowGravity: false
     });
 
+    this.laserCounter = 3;
+
     this.player = new PlayerAerial(this, 0, 412);
     this.ghost1 = new Ghost(this, 800, 420, 'ghost');
     this.ghost2 = new Ghost(this, 350, 200, 'ghost2');
     this.ghosts.add(this.ghost1);
     this.ghosts.add(this.ghost2);
     this.shootLights.createMultiple({
-      frameQuantity: 3,
+      classType: Laser,
+      frameQuantity: this.laserCounter,
       active: false,
       visible: false, 
-      key: 'shoot_light'
+      key: 'laser'
     });
 
-    this.player.body.setAllowGravity(false);
+    this.inputKeys = [
+			this.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.SPACE),
+			this.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.DOWN),
+      this.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.LEFT),
+      this.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.RIGHT),
+      this.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.UP)
+		];
 
-    //this.addEvents();
+    this.player.body.setAllowGravity(false);
 
     //Crear el marco del laberinto
     this.marco();
@@ -95,8 +104,8 @@ export default class Level2 extends Phaser.Scene {
 
     this.physics.add.collider(this.player, this.walls);
 
-    this.physics.add.collider(this.ghosts, this.walls, (child) => {
-      child.onCollision();
+    this.physics.add.collider(this.ghosts, this.walls, (ghost) => {
+      ghost.onCollision();
     });
 
     this.physics.add.collider(this.player, this.ghosts, () => {
@@ -105,56 +114,61 @@ export default class Level2 extends Phaser.Scene {
       this.endGame();
     });
 
-  }
+    this.physics.add.collider(this.shootLights, this.walls, (laser) => {
+      laser.collide();
+    });
 
-  shoot(x, y){
-    const shoot = this.shootLights.getFirstDead(false);
-    if(shoot)
-      shoot.body.reset(x, y);
-      shoot.setActive(true);
-      shoot.setVisible(true);
-      shoot.body.setVelocityY(500);
+    this.physics.add.collider(this.shootLights, this.ghosts, (laser, ghost) => {
+      laser.collide();
+      ghost.destroy();
+    });
   }
 
   endGame(completed = false) {
     if(! completed) {
       this.scene.launch('gameover', {key: this.scene.key });
-    } else {
+    } 
+    else {
       this.scene.launch('congratulations');
     }
   }
-  update(){
-    if(this.player.cursors.space.isDown){
-      this.shoot(this.player.x, this.player.y - 20);
-    } 
+
+  shoot(laser, dir){
+    laser.shoot(this.player.x, this.player.y + 20, dir);
   }
 
-  
-  /**
-   * Genera una estrella en una de las bases del escenario
-   * @param {Array<Base>} from Lista de bases sobre las que se puede crear una estrella
-   * Si es null, entonces se crea aleatoriamente sobre cualquiera de las bases existentes
-   */
-  /*spawn(from = null) {
-    Phaser.Math.RND.pick(from || this.bases.children.entries).spawn();
-  }*/
-
-  /**
-   * Método que se ejecuta al coger una estrella. Se pasa la base
-   * sobre la que estaba la estrella cogida para evitar repeticiones
-   * @param {Base} base La base sobre la que estaba la estrella que se ha cogido
-   */
-  /*starPickt (base) {
-    this.player.point();
-    if (this.player.score == this.stars && (this.player.x == 980 && this.player.y ==60)) {
-      this.endGame(true);
+  update(){
+    // If key was just pressed down, shoot the laser. We use JustDown to make sure this only fires once.
+    if (this.inputKeys[0].isDown) {
+      let dir = "";
+      if(this.inputKeys[1].isDown){
+        dir = "down";
+      }
+      else if(this.inputKeys[2].isDown){
+        dir = "left";
+      }
+      else if(this.inputKeys[3].isDown){
+        dir = "right";
+      }
+      else if(this.inputKeys[4].isDown){
+        dir = "up";
+      }
+      // Get the first available sprite in the group
+      const laser = this.shootLights.getFirstDead(false);
+      if (laser) {
+        if(this.laserCounter < 3){
+          this.time.addEvent( {
+            delay: 2000, 
+            callback: this.shoot(laser, dir),
+            callbackScope: this 
+          });
+        }
+        else{
+          laser.shoot(this.player.x, this.player.y + 20, dir);
+        }
+      }
     }
-    else {
-      let s = this.bases.children.entries;
-      this.spawn(s.filter(o => o !== base));
-
-    }
-  }*/
+  }
 
   marco(){
     for(let i = 0; i < 9;i++){

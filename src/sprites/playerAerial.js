@@ -90,7 +90,7 @@ export default class PlayerAerial extends Phaser.GameObjects.Sprite {
     this.body.setVelocityX(0);
     this.body.setVelocityY(0);
     this.muerte = true;
-    this.anims.play('dead');
+    //this.anims.play('dead');
     this.body.setOffset(35, 0);
     //this.label.text = 'Has muerto: ' + this.score;
   }
@@ -105,31 +105,31 @@ export default class PlayerAerial extends Phaser.GameObjects.Sprite {
     super.preUpdate(t,dt);
     this.body.setVelocity(0, 0);
     
-    if (this.cursors.up.isDown) {
-      this.body.setVelocityY(-this.speed);
-      this.anims.play('run', true);
-    }
-
-    if (this.cursors.down.isDown){
-      this.body.setVelocityY(this.speed);
-      this.anims.play('run', true);
-    }
-
-    if (this.cursors.left.isDown) {
-      this.flipX = true;
-      this.body.setVelocityX(-this.speed);
-      this.anims.play('run', true);
-      this.body.setOffset(8, 2);
-    }
-    else if (this.cursors.right.isDown) {
-      this.flipX = false;
-      this.body.setVelocityX(this.speed);
-      this.anims.play('run', true);
-      this.body.setOffset(10, 2);
-    }
-    else{
-      this.anims.play('idle', true);
-      this.body.setOffset(0);
+    if(!this.cursors.space.isDown){
+      if (this.cursors.up.isDown) {
+        this.body.setVelocityY(-this.speed);
+        this.anims.play('run', true);
+      }
+      if (this.cursors.down.isDown){
+        this.body.setVelocityY(this.speed);
+        this.anims.play('run', true);
+      }
+      if (this.cursors.left.isDown) {
+        this.flipX = true;
+        this.body.setVelocityX(-this.speed);
+        this.anims.play('run', true);
+        this.body.setOffset(8, 2);
+      }
+      else if (this.cursors.right.isDown) {
+        this.flipX = false;
+        this.body.setVelocityX(this.speed);
+        this.anims.play('run', true);
+        this.body.setOffset(10, 2);
+      }
+      else {
+        this.anims.play('idle', true);
+        this.body.setOffset(0);
+      }
     }
 
     if(this.muerte){

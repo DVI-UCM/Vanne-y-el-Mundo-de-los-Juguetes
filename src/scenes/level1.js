@@ -2,7 +2,7 @@ import Platform from '../sprites/platform.js';
 import Player from '../sprites/player.js';
 import Calabaza from '../sprites/calabaza.js';
 import Cristales from '../sprites/cristales.js';
-import monstruoVolador from '../sprites/monstruoVolador.js';
+import MonstruoVolador from '../sprites/monstruoVolador.js';
 import Cupcake from '../sprites/cupcake.js';
 
 
@@ -57,23 +57,6 @@ export default class Level1 extends Phaser.Scene {
    * Creación de los elementos de la escena principal de juego
    */
   create() {
-    //let image = this.add.image(this.cameras.main.width / 2, this.cameras.main.height / 2, 'chuche');
-    //let scaleX = this.cameras.main.width / image.width;
-    //let scaleY = this.cameras.main.height / image.height;
-    //let scale = Math.max(scaleX, scaleY);
-    
-    //image.setScale(scale).setScrollFactor(0);  
-
-    //parallax
-    /* this.chuche = this.add.tileSprite(0,
-      //this.game.height - this.game.cache.getImage('chuche').height,
-      this.game.height - this.textures.get('chuche').height,
-      this.game.width,
-      //this.cache.getImage('chuche').height,
-      this.textures.get('chuche').height,
-      'chuche'
-    ); */
-
     //Fondo parallax
     const width = this.scale.width;
     const height = this.scale.height;
@@ -104,14 +87,9 @@ export default class Level1 extends Phaser.Scene {
     this.stars = 5;
     this.player = new Player(this, 500, 500);
     this.calabaza = new Calabaza(this, 50, 500);
-    //this.bases = this.add.group();
+    this.monstruo = new MonstruoVolador(this, 500, 150);
     this.plataformas = this.physics.add.staticGroup();
     this.cristales = this.physics.add.staticGroup();
-
-    this.player = new Player(this, 500, 500);
-    this.calabaza = new Calabaza(this,0,500);
-    this.monstruo = new monstruoVolador(this, 500, 150);
-
 
 
     this.plataformas.add(new Platform(this, this.player, 600, 350));
@@ -127,7 +105,6 @@ export default class Level1 extends Phaser.Scene {
     new Cupcake(this, this.player, 100, 80);
 
 
-
     this.monstruo.body.setAllowGravity(false);
 
     this.physics.add.collider(this.monstruo, this.plataformas, () => {
@@ -137,9 +114,6 @@ export default class Level1 extends Phaser.Scene {
     this.physics.add.collider(this.cristales, this.player, () => {
       this.player.muere();
     });
-
-    //this.spawn();
-
 
     this.physics.add.collider(this.player, this.calabaza, () => {
       this.calabaza.body.setVelocity(0);
