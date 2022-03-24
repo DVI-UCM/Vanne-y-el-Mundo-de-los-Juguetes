@@ -4,8 +4,11 @@ import Inicio from './inicio.js';
 import Lobby from './lobby.js';
 import Level1 from './level1.js';
 import Level2 from './level2.js';
+import Level3 from './level3coches.js'
 import Congratulations from './congratulations.js';
 import GameOver from './gameover.js';
+
+
 
 
 /**
@@ -22,7 +25,7 @@ let config = {
         autoCenter: Phaser.Scale.CENTER_HORIZONTALLY
     },
     pixelArt: true,
-    scene: [Boot, Inicio, Lobby, Level1, Level2, End, Congratulations,GameOver],
+    scene: [Boot, Inicio, Lobby, Level1, Level2, Level3, End, Congratulations,GameOver],
     physics: {
         default: 'arcade',
         arcade: {
