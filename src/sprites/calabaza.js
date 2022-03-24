@@ -32,7 +32,10 @@ export default class Player extends Phaser.GameObjects.Sprite {
     });
 
 
+      
     this.anims.play('run', true);
+
+    
     this.die = false;
   
     this.scene.add.existing(this);
@@ -44,7 +47,9 @@ export default class Player extends Phaser.GameObjects.Sprite {
     this.speed = 100;
     
     this.setScale(.15);
+
     this.body.setVelocityX(this.speed);
+
   }
 
  
@@ -70,6 +75,8 @@ export default class Player extends Phaser.GameObjects.Sprite {
         this.body.setVelocityX(this.speed);
       }
     });
+
+  
   }
   
 }

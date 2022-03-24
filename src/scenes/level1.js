@@ -4,6 +4,7 @@ import Calabaza from '../sprites/calabaza.js';
 import Cristales from '../sprites/cristales.js';
 import MonstruoVolador from '../sprites/monstruoVolador.js';
 import Cupcake from '../sprites/cupcake.js';
+import Level2 from './level2.js';
 
 
 
@@ -91,7 +92,6 @@ export default class Level1 extends Phaser.Scene {
     this.plataformas = this.physics.add.staticGroup();
     this.cristales = this.physics.add.staticGroup();
 
-
     this.plataformas.add(new Platform(this, this.player, 600, 350));
     this.plataformas.add(new Platform(this, this.player, 910, 250));
     //new Platform(this, this.player, 500, 150);
@@ -102,7 +102,7 @@ export default class Level1 extends Phaser.Scene {
     this.cristales.add(new Cristales(this, this.player, 800, 255));
     this.cristales.add(new Cristales(this, this.player, 800, 270));
 
-    new Cupcake(this, this.player, 100, 80);
+    this.cupcake = new Cupcake(this, this.player, 100, 80);
 
 
     this.monstruo.body.setAllowGravity(false);
@@ -112,7 +112,21 @@ export default class Level1 extends Phaser.Scene {
     });
 
     this.physics.add.collider(this.cristales, this.player, () => {
+      this.player.body.setOffset(20, 10);
+       this.player.muere();
+    });
+
+    this.physics.add.collider(this.player, this.calabaza, () => {
+      this.calabaza.anims.play('idle', true);
+      this.calabaza.body.setVelocityX(0);
+      this.player.body.setOffset(29, 0);
       this.player.muere();
+      
+    });
+
+    this.physics.add.collider(this.cupcake, this.player, () => {
+      this.cupcake.destroy();
+      this.scene.start("level2");
     });
 
     this.physics.add.collider(this.player, this.calabaza, () => {
