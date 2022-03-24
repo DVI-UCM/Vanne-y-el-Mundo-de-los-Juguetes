@@ -1,12 +1,10 @@
-import Platform from './platform.js';
-import Player from './player.js';
-import Calabaza from './calabaza.js';
-import Cristales from './cristales.js';
-import monstruoVolador from './monstruoVolador.js';
-import Cupcake from './cupcake.js';
 import Platform from '../sprites/platform.js';
 import Player from '../sprites/player.js';
 import Calabaza from '../sprites/calabaza.js';
+import Cristales from '../sprites/cristales.js';
+import monstruoVolador from '../sprites/monstruoVolador.js';
+import Cupcake from '../sprites/cupcake.js';
+
 
 
 
