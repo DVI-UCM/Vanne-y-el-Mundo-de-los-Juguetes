@@ -1,7 +1,7 @@
-import Wall from './wall.js';
-import Player from './playerAerial.js';
-import Ghost from './ghost.js';
-import Ghost2 from './ghost2.js';
+import Wall from '../sprites/wall.js';
+import Player from '../sprites/playerAerial.js';
+import Ghost from '../sprites/ghost.js';
+import Ghost2 from '../sprites/ghost2.js';
 
 
 
