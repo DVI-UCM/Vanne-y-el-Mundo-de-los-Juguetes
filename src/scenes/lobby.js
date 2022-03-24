@@ -1,4 +1,4 @@
-import Player from './player.js';
+import Player from '../sprites/player.js';
 
 /**
  * Escena principal del juego. La escena se compone de una serie de plataformas 

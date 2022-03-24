@@ -82,6 +82,9 @@ export default class Boot extends Phaser.Scene {
     this.load.spritesheet('player_run', 'player/run_spritesheet.png', {frameWidth: 75, frameHeight: 104});
     this.load.spritesheet('player_jump', 'player/jump_spritesheet.png', {frameWidth: 80, frameHeight: 109});
     this.load.spritesheet('player_dead', 'player/dead_spritesheet.png', {frameWidth: 116, frameHeight: 120});
+    this.load.image('cristales','cristales.png');
+    this.load.image('monstruoVolador','monstruoVolador.png');
+    this.load.image('cupcake','cupcake.png');
 
 
     this.load.on('progress', function (value) {
@@ -116,5 +119,6 @@ export default class Boot extends Phaser.Scene {
     this.input.on('pointerdown', function(){
       this.scene.start('inicio');
     }, this);
+
   }
 }

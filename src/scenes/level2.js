@@ -1,6 +1,6 @@
-import Wall from './wall.js';
-import PlayerAerial from './playerAerial.js';
-import Ghost from './ghost.js';
+import Wall from '../sprites/wall.js';
+import PlayerAerial from '../sprites/playerAerial.js';
+import Ghost from '../sprites/ghost.js';
 
 /**
  * Escena principal del juego. La escena se compone de una serie de plataformas 
@@ -23,6 +23,7 @@ export default class Level2 extends Phaser.Scene {
   }
 
   preload(){
+    
     this.load.image("lego", "assets/sprites/fondoPrueba.png");
     this.load.image("shoot_light", "assets/sprites/shoot_blue.png");
   }
@@ -30,6 +31,7 @@ export default class Level2 extends Phaser.Scene {
    * Creación de los elementos de la escena principal de juego
    */
   create() {
+    
     let background = this.add.tileSprite(0, 0, 0, 0, "lego").setOrigin(0,0);
     background.displayHeight = this.sys.game.config.height;
     background.scaleX = background.scaleY; 
@@ -116,9 +118,9 @@ export default class Level2 extends Phaser.Scene {
 
   endGame(completed = false) {
     if(! completed) {
-      this.scene.start('gameover');
+      this.scene.launch('gameover', {key: this.scene.key });
     } else {
-      this.scene.start('congratulations');
+      this.scene.launch('congratulations');
     }
   }
   update(){
