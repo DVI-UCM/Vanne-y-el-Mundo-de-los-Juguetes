@@ -1,6 +1,6 @@
-import Platform from './platform.js';
-import Player from './player.js';
-import Calabaza from './calabaza.js';
+import Platform from '../sprites/platform.js';
+import Player from '../sprites/player.js';
+import Calabaza from '../sprites/calabaza.js';
 
 
 /**
