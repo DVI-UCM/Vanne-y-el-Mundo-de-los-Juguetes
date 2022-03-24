@@ -18,16 +18,8 @@ export default class Cristales extends Phaser.GameObjects.Sprite {
     this.scene.add.existing(this);
     this.scene.physics.add.existing(this, true);
 
-    this.body.setSize(43, 52);
+    this.body.setSize(40, 45);
     this.setScale(.20);
-
     this.rotation += 350.25;
-    this.scene.physics.add.collider(this, player);    
   }
-
-  preUpdate(t,dt) {
-    super.preUpdate(t,dt);
-    
-  }
-
 }
