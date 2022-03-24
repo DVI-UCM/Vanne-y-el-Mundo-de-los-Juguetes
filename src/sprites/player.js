@@ -104,10 +104,9 @@ export default class Player extends Phaser.GameObjects.Sprite {
   }
 
   muere(){
-    this.body.setVelocity(0, 0);
+    this.body.setVelocity(0);
     this.muerte = true;
     this.anims.play('dead');
-    this.body.setOffset(35, 0);
     //this.scene.scene.start('end');
     //this.label.text = 'Has muerto: ' + this.score;
   }

@@ -25,7 +25,7 @@ export default class Level2 extends Phaser.Scene {
   preload(){
     
     this.load.image("lego", "assets/sprites/fondoPrueba.png");
-
+    this.load.image("shoot_light", "assets/sprites/shoot_blue.png");
   }
   /**
    * Creación de los elementos de la escena principal de juego
@@ -66,27 +66,39 @@ export default class Level2 extends Phaser.Scene {
 
     this.stars = 3;
     this.walls = this.physics.add.staticGroup();
-    this.ghosts = this.physics.add.group();
+    this.ghosts = this.physics.add.group({
+      allowGravity:false
+    });
+    this.shootLights = this.physics.add.group({
+      allowGravity: false
+    });
 
     this.player = new PlayerAerial(this, 0, 412);
     this.ghost1 = new Ghost(this, 800, 420, 'ghost');
     this.ghost2 = new Ghost(this, 350, 200, 'ghost2');
     this.ghosts.add(this.ghost1);
     this.ghosts.add(this.ghost2);
+    this.shootLights.createMultiple({
+      frameQuantity: 3,
+      active: false,
+      visible: false, 
+      key: 'shoot_light'
+    });
 
     this.player.body.setAllowGravity(false);
-    this.ghost1.body.setAllowGravity(false);
-    this.ghost2.body.setAllowGravity(false);
 
+    //this.addEvents();
 
     //Crear el marco del laberinto
     this.marco();
     this.nivel();
 
     this.physics.add.collider(this.player, this.walls);
+
     this.physics.add.collider(this.ghosts, this.walls, (child) => {
       child.onCollision();
     });
+
     this.physics.add.collider(this.player, this.ghosts, () => {
       this.player.body.setVelocityX(0);
       this.player.muere();
@@ -94,6 +106,16 @@ export default class Level2 extends Phaser.Scene {
     });
 
   }
+
+  shoot(x, y){
+    const shoot = this.shootLights.getFirstDead(false);
+    if(shoot)
+      shoot.body.reset(x, y);
+      shoot.setActive(true);
+      shoot.setVisible(true);
+      shoot.body.setVelocityY(500);
+  }
+
   endGame(completed = false) {
     if(! completed) {
       this.scene.launch('gameover', {key: this.scene.key });
@@ -102,33 +124,37 @@ export default class Level2 extends Phaser.Scene {
     }
   }
   update(){
+    if(this.player.cursors.space.isDown){
+      this.shoot(this.player.x, this.player.y - 20);
+    } 
   }
 
+  
   /**
    * Genera una estrella en una de las bases del escenario
    * @param {Array<Base>} from Lista de bases sobre las que se puede crear una estrella
    * Si es null, entonces se crea aleatoriamente sobre cualquiera de las bases existentes
    */
-  spawn(from = null) {
+  /*spawn(from = null) {
     Phaser.Math.RND.pick(from || this.bases.children.entries).spawn();
-  }
+  }*/
 
   /**
    * Método que se ejecuta al coger una estrella. Se pasa la base
    * sobre la que estaba la estrella cogida para evitar repeticiones
    * @param {Base} base La base sobre la que estaba la estrella que se ha cogido
    */
-  starPickt (base) {
+  /*starPickt (base) {
     this.player.point();
-      if (this.player.score == this.stars && (this.player.x == 980 && this.player.y ==60)) {
-        this.endGame(true);
-      }
-      else {
-        let s = this.bases.children.entries;
-        this.spawn(s.filter(o => o !== base));
+    if (this.player.score == this.stars && (this.player.x == 980 && this.player.y ==60)) {
+      this.endGame(true);
+    }
+    else {
+      let s = this.bases.children.entries;
+      this.spawn(s.filter(o => o !== base));
 
-      }
-  }
+    }
+  }*/
 
   marco(){
     for(let i = 0; i < 9;i++){
