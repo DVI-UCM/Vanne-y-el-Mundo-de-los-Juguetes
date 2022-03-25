@@ -24,13 +24,16 @@ export default class Level4 extends Phaser.Scene {
   }
 
   preload(){
-    
+    this.load.image('lego_verde', 'assets/sprites/LEGO_LEVEL2.png');
+    this.load.tilemapTiledJSON('MAPA2', 'assets/tiles/MAPA2.json');
     this.load.image("lego", "assets/sprites/fondoPrueba.png");
   }
   /**
    * Creación de los elementos de la escena principal de juego
    */
   create() {
+
+   
     
     let background = this.add.tileSprite(0, 0, 0, 0, "lego").setOrigin(0,0);
     background.displayHeight = this.sys.game.config.height;
@@ -65,7 +68,6 @@ export default class Level4 extends Phaser.Scene {
     });
 
     this.stars = 3;
-    this.walls = this.physics.add.staticGroup();
     this.ghosts = this.physics.add.group({
       allowGravity:false
     });
@@ -98,15 +100,23 @@ export default class Level4 extends Phaser.Scene {
 
     this.player.body.setAllowGravity(false);
 
-    //Crear el marco del laberinto
-    this.marco();
-    this.nivel();
-
-    this.physics.add.collider(this.player, this.walls);
-
-    this.physics.add.collider(this.ghosts, this.walls, (ghost) => {
-      ghost.onCollision();
+    //CREAR MAPA
+    this.map = this.make.tilemap({ 
+      key: 'nivel2', 
+      tileWidth: 50, 
+      tileHeight: 50 ,
+      width: 20,
+      height: 10
     });
+
+    const tileset1 = this.map.addTilesetImage('MAPA2', 'lego');
+
+    this.groundLayer = this.map.createLayer('GroundLayer', tileset1);
+
+    this.groundLayer.setCollisionByProperty({ colision: true });
+    this.physics.add.collider(player, this.groundLayer);
+
+    //------------------
 
     this.physics.add.collider(this.player, this.ghosts, () => {
       this.player.body.setVelocityX(0);
@@ -114,14 +124,23 @@ export default class Level4 extends Phaser.Scene {
       this.endGame();
     });
 
-    this.physics.add.collider(this.shootLights, this.walls, (laser) => {
-      laser.collide();
-    });
-
     this.physics.add.collider(this.shootLights, this.ghosts, (laser, ghost) => {
       laser.collide();
       ghost.destroy();
     });
+  }
+
+   cargar(mapa, capa, tipo, callback) {
+    const objetos = mapa.getObjectLayer(capa).objects.filter(x => x.type === tipo)
+    for (const objeto of objetos) {
+      const props = {}
+      if (objeto.properties) {
+        for (const { name, value } of objeto.properties) {
+          props[name] = value
+        }
+      }
+      callback({ x: objeto.x, y: objeto.y, props })
+    }
   }
 
   endGame(completed = false) {
@@ -169,7 +188,7 @@ export default class Level4 extends Phaser.Scene {
       }
     }
   }
-
+/*
   marco(){
     for(let i = 0; i < 9;i++){
       this.walls.add(new Wall(this, this.player,this.ghost, this.ghost2, 20, i*40+20));
@@ -264,5 +283,6 @@ export default class Level4 extends Phaser.Scene {
 
     this.walls.add(new Wall(this, this.player,this.ghost,this.ghost2, 940, 160));
   }
+  */
   
 }
