@@ -14,24 +14,25 @@ export default class Boot extends Phaser.Scene {
   }
 
   init(){
-
+    
   }
   
   /**
    * Carga de los assets del juego
    */
   preload() {
-    var progressBar = this.add.graphics();
-    var progressBox = this.add.graphics();
-    var width = this.cameras.main.width;
-    var height = this.cameras.main.height;
+    let progressBar = this.add.graphics();
+    let progressBox = this.add.graphics();
+    this.startBox = this.add.graphics();
 
-    progressBox.fillStyle(0x222222, 0.8);
-    progressBox.fillRect((width / 2) - (320/2), (height / 2) - 30, 320, 30);
+    this.width = this.cameras.main.width;
+    this.height = this.cameras.main.height;
 
-    var loadingText = this.make.text({
-        x: width / 2,
-        y: height / 2 - 50,
+    progressBox.fillStyle(0x222222, 0.8).fillRect((this.width / 2) - (320/2), (this.height / 2) - 30, 320, 30);
+
+    let loadingText = this.make.text({
+        x: this.width / 2,
+        y: this.height / 2 - 50,
         text: 'Loading...',
         style: {
             font: '20px monospace',
@@ -40,9 +41,9 @@ export default class Boot extends Phaser.Scene {
     });
     loadingText.setOrigin(0.5, 0.5);
 
-    var percentText = this.make.text({
-      x: width / 2,
-      y: height / 2 - 15,
+    let percentText = this.make.text({
+      x: this.width / 2,
+      y: this.height / 2 - 15,
       text: '0%',
       style: {
           font: '18px monospace',
@@ -51,16 +52,16 @@ export default class Boot extends Phaser.Scene {
     });
     percentText.setOrigin(0.5, 0.5);
 
-    var startText = this.make.text({
-      x: width / 2,
-      y: height / 2 - 15, 
+    this.startText = this.make.text({
+      x: this.width / 2,
+      y: this.height - 75, 
       text: '',
       style: {
         font: '18px bungee',
         fill: '#ffffff'
       }
     });
-    startText.setOrigin(0.5, 0.5);
+    this.startText.setOrigin(0.5);
     
     this.load.setPath('assets/sprites/gui');
     this.load.image("exit", "grey_crossGrey.png");
@@ -72,27 +73,27 @@ export default class Boot extends Phaser.Scene {
     this.load.image('platform', 'platform.png');
     this.load.image('lego_verde', 'lego_verde.png');
     this.load.image('star', 'star.png');
-    this.load.atlas('player', 'ninjagirl.png', 'ninjagirl_atlas.json');
-    this.load.atlas('calabaza', 'calabaza.png', 'calabaza.json');
     this.load.image('ant','ant.png');
     this.load.image('ghost','ghost.png');
     this.load.image('ghost2','ghost2.png');
-    this.load.spritesheet('player_idle', 'player/idle_spritesheet.png', {frameWidth: 58, frameHeight: 100});
-    this.load.spritesheet('player_run', 'player/run_spritesheet.png', {frameWidth: 75, frameHeight: 104});
-    this.load.spritesheet('player_jump', 'player/jump_spritesheet.png', {frameWidth: 80, frameHeight: 109});
-    this.load.spritesheet('player_dead', 'player/dead_spritesheet.png', {frameWidth: 116, frameHeight: 120});
     this.load.image('cristales','cristales.png');
     this.load.image('monstruoVolador','monstruoVolador.png');
     this.load.image('cupcake','cupcake.png');
     this.load.image("laser", "shoot_blue.png");
-
+    this.load.image("castillo_background", "castillo.png");
+    this.load.atlas('player', 'ninjagirl.png', 'ninjagirl_atlas.json');
+    this.load.atlas('calabaza', 'calabaza.png', 'calabaza.json');
+    this.load.spritesheet('player_idle', 'player/idle_spritesheet.png', {frameWidth: 58, frameHeight: 100});
+    this.load.spritesheet('player_run', 'player/run_spritesheet.png', {frameWidth: 75, frameHeight: 104});
+    this.load.spritesheet('player_jump', 'player/jump_spritesheet.png', {frameWidth: 80, frameHeight: 109});
+    this.load.spritesheet('player_dead', 'player/dead_spritesheet.png', {frameWidth: 116, frameHeight: 120});
 
 
     this.load.on('progress', function (value) {
       console.log(value);
       progressBar.clear();
-      progressBar.fillStyle(0xffffff, 1);
-      progressBar.fillRect((width / 2) - (320/2), (height / 2) - 30, 320 * value, 30);
+      progressBar.fillStyle(0xffffff, 1)
+        .fillRect((this.width / 2) - (320/2), (this.height / 2) - 30, 320 * value, 30);
       percentText.setText(parseInt(value * 100) + '%');
     });
               
@@ -101,14 +102,13 @@ export default class Boot extends Phaser.Scene {
     });
 
     this.load.on('complete', function () {
-        console.log('complete');
+      console.log('complete');
 
-        progressBar.destroy();
-        progressBox.destroy();
-        loadingText.destroy();
-        percentText.destroy();
+      progressBar.destroy();
+      progressBox.destroy();
+      loadingText.destroy();
+      percentText.destroy();
 
-        startText.setText('Haz click para empezar');
     });
   }
 
@@ -117,9 +117,21 @@ export default class Boot extends Phaser.Scene {
    * nivel del juego
    */
   create() {
-    this.input.on('pointerdown', function(){
-      this.scene.start('inicio');
-    }, this);
+    this.add.image(0, 0, 'castillo_background').setOrigin(0).setDepth(0);
+    this.startBox.fillStyle(0x222222, 0.8).fillRoundedRect(this.width / 2 - (280/2), this.height - 100, 280, 50, 10).setDepth(1);
+    this.startText.setText('Haz click para empezar').setDepth(1);
+    
+    this.tweens.add({
+      targets: [this.startText],
+      alpha: 0,
+      ease: 'Cubic.easeIn',
+      duration: 500,
+      repeat: -1,
+      yoyo: true
+    });
 
+    this.input.on('pointerdown', function(){
+      this.scene.start('lobby');
+    }, this);
   }
 }
