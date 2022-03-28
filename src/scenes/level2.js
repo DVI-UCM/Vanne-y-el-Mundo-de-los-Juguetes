@@ -4,11 +4,6 @@ import Ghost from '../sprites/ghost.js';
 import Laser from '../sprites/laser.js';
 
 /**
- * Escena principal del juego. La escena se compone de una serie de plataformas 
- * sobre las que se sitúan las bases en las podrán aparecer las estrellas. 
- * El juego comienza generando aleatoriamente una base sobre la que generar una estrella. 
- * Cada vez que el jugador recoge la estrella, aparece una nueva en otra base.
- * El juego termina cuando el jugador ha recogido 10 estrellas.
  * @extends Phaser.Scene
  */
 export default class Level2 extends Phaser.Scene {
@@ -24,7 +19,6 @@ export default class Level2 extends Phaser.Scene {
   }
 
   preload(){
-    
     this.load.image("lego", "assets/sprites/fondoPrueba.png");
   }
   /**
@@ -60,33 +54,26 @@ export default class Level2 extends Phaser.Scene {
       }
       else{
         fullScreen.setTexture("fullScreen2");
-          this.scale.startFullscreen();
+        this.scale.startFullscreen();
       }
     });
 
-    this.stars = 3;
     this.walls = this.physics.add.staticGroup();
     this.ghosts = this.physics.add.group({
       allowGravity:false
     });
-    this.shootLights = this.physics.add.group({
+    this.lasers = this.physics.add.group({
       allowGravity: false
     });
-
-    this.laserCounter = 3;
-
+    
     this.player = new PlayerAerial(this, 0, 412);
+    this.player.body.setAllowGravity(false);
     this.ghost1 = new Ghost(this, 800, 420, 'ghost');
     this.ghost2 = new Ghost(this, 350, 200, 'ghost2');
+    
     this.ghosts.add(this.ghost1);
     this.ghosts.add(this.ghost2);
-    this.shootLights.createMultiple({
-      classType: Laser,
-      frameQuantity: this.laserCounter,
-      active: false,
-      visible: false, 
-      key: 'laser'
-    });
+    this.lasers.add(new Laser(this, this.player.x, this.player.y + 20));
 
     this.inputKeys = [
 			this.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.SPACE),
@@ -95,8 +82,6 @@ export default class Level2 extends Phaser.Scene {
       this.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.RIGHT),
       this.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.UP)
 		];
-
-    this.player.body.setAllowGravity(false);
 
     //Crear el marco del laberinto
     this.marco();
@@ -114,12 +99,12 @@ export default class Level2 extends Phaser.Scene {
       this.endGame();
     });
 
-    this.physics.add.collider(this.shootLights, this.walls, (laser) => {
-      laser.collide();
+    this.physics.add.overlap(this.lasers, this.walls, (laser) => {
+      laser.onCollision();
     });
 
-    this.physics.add.collider(this.shootLights, this.ghosts, (laser, ghost) => {
-      laser.collide();
+    this.physics.add.collider(this.lasers, this.ghosts, (laser, ghost) => {
+      laser.onCollision();
       ghost.destroy();
     });
   }
@@ -138,7 +123,7 @@ export default class Level2 extends Phaser.Scene {
   }
 
   update(){
-    // If key was just pressed down, shoot the laser. We use JustDown to make sure this only fires once.
+    // If key was just pressed down, shoot the laser.
     if (this.inputKeys[0].isDown) {
       let dir = "";
       if(this.inputKeys[1].isDown){
@@ -154,18 +139,9 @@ export default class Level2 extends Phaser.Scene {
         dir = "up";
       }
       // Get the first available sprite in the group
-      const laser = this.shootLights.getFirstDead(false);
+      const laser = this.lasers.getFirstDead(false);
       if (laser) {
-        if(this.laserCounter < 3){
-          this.time.addEvent( {
-            delay: 2000, 
-            callback: this.shoot(laser, dir),
-            callbackScope: this 
-          });
-        }
-        else{
-          laser.shoot(this.player.x, this.player.y + 20, dir);
-        }
+        laser.shoot(this.player.x, this.player.y + 20, dir);
       }
     }
   }

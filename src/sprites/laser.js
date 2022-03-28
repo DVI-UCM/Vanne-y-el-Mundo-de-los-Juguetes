@@ -8,39 +8,35 @@ export default class Laser extends Phaser.GameObjects.Sprite {
     constructor(scene, x, y) {
         super(scene, x, y, 'laser');
 
-        //this.body.setCollideWorldBounds();
-
+        this.scene.add.existing(this);
+        this.scene.physics.add.existing(this);
+        this.setActive(false).setVisible(false);
     }
 
     shoot(x, y, dir) {
         if(dir != ""){
             this.body.reset(x, y);
 
-            this.setActive(true);
-            this.setVisible(true);
+            this.setActive(true).setVisible(true);
             this.speed = 500;
-            this.scene.laserCounter--;
+        
+            if(dir == "down"){
+                this.body.setVelocityY(this.speed);
+            }
+            else if(dir == "up"){
+                this.body.setVelocityY(-this.speed);
+            }
+            else if(dir == "left"){
+                this.body.setVelocityX(-this.speed);
+            }
+            else if(dir == "right"){
+                this.body.setVelocityX(this.speed);
+            }
         }
-
-        if(dir == "down"){
-            this.body.setVelocityY(this.speed);
-        }
-        else if(dir == "up"){
-            this.body.setVelocityY(-this.speed);
-        }
-        else if(dir == "left"){
-            this.body.setVelocityX(-this.speed);
-        }
-        else if(dir == "right"){
-            this.body.setVelocityX(this.speed);
-        }
-
     }
 
-    collide(){
-        this.setActive(false);
-		this.setVisible(false);
-        this.scene.laserCounter++;
+    onCollision(){
+        this.setActive(false).setVisible(false);
     }
 
     preUpdate(t,dt) {
@@ -49,7 +45,7 @@ export default class Laser extends Phaser.GameObjects.Sprite {
         this.body.onWorldBounds=true;
     
         this.scene.physics.world.on('worldbounds', () => {
-            this.collide();
+            this.onCollision();
         });
     }
 }
