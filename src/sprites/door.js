@@ -13,19 +13,19 @@
      * @param {number} x coordenada x
      * @param {number} y coordenada y
      */
-    constructor(scene, x, y, close) {
-      if(!close)super(scene, x, y, 'closeDoor');
-      else super(scene, x, y, 'openDoor');
-      this.close = close;
+    constructor(scene, x, y) {
+      //if(!close)super(scene, x, y, 'closeDoor');
+      //else super(scene, x, y, 'openDoor');
+      super(scene, x, y, 'closeDoor');
+      this.close = true;
       this.x =x;
       this.y = y;
       this.scene.add.existing(this);
       this.scene.physics.add.existing(this, true);
-      this.setScale(.25);
     }
   
     setOpen(){
-        this.close = false;
+      this.close = false;
     }
     /**
      * Redefinición del preUpdate de Phaser

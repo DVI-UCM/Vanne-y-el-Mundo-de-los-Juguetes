@@ -61,8 +61,8 @@ export default class Level2 extends Phaser.Scene {
     });
 
     this.walls = this.physics.add.staticGroup();
-    this.doors = this.physics.add.staticGroup();
-    this.keys = this.physics.add.staticGroup();
+    //this.doors = this.physics.add.staticGroup();
+    //this.keys = this.physics.add.staticGroup();
     this.ghosts = this.physics.add.group({
       allowGravity:false
     });
@@ -70,12 +70,12 @@ export default class Level2 extends Phaser.Scene {
       allowGravity: false
     });
     
-    this.door = new Door(this,980,100, true);
-    this.doors.add(this.door);
     this.player = new PlayerAerial(this, 0, 412);
     this.player.body.setAllowGravity(false);
     this.ghost1 = new Ghost(this, 800, 420, 'ghost');
     this.ghost2 = new Ghost(this, 350, 200, 'ghost2');
+    this.door = new Door(this, 977, 90);
+    this.key;
     
     this.ghosts.add(this.ghost1);
     this.ghosts.add(this.ghost2);
@@ -93,12 +93,7 @@ export default class Level2 extends Phaser.Scene {
     this.marco();
     this.nivel();
 
-
-
-
     this.physics.add.collider(this.player, this.walls);
-
-
 
     this.physics.add.collider(this.ghosts, this.walls, (ghost) => {
       ghost.onCollision();
@@ -118,26 +113,24 @@ export default class Level2 extends Phaser.Scene {
       laser.onCollision();
       ghost.updateDie(true);
       ghost.destroy();
-      if(this.ghost1.die && this.ghost2.die) this.keys.add(new Key(this, 450,420));
-      
+      if(this.ghost1.die && this.ghost2.die){
+        this.key = new Key(this, 450, 420);
+        this.physics.add.collider(this.player, this.key, (player, key) =>{
+          this.door.setTexture('openDoor');
+          this.door.setOpen();
+          key.destroy();
+        });
+      }
     });
 
-    
-    this.physics.add.collider(this.player, this.keys, (key) =>{
-      this.door.destroy(); //Quito la antigua puerta
-      this.door2 = new Door(this,980,100, false); //Creo la nueva puerta
-      this.doors.add(this.door2);
-      key.destroy();
-    });
-
-    this.physics.add.collider(this.player, this.doors, (door)=>{
+    this.physics.add.collider(this.player, this.door, (player, door)=>{
       if(!door.close){//Si la puerta está abierta
         this.endGame(true); //Termino el juego
       }
       //else{
         //Mostrar texto indicando que tiene que matar a los bichos para que salga la llave
       //}
-    })
+    });
     
   }
 
@@ -146,7 +139,7 @@ export default class Level2 extends Phaser.Scene {
       this.scene.launch('gameover', {key: this.scene.key });
     } 
     else {
-      this.scene.launch('congratulations');
+      this.scene.launch('congratulations', {key: this.scene.key });
     }
   }
 
