@@ -104,20 +104,18 @@ export default class Level4 extends Phaser.Scene {
     this.map = this.make.tilemap({ 
       key: 'nivel2', 
       tileWidth: 50, 
-      tileHeight: 50 ,
-      width: 20,
-      height: 10
+      tileHeight: 50
     });
 
-    const tileset1 = this.map.addTilesetImage('MAPA2', 'lego');
+    const tileset1 = this.map.addTilesetImage('LEGO_LEVEL2', 'lego_verde');
 
     this.groundLayer = this.map.createLayer('GroundLayer', tileset1);
 
-    this.groundLayer.setCollisionByProperty({ colision: true });
+    this.groundLayer.setCollisionByProperty({ colisiona: true });
+    this.physics.add.collider(player, this.groundLayer);
     this.physics.add.collider(player, this.groundLayer);
 
     //------------------
-
     this.physics.add.collider(this.player, this.ghosts, () => {
       this.player.body.setVelocityX(0);
       this.player.muere();
@@ -128,19 +126,6 @@ export default class Level4 extends Phaser.Scene {
       laser.collide();
       ghost.destroy();
     });
-  }
-
-   cargar(mapa, capa, tipo, callback) {
-    const objetos = mapa.getObjectLayer(capa).objects.filter(x => x.type === tipo)
-    for (const objeto of objetos) {
-      const props = {}
-      if (objeto.properties) {
-        for (const { name, value } of objeto.properties) {
-          props[name] = value
-        }
-      }
-      callback({ x: objeto.x, y: objeto.y, props })
-    }
   }
 
   endGame(completed = false) {
