@@ -16,6 +16,27 @@ export default class Player extends Phaser.GameObjects.Sprite {
   constructor(scene, x, y) {
     super(scene, x, y, 'player_idle');
 
+    this.createAnims();
+    
+    this.anims.play('idle', true);
+
+    //this.score = 0;
+    this.scene.add.existing(this);
+    this.scene.physics.add.existing(this);
+    // Queremos que el jugador no se salga de los límites del mundo
+    //this.body.setCollideWorldBounds();
+    this.body.setCollideWorldBounds(true, 0, 0);
+    this.speed = 300;
+    this.jumpSpeed = -600;
+
+    // Esta label es la UI en la que pondremos la puntuación del jugador
+    //this.label = this.scene.add.text(10, 10, "");
+    this.cursors = this.scene.input.keyboard.createCursorKeys();
+    //this.updateScore();
+    
+  }
+
+  createAnims(){
     this.anims.create({
       key: 'idle',
       frames: 'player_idle',
@@ -69,22 +90,6 @@ export default class Player extends Phaser.GameObjects.Sprite {
       repeat: 0
     });
 
-    this.anims.play('idle', true);
-
-    this.score = 0;
-    this.scene.add.existing(this);
-    this.scene.physics.add.existing(this);
-    // Queremos que el jugador no se salga de los límites del mundo
-    //this.body.setCollideWorldBounds();
-    this.body.setCollideWorldBounds(true, 0, 0);
-    this.speed = 300;
-    this.jumpSpeed = -600;
-
-    // Esta label es la UI en la que pondremos la puntuación del jugador
-    this.label = this.scene.add.text(10, 10, "");
-    this.cursors = this.scene.input.keyboard.createCursorKeys();
-    this.updateScore();
-    
   }
 
   /**
@@ -92,15 +97,15 @@ export default class Player extends Phaser.GameObjects.Sprite {
    * actualiza la UI con la puntuación actual.
    */
   point() {
-    this.score++;
-    this.updateScore();
+    //this.score++;
+    //this.updateScore();
   }
   
   /**
    * Actualiza la UI con la puntuación actual
    */
   updateScore() {
-    this.label.text = 'Score: ' + this.score;
+    //this.label.text = 'Score: ' + this.score;
   }
 
   muere(){

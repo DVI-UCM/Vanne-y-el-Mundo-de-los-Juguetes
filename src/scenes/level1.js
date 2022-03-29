@@ -64,9 +64,9 @@ export default class Level1 extends Phaser.Scene {
     const totalWidth = width * 3;
 
     createAligned(this, totalWidth, 'chuche', 0.80);
-    //this.cameras.main.setBounds(0,0, totalWidth, height);
-    this.physics.world.setBounds(0, 0, totalWidth, height);
-    this.cameras.main.setBounds(0, 0, totalWidth, height);
+    this.cameras.main.setBounds(0,0, totalWidth, height);
+    //this.physics.world.setBounds(0, 0, totalWidth, height);
+    //this.cameras.main.setBounds(0, 0, totalWidth, height);
 
     this.exit = this.add.image(this.cameras.main.width - 20, 20, "exit").setInteractive();
     this.exit.on('pointerdown', function (ptr) { this.setScale(0.9, 0.9) } );
