@@ -64,7 +64,9 @@ export default class Level1 extends Phaser.Scene {
     const totalWidth = width * 3;
 
     createAligned(this, totalWidth, 'chuche', 0.80);
-    this.cameras.main.setBounds(0,0, totalWidth, height);
+    //this.cameras.main.setBounds(0,0, totalWidth, height);
+    this.physics.world.setBounds(0, 0, totalWidth, height);
+    this.cameras.main.setBounds(0, 0, totalWidth, height);
 
     this.exit = this.add.image(this.cameras.main.width - 20, 20, "exit").setInteractive();
     this.exit.on('pointerdown', function (ptr) { this.setScale(0.9, 0.9) } );
@@ -92,6 +94,8 @@ export default class Level1 extends Phaser.Scene {
     this.plataformas = this.physics.add.staticGroup();
     this.cristales = this.physics.add.staticGroup();
 
+    this.cameras.main.startFollow(this.player);
+
     this.plataformas.add(new Platform(this, this.player, 600, 350));
     this.plataformas.add(new Platform(this, this.player, 910, 250));
     //new Platform(this, this.player, 500, 150);
@@ -103,7 +107,6 @@ export default class Level1 extends Phaser.Scene {
     this.cristales.add(new Cristales(this, this.player, 800, 270));
 
     this.cupcake = new Cupcake(this, this.player, 100, 80);
-
 
     this.monstruo.body.setAllowGravity(false);
 
@@ -128,13 +131,6 @@ export default class Level1 extends Phaser.Scene {
       this.cupcake.destroy();
       this.scene.start("level2");
     });
-
-    this.physics.add.collider(this.player, this.calabaza, () => {
-      this.calabaza.body.setVelocity(0);
-      this.calabaza.anims.play('idle', true);
-      this.player.muere();
-    });
-
   }
   
   endGame(completed = false) {
@@ -159,8 +155,9 @@ export default class Level1 extends Phaser.Scene {
       }
     }
 
-    this.exit.setPosition(this.cameras.main.width - 20, 20);
-    this.fullScreen.setPosition(this.cameras.main.width - 50, 20);
+
+    //this.exit.setPosition(this.cameras.main.width - 20, 20);
+    //this.fullScreen.setPosition(this.cameras.main.width - 50, 20);
   }
 
   /**

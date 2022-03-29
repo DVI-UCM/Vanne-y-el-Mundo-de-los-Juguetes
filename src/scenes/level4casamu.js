@@ -1,4 +1,3 @@
-import Wall from '../sprites/wall.js';
 import PlayerAerial from '../sprites/playerAerial.js';
 import Ghost from '../sprites/ghost.js';
 import Laser from '../sprites/laser.js';
