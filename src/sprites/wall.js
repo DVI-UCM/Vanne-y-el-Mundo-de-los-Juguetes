@@ -21,8 +21,6 @@ export default class Wall extends Phaser.GameObjects.Sprite {
     this.ghost2 = ghost2;
     this.scene.add.existing(this);
     this.scene.physics.add.existing(this, true);
-    // this.scene.physics.add.collider(this, this.player); 
-    // this.scene.physics.add.collider(this, this.ghost);
   }
 
 }
