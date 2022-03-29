@@ -2,6 +2,8 @@ import Wall from '../sprites/wall.js';
 import PlayerAerial from '../sprites/playerAerial.js';
 import Ghost from '../sprites/ghost.js';
 import Laser from '../sprites/laser.js';
+import Key from '../sprites/key.js';
+import Door from '../sprites/door.js';
 
 /**
  * Escena principal del juego. La escena se compone de una serie de plataformas 
@@ -24,7 +26,7 @@ export default class Level4 extends Phaser.Scene {
   }
 
   preload(){
-    this.load.image('lego_verde', 'assets/sprites/LEGO_LEVEL2.png');
+    this.load.image('lego_verde', 'assets/tiles/LEGO_LEVEL2.png');
     this.load.tilemapTiledJSON('MAPA2', 'assets/tiles/MAPA2.json');
     this.load.image("lego", "assets/sprites/fondoPrueba.png");
   }
@@ -32,13 +34,6 @@ export default class Level4 extends Phaser.Scene {
    * Creación de los elementos de la escena principal de juego
    */
   create() {
-
-   
-    
-    let background = this.add.tileSprite(0, 0, 0, 0, "lego").setOrigin(0,0);
-    background.displayHeight = this.sys.game.config.height;
-    background.scaleX = background.scaleY; 
-    background.setScrollFactor(0);
 
     let image = this.add.image(this.cameras.main.width / 2, this.cameras.main.height / 2, 'lego');
     let scaleX = this.cameras.main.width / image.width;
@@ -48,14 +43,14 @@ export default class Level4 extends Phaser.Scene {
     
     let exit = this.add.image(this.cameras.main.width - 20, 20, "exit").setInteractive();
     exit.setDepth(1);
-    exit.on('pointerdown', function (ptr) { this.setScale(0.9, 0.9) } );
+    exit.on('pointerdown', function () { this.setScale(0.9); });
     exit.on('pointerup', () => {
       this.scene.start("lobby");
     });
 
     let fullScreen = this.add.image(this.cameras.main.width - 50, 20, "fullScreen").setInteractive();
     fullScreen.setDepth(1);
-    fullScreen.on('pointerdown', () => { this.setScale(0.9, 0.9) } );
+    fullScreen.on('pointerdown', () => { this.setScale(0.9); });
     fullScreen.on('pointerup', () => {
       if (this.scale.isFullscreen){
         fullScreen.setTexture("fullScreen");
@@ -63,32 +58,30 @@ export default class Level4 extends Phaser.Scene {
       }
       else{
         fullScreen.setTexture("fullScreen2");
-          this.scale.startFullscreen();
+        this.scale.startFullscreen();
       }
     });
 
-    this.stars = 3;
+    //this.walls = this.physics.add.staticGroup();
+    //this.doors = this.physics.add.staticGroup();
+    //this.keys = this.physics.add.staticGroup();
     this.ghosts = this.physics.add.group({
       allowGravity:false
     });
-    this.shootLights = this.physics.add.group({
+    this.lasers = this.physics.add.group({
       allowGravity: false
     });
-
-    this.laserCounter = 3;
-
-    this.player = new PlayerAerial(this, 0, 412);
+    
+    this.player = new PlayerAerial(this, 0, 412).setDepth(1);
+    this.player.body.setAllowGravity(false);
     this.ghost1 = new Ghost(this, 800, 420, 'ghost');
     this.ghost2 = new Ghost(this, 350, 200, 'ghost2');
+    this.door = new Door(this, 977, 90);
+    this.key;
+    
     this.ghosts.add(this.ghost1);
     this.ghosts.add(this.ghost2);
-    this.shootLights.createMultiple({
-      classType: Laser,
-      frameQuantity: this.laserCounter,
-      active: false,
-      visible: false, 
-      key: 'laser'
-    });
+    this.lasers.add(new Laser(this, this.player.x, this.player.y + 20));
 
     this.inputKeys = [
 			this.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.SPACE),
@@ -98,33 +91,55 @@ export default class Level4 extends Phaser.Scene {
       this.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.UP)
 		];
 
-    this.player.body.setAllowGravity(false);
 
     //CREAR MAPA
-    this.map = this.make.tilemap({ 
-      key: 'nivel2', 
-      tileWidth: 50, 
-      tileHeight: 50
-    });
+    this.map = this.make.tilemap({ key: 'MAPA2' });
 
     const tileset1 = this.map.addTilesetImage('LEGO_LEVEL2', 'lego_verde');
-
+    
     this.groundLayer = this.map.createLayer("Capa de patrones 1", tileset1);
-
-    this.groundLayer.setCollisionByProperty({ colisiona: true });
-    this.physics.add.collider(player, this.groundLayer);
-    this.physics.add.collider(player, this.groundLayer);
-
+    //this.groundLayer.setCollisionByProperty({ colisiona: true });
     //------------------
+
+    this.createColliders();
+  }
+
+  createColliders(){
+    this.groundLayer.setCollisionByProperty({ colisiona: true });
+    this.physics.add.collider(this.player, this.groundLayer);
+    //this.physics.add.collider(this.player, this.groundLayer);
+    
+    this.physics.add.collider(this.ghosts, this.groundLayer, (ghost) => {
+      ghost.onCollision();
+    });
+
     this.physics.add.collider(this.player, this.ghosts, () => {
       this.player.body.setVelocityX(0);
       this.player.muere();
       this.endGame();
     });
 
-    this.physics.add.collider(this.shootLights, this.ghosts, (laser, ghost) => {
-      laser.collide();
+    this.physics.add.collider(this.lasers, this.ghosts, (laser, ghost) => {
+      laser.onCollision();
+      ghost.updateDie(true);
       ghost.destroy();
+      if(this.ghost1.die && this.ghost2.die){
+        this.key = new Key(this, 450, 420);
+        this.physics.add.overlap(this.player, this.key, (player, key) =>{
+          this.door.setTexture('openDoor');
+          this.door.setOpen();
+          key.destroy();
+        });
+      }
+    });
+
+    this.physics.add.overlap(this.player, this.door, (player, door)=>{
+      if(!door.close){//Si la puerta está abierta
+        this.endGame(true); //Termino el juego
+      }
+      //else{
+        //Mostrar texto indicando que tiene que matar a los bichos para que salga la llave
+      //}
     });
   }
 
@@ -133,7 +148,7 @@ export default class Level4 extends Phaser.Scene {
       this.scene.launch('gameover', {key: this.scene.key });
     } 
     else {
-      this.scene.launch('congratulations');
+      this.scene.launch('congratulations', {key: this.scene.key });
     }
   }
 
@@ -141,8 +156,15 @@ export default class Level4 extends Phaser.Scene {
     laser.shoot(this.player.x, this.player.y + 20, dir);
   }
 
+  keyPick(){
+    if(this.player.x == 450 && this.player.y == 380){
+      this.key.destroy();
+      this.door.setOpen();
+    }
+  }
+
   update(){
-    // If key was just pressed down, shoot the laser. We use JustDown to make sure this only fires once.
+    // If key was just pressed down, shoot the laser.
     if (this.inputKeys[0].isDown) {
       let dir = "";
       if(this.inputKeys[1].isDown){
@@ -158,20 +180,11 @@ export default class Level4 extends Phaser.Scene {
         dir = "up";
       }
       // Get the first available sprite in the group
-      const laser = this.shootLights.getFirstDead(false);
+      const laser = this.lasers.getFirstDead(false);
       if (laser) {
-        if(this.laserCounter < 3){
-          this.time.addEvent( {
-            delay: 2000, 
-            callback: this.shoot(laser, dir),
-            callbackScope: this 
-          });
-        }
-        else{
-          laser.shoot(this.player.x, this.player.y + 20, dir);
-        }
+        laser.shoot(this.player.x, this.player.y + 20, dir);
       }
-    }
+    } 
   }
 /*
   marco(){

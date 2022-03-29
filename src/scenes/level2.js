@@ -28,10 +28,10 @@ export default class Level2 extends Phaser.Scene {
    */
   create() {
     
-    let background = this.add.tileSprite(0, 0, 0, 0, "lego").setOrigin(0,0);
+    /*let background = this.add.tileSprite(0, 0, 0, 0, "lego").setOrigin(0,0);
     background.displayHeight = this.sys.game.config.height;
     background.scaleX = background.scaleY; 
-    background.setScrollFactor(0);
+    background.setScrollFactor(0);*/
 
     let image = this.add.image(this.cameras.main.width / 2, this.cameras.main.height / 2, 'lego');
     let scaleX = this.cameras.main.width / image.width;
@@ -41,14 +41,14 @@ export default class Level2 extends Phaser.Scene {
     
     let exit = this.add.image(this.cameras.main.width - 20, 20, "exit").setInteractive();
     exit.setDepth(1);
-    exit.on('pointerdown', function (ptr) { this.setScale(0.9, 0.9) } );
+    exit.on('pointerdown', function () { this.setScale(0.9); });
     exit.on('pointerup', () => {
       this.scene.start("lobby");
     });
 
     let fullScreen = this.add.image(this.cameras.main.width - 50, 20, "fullScreen").setInteractive();
     fullScreen.setDepth(1);
-    fullScreen.on('pointerdown', () => { this.setScale(0.9, 0.9) } );
+    fullScreen.on('pointerdown', () => { this.setScale(0.9); });
     fullScreen.on('pointerup', () => {
       if (this.scale.isFullscreen){
         fullScreen.setTexture("fullScreen");
@@ -70,7 +70,7 @@ export default class Level2 extends Phaser.Scene {
       allowGravity: false
     });
     
-    this.player = new PlayerAerial(this, 0, 412);
+    this.player = new PlayerAerial(this, 0, 412).setDepth(1);
     this.player.body.setAllowGravity(false);
     this.ghost1 = new Ghost(this, 800, 420, 'ghost');
     this.ghost2 = new Ghost(this, 350, 200, 'ghost2');
@@ -93,6 +93,11 @@ export default class Level2 extends Phaser.Scene {
     this.marco();
     this.nivel();
 
+    this.createColliders();
+
+  }
+
+  createColliders(){
     this.physics.add.collider(this.player, this.walls);
 
     this.physics.add.collider(this.ghosts, this.walls, (ghost) => {
@@ -115,7 +120,7 @@ export default class Level2 extends Phaser.Scene {
       ghost.destroy();
       if(this.ghost1.die && this.ghost2.die){
         this.key = new Key(this, 450, 420);
-        this.physics.add.collider(this.player, this.key, (player, key) =>{
+        this.physics.add.overlap(this.player, this.key, (player, key) =>{
           this.door.setTexture('openDoor');
           this.door.setOpen();
           key.destroy();
@@ -123,7 +128,7 @@ export default class Level2 extends Phaser.Scene {
       }
     });
 
-    this.physics.add.collider(this.player, this.door, (player, door)=>{
+    this.physics.add.overlap(this.player, this.door, (player, door)=>{
       if(!door.close){//Si la puerta está abierta
         this.endGame(true); //Termino el juego
       }
@@ -131,7 +136,6 @@ export default class Level2 extends Phaser.Scene {
         //Mostrar texto indicando que tiene que matar a los bichos para que salga la llave
       //}
     });
-    
   }
 
   endGame(completed = false) {
