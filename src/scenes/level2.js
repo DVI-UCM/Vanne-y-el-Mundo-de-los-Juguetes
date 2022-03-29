@@ -2,6 +2,8 @@ import Wall from '../sprites/wall.js';
 import PlayerAerial from '../sprites/playerAerial.js';
 import Ghost from '../sprites/ghost.js';
 import Laser from '../sprites/laser.js';
+import Key from '../sprites/key.js';
+import Door from '../sprites/door.js';
 
 /**
  * @extends Phaser.Scene
@@ -59,6 +61,8 @@ export default class Level2 extends Phaser.Scene {
     });
 
     this.walls = this.physics.add.staticGroup();
+    this.doors = this.physics.add.staticGroup();
+    this.keys = this.physics.add.staticGroup();
     this.ghosts = this.physics.add.group({
       allowGravity:false
     });
@@ -66,6 +70,8 @@ export default class Level2 extends Phaser.Scene {
       allowGravity: false
     });
     
+    this.door = new Door(this,980,100, true);
+    this.doors.add(this.door);
     this.player = new PlayerAerial(this, 0, 412);
     this.player.body.setAllowGravity(false);
     this.ghost1 = new Ghost(this, 800, 420, 'ghost');
@@ -87,7 +93,12 @@ export default class Level2 extends Phaser.Scene {
     this.marco();
     this.nivel();
 
+
+
+
     this.physics.add.collider(this.player, this.walls);
+
+
 
     this.physics.add.collider(this.ghosts, this.walls, (ghost) => {
       ghost.onCollision();
@@ -105,8 +116,29 @@ export default class Level2 extends Phaser.Scene {
 
     this.physics.add.collider(this.lasers, this.ghosts, (laser, ghost) => {
       laser.onCollision();
+      ghost.updateDie(true);
       ghost.destroy();
+      if(this.ghost1.die && this.ghost2.die) this.keys.add(new Key(this, 450,420));
+      
     });
+
+    
+    this.physics.add.collider(this.player, this.keys, (key) =>{
+      this.door.destroy(); //Quito la antigua puerta
+      this.door2 = new Door(this,980,100, false); //Creo la nueva puerta
+      this.doors.add(this.door2);
+      key.destroy();
+    });
+
+    this.physics.add.collider(this.player, this.doors, (door)=>{
+      if(!door.close){//Si la puerta está abierta
+        this.endGame(true); //Termino el juego
+      }
+      //else{
+        //Mostrar texto indicando que tiene que matar a los bichos para que salga la llave
+      //}
+    })
+    
   }
 
   endGame(completed = false) {
@@ -120,6 +152,13 @@ export default class Level2 extends Phaser.Scene {
 
   shoot(laser, dir){
     laser.shoot(this.player.x, this.player.y + 20, dir);
+  }
+
+  keyPick(){
+    if(this.player.x == 450 && this.player.y == 380){
+      this.key.destroy();
+      this.door.setOpen();
+    }
   }
 
   update(){
@@ -144,6 +183,8 @@ export default class Level2 extends Phaser.Scene {
         laser.shoot(this.player.x, this.player.y + 20, dir);
       }
     }
+
+    
   }
 
   marco(){
