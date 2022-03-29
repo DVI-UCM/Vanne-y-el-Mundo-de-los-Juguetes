@@ -109,7 +109,7 @@ export default class Level4 extends Phaser.Scene {
 
     const tileset1 = this.map.addTilesetImage('LEGO_LEVEL2', 'lego_verde');
 
-    this.groundLayer = this.map.createLayer('GroundLayer', tileset1);
+    this.groundLayer = this.map.createLayer("Capa de patrones 1", tileset1);
 
     this.groundLayer.setCollisionByProperty({ colisiona: true });
     this.physics.add.collider(player, this.groundLayer);
