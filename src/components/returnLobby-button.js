@@ -11,9 +11,9 @@ export default class ReturnButton extends Phaser.GameObjects.Sprite {
       this.on('pointerout', () => {
         this.setFrame(0);
       });
-      this.on('pointerdown', () => { this.setScale(0.95, 0.95) } );
+      this.on('pointerdown', () => { this.setScale(0.95) } );
       this.on('pointerup', () => {
-        this.scene.returnLobby();
+        this.scene.scene.start("lobby");
       });
     }
   }
