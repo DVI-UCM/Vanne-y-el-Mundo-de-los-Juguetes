@@ -19,6 +19,7 @@ export default class Inicio extends Phaser.Scene {
     }
 
     create() {
+      this.add.image(0, 0, 'castillo_background').setOrigin(0).setDepth(0);
       var width = this.cameras.main.width / 2;
       var height = this.cameras.main.height / 2;
       
