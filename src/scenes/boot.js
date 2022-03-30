@@ -87,6 +87,10 @@ export default class Boot extends Phaser.Scene {
     this.load.image("castillo_background", "castillo.png");
     this.load.atlas('player', 'ninjagirl.png', 'ninjagirl_atlas.json');
     this.load.atlas('calabaza', 'calabaza.png', 'calabaza.json');
+    this.load.image('spaceshipUp', 'nave/spaceshipUp');
+    this.load.image('spaceshipRight', 'nave/spaceshipRight');
+    this.load.image('spaceshipLeft', 'nave/spaceshipLeft');
+    this.load.image('spaceshipDown', 'nave/spaceshipDown');
     this.load.spritesheet('player_idle', 'player/idle_spritesheet.png', {frameWidth: 58, frameHeight: 100});
     this.load.spritesheet('player_run', 'player/run_spritesheet.png', {frameWidth: 75, frameHeight: 104});
     this.load.spritesheet('player_jump', 'player/jump_spritesheet.png', {frameWidth: 80, frameHeight: 109});
