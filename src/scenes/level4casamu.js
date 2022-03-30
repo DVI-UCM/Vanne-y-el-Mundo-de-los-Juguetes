@@ -25,9 +25,9 @@ export default class Level4 extends Phaser.Scene {
   }
 
   preload(){
-    this.load.image('lego_verde', 'assets/tiles/LEGO_LEVEL2.png');
-    this.load.tilemapTiledJSON('MAPA2', 'assets/tiles/MAPA2.json');
-    this.load.image("lego", "assets/sprites/fondoPrueba.png");
+    this.load.image('lego_level4', 'assets/tiles/lego_level4.png');
+    this.load.tilemapTiledJSON('MAPA2', 'assets/tiles/MAPA4.json');
+    this.load.image("fondoPantalla", "assets/sprites/fondoPrueba.png");
   }
   /**
    * Creación de los elementos de la escena principal de juego
@@ -92,9 +92,9 @@ export default class Level4 extends Phaser.Scene {
 
 
     //CREAR MAPA
-    this.map = this.make.tilemap({ key: 'MAPA2' });
+    this.map = this.make.tilemap({ key: 'MAPA4' });
 
-    const tileset1 = this.map.addTilesetImage('LEGO_LEVEL2', 'lego_verde');
+    const tileset1 = this.map.addTilesetImage('lego_level4', 'LEGO_LEVEL4');
     
     this.groundLayer = this.map.createLayer("Capa de patrones 1", tileset1);
     //this.groundLayer.setCollisionByProperty({ colisiona: true });

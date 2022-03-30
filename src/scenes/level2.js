@@ -4,6 +4,7 @@ import Ghost from '../sprites/ghost.js';
 import Laser from '../sprites/laser.js';
 import Key from '../sprites/key.js';
 import Door from '../sprites/door.js';
+import SpaceShip from '../sprites/spaceship.js';
 
 /**
  * @extends Phaser.Scene
@@ -70,7 +71,7 @@ export default class Level2 extends Phaser.Scene {
       allowGravity: false
     });
     
-    this.player = new PlayerAerial(this, 0, 412).setDepth(1);
+    this.player = new SpaceShip(this, 0, 412).setDepth(1);
     this.player.body.setAllowGravity(false);
     this.ghost1 = new Ghost(this, 800, 420, 'ghost');
     this.ghost2 = new Ghost(this, 350, 200, 'ghost2');

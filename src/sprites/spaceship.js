@@ -16,32 +16,7 @@ export default class SpaceShip extends Phaser.GameObjects.Sprite {
   constructor(scene, x, y) {
     super(scene, x, y, 'spaceshipRight');
 
-    this.anims.create({
-        key: 'up',
-        frames: 'spaceshipUp',
-        frameRate: 10, // Velocidad de la animación
-        repeat: -1    // Animación en bucle
-    });
-    this.anims.create({
-        key: 'down',
-        frames: 'spaceshipDown',
-        frameRate: 10, // Velocidad de la animación
-        repeat: -1    // Animación en bucle
-    });
-    this.anims.create({
-        key: 'left',
-        frames: 'spaceshipLeft',
-        frameRate: 10, // Velocidad de la animación
-        repeat: -1    // Animación en bucle
-    });
-    this.anims.create({
-        key: 'right',
-        frames: 'spaceshipRight',
-        frameRate: 10, // Velocidad de la animación
-        repeat: -1    // Animación en bucle
-    });
-
-    this.anims.play('up', true);
+    
 
     this.score = 0;
     this.scene.add.existing(this);
@@ -96,28 +71,22 @@ export default class SpaceShip extends Phaser.GameObjects.Sprite {
     if(!this.cursors.space.isDown){
       if (this.cursors.up.isDown) {
         this.body.setVelocityY(-this.speed);
-        this.anims.play('up', true);
+        this.setTexture('spaceshipUp');
       }
       if (this.cursors.down.isDown){
         this.body.setVelocityY(this.speed);
-        this.anims.play('down', true);
+        this.setTexture('spaceshipDown');
       }
       if (this.cursors.left.isDown) {
-        this.flipX = true;
+
         this.body.setVelocityX(-this.speed);
-        this.anims.play('left', true);
-        this.body.setOffset(8, 2);
+        this.setTexture('spaceshipLeft');
       }
       else if (this.cursors.right.isDown) {
-        this.flipX = false;
         this.body.setVelocityX(this.speed);
-        this.anims.play('right', true);
-        this.body.setOffset(10, 2);
+        this.setTexture('spaceshipRight');
       }
-      else {
-        this.anims.play('right', true);
-        this.body.setOffset(0);
-      }
+
     }
 
     if(this.muerte){
