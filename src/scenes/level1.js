@@ -113,8 +113,8 @@ export default class Level1 extends Phaser.Scene {
     this.plataformas.add(new Platform(this, this.player, 600, 350));
     this.plataformas.add(new Platform(this, this.player, 910, 250));
     //new Platform(this, this.player, 500, 150);
-    this.plataformas.add(new Platform(this, this.player, 90, 150));
-    this.plataformas.add(new Platform(this, this.player, 272, 150));
+    this.plataformas.add(new Platform(this, this.player, 90, 170));
+    this.plataformas.add(new Platform(this, this.player, 272, 170));
 
     this.cristales.add(new Cristales(this, this.player, 800, 235));
     this.cristales.add(new Cristales(this, this.player, 800, 255));
