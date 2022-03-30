@@ -1,8 +1,8 @@
-import PlayerAerial from '../sprites/playerAerial.js';
 import Ghost from '../sprites/ghost.js';
 import Laser from '../sprites/laser.js';
 import Key from '../sprites/key.js';
 import Door from '../sprites/door.js';
+import SpaceShip from '../sprites/spaceship.js';
 
 /**
  * Escena principal del juego. La escena se compone de una serie de plataformas 
@@ -25,8 +25,8 @@ export default class Level4 extends Phaser.Scene {
   }
 
   preload(){
-    this.load.image('lego_level4', 'assets/tiles/lego_level4.png');
-    this.load.tilemapTiledJSON('MAPA2', 'assets/tiles/MAPA4.json');
+    this.load.image('LEGO_LEVEL4', 'assets/tiles/lego_level4.png');
+    this.load.tilemapTiledJSON('MAPA4', 'assets/tiles/MAPA4.json');
     this.load.image("fondoPantalla", "assets/sprites/fondoPrueba.png");
   }
   /**
@@ -71,7 +71,7 @@ export default class Level4 extends Phaser.Scene {
       allowGravity: false
     });
     
-    this.player = new PlayerAerial(this, 0, 412).setDepth(1);
+    this.player = new SpaceShip(this, 0, 412).setDepth(1);
     this.player.body.setAllowGravity(false);
     this.ghost1 = new Ghost(this, 800, 420, 'ghost');
     this.ghost2 = new Ghost(this, 350, 200, 'ghost2');
@@ -94,7 +94,7 @@ export default class Level4 extends Phaser.Scene {
     //CREAR MAPA
     this.map = this.make.tilemap({ key: 'MAPA4' });
 
-    const tileset1 = this.map.addTilesetImage('lego_level4', 'LEGO_LEVEL4');
+    const tileset1 = this.map.addTilesetImage('LEGO_LEVEL4', 'LEGO_LEVEL4');
     
     this.groundLayer = this.map.createLayer("Capa de patrones 1", tileset1);
     //this.groundLayer.setCollisionByProperty({ colisiona: true });
