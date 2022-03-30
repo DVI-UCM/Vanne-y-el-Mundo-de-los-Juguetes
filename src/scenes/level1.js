@@ -87,14 +87,28 @@ export default class Level1 extends Phaser.Scene {
       }
     });
 
-    this.stars = 5;
     this.player = new Player(this, 500, 500);
     this.calabaza = new Calabaza(this, 50, 500);
-    this.monstruo = new MonstruoVolador(this, 500, 150);
+    this.monstruos = this.physics.add.group({allowGravity: false, immovable: true});
     this.plataformas = this.physics.add.staticGroup();
     this.cristales = this.physics.add.staticGroup();
 
     this.cameras.main.startFollow(this.player);
+
+    this.monstruos.add(new MonstruoVolador(this, 500, 200));
+    
+    var _this = this;
+    this.monstruos.children.iterate(function (child) {
+      _this.tweens.add({
+          targets: child,
+          x: 700,
+          ease: 'Linear',
+          duration: 1500,
+          yoyo: true,
+          flipX: true,
+          repeat: -1,
+      });
+    });
 
     this.plataformas.add(new Platform(this, this.player, 600, 350));
     this.plataformas.add(new Platform(this, this.player, 910, 250));
@@ -108,23 +122,22 @@ export default class Level1 extends Phaser.Scene {
 
     this.cupcake = new Cupcake(this, this.player, 100, 80);
 
-    this.monstruo.body.setAllowGravity(false);
-
-    this.physics.add.collider(this.monstruo, this.plataformas, () => {
-      this.monstruo.onCollision();
+    this.physics.add.collider(this.cristales, this.player, (player) => {
+      player.body.setOffset(20, 10);
+      player.muere();
     });
 
-    this.physics.add.collider(this.cristales, this.player, () => {
-      this.player.body.setOffset(20, 10);
-       this.player.muere();
-    });
-
-    this.physics.add.collider(this.player, this.calabaza, () => {
-      this.calabaza.anims.play('idle', true);
-      this.calabaza.body.setVelocityX(0);
-      this.player.body.setOffset(29, 0);
-      this.player.muere();
-      
+    this.physics.add.collider(this.player, this.calabaza, (player, calabaza) => {
+      if(!player.body.touching.down){
+        calabaza.anims.play('idle', true);
+        calabaza.body.setVelocityX(0);
+        player.body.setOffset(29, 0);
+        player.muere();
+        this.endGame(); 
+      }
+      else {
+        calabaza.destroy();
+      }
     });
 
     this.physics.add.collider(this.cupcake, this.player, () => {
@@ -134,16 +147,14 @@ export default class Level1 extends Phaser.Scene {
   }
   
   endGame(completed = false) {
-    if(! completed) {
-      this.scene.start('gameover');
+    if(!completed) {
+      this.scene.launch('gameover', {key: this.scene.key });
     } else {
-      this.scene.start('congratulations');
+      this.scene.launch('congratulations', {key: this.scene.key });
     }
   }
   update(){
     //parallax
-    //this.chuche.tilePositionX -=0.4;
-
     const cam = this.cameras.main;
     const speed = 3;
     if(!this.player.muerte){
@@ -154,40 +165,5 @@ export default class Level1 extends Phaser.Scene {
         cam.scrollX += speed;
       }
     }
-
-
-    //this.exit.setPosition(this.cameras.main.width - 20, 20);
-    //this.fullScreen.setPosition(this.cameras.main.width - 50, 20);
   }
-
-  /**
-   * Genera una estrella en una de las bases del escenario
-   * @param {Array<Base>} from Lista de bases sobre las que se puede crear una estrella
-   * Si es null, entonces se crea aleatoriamente sobre cualquiera de las bases existentes
-   */
-  // spawn(from = null) {
-  //   Phaser.Math.RND.pick(from || this.bases.children.entries).spawn();
-  // }
-
-  /**
-   * Método que se ejecuta al coger una estrella. Se pasa la base
-   * sobre la que estaba la estrella cogida para evitar repeticiones
-   * @param {Base} base La base sobre la que estaba la estrella que se ha cogido
-   */
-  // starPickt (base) {
-  //   this.player.point();
-  //     if (this.player.score == this.stars/*&& this.ant.die*/) {
-  //       this.scene.start('end');
-  //     }
-  //     else {
-  //       let s = this.bases.children.entries;
-  //       this.spawn(s.filter(o => o !== base));
-
-  //     }
-  // }
-
-  /*calabazaChoca () {
-    this.player.muere();
-  }*/
-  
 }
