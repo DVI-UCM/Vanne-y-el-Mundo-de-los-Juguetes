@@ -16,6 +16,26 @@ export default class PlayerAerial extends Phaser.GameObjects.Sprite {
   constructor(scene, x, y) {
     super(scene, x, y, 'player');
 
+    this.createAnims();
+
+    this.anims.play('idle', true);
+
+    this.score = 0;
+    this.scene.add.existing(this);
+    this.scene.physics.add.existing(this);
+
+    // Queremos que el jugador no se salga de los límites del mundo
+    this.body.setCollideWorldBounds();
+    this.speed = 200;
+    this.setScale(.95);
+
+    // Esta label es la UI en la que pondremos la puntuación del jugador
+    //this.label = this.scene.add.text(10, 10, "");
+    this.cursors = this.scene.input.keyboard.createCursorKeys();
+    //this.updateScore();
+  }
+
+  createAnims(){
     this.anims.create({
       key: 'idle',
       frames: 'player_idle',
@@ -31,43 +51,11 @@ export default class PlayerAerial extends Phaser.GameObjects.Sprite {
     });
 
     this.anims.create({
-      key: 'attack',
-      frames: this.anims.generateFrameNames('player', { prefix: 'attack__00',
-      start: 0,
-      end: 9}),
-      frameRate: 15 , // Velocidad de la animación
-    });
-
-    this.anims.create({
-      key: 'jump_attack',
-      frames: this.anims.generateFrameNames('player', { prefix: 'jump_attack__00',
-      start: 0,
-      end: 9}),
-      frameRate: 15 , // Velocidad de la animación
-    });
-
-    this.anims.create({
       key: 'dead',
       frames: 'player_dead',
       frameRate: 10, // Velocidad de la animación
       repeat: 1
     });
-
-    this.anims.play('idle', true);
-
-    this.score = 0;
-    this.scene.add.existing(this);
-    this.scene.physics.add.existing(this);
-
-    // Queremos que el jugador no se salga de los límites del mundo
-    this.body.setCollideWorldBounds();
-    this.speed = 200;
-    this.setScale(.95);
-
-    // Esta label es la UI en la que pondremos la puntuación del jugador
-    this.label = this.scene.add.text(10, 10, "");
-    this.cursors = this.scene.input.keyboard.createCursorKeys();
-    this.updateScore();
   }
 
   /**
@@ -75,15 +63,15 @@ export default class PlayerAerial extends Phaser.GameObjects.Sprite {
    * actualiza la UI con la puntuación actual.
    */
   point() {
-    this.score++;
-    this.updateScore();
+    //this.score++;
+    //this.updateScore();
   }
   
   /**
    * Actualiza la UI con la puntuación actual
    */
   updateScore() {
-    this.label.text = 'Score: ' + this.score;
+    //this.label.text = 'Score: ' + this.score;
   }
 
   muere(){

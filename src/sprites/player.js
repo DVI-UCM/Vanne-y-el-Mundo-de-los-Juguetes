@@ -27,7 +27,7 @@ export default class Player extends Phaser.GameObjects.Sprite {
     //this.body.setCollideWorldBounds();
     this.body.setCollideWorldBounds(true, 0, 0);
     this.speed = 300;
-    this.jumpSpeed = -600;
+    this.jumpSpeed = -550;
 
     // Esta label es la UI en la que pondremos la puntuación del jugador
     //this.label = this.scene.add.text(10, 10, "");

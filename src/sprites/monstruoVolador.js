@@ -13,55 +13,14 @@ export default class MonstruoVolador extends Phaser.GameObjects.Sprite {
   constructor(scene, x, y) {
     super(scene, x, y, 'monstruoVolador');
 
-
-    this.die = false;
     this.scene.add.existing(this);
     this.scene.physics.add.existing(this);
-    // Queremos que el jugador no se salga de los límites del mundo
-    this.body.setCollideWorldBounds();
-    this.speed = 100;
-    this.jumpSpeed = -600;
-    this.setScale(.20);
-    // Esta label es la UI en la que pondremos la puntuación del jugador
-    this.label = this.scene.add.text(10, 10, "");
-
-    this.body.setVelocityX(this.speed);
-
+    this.body.setSize(50, 49);
+    
+    this.scene.physics.add.collider(this.scene.player, this, (player) => {
+      if(!this.body.touching.up && !player.body.touching.down){
+        player.muere(); 
+      }
+    });
   }
-
-  /**
-   * Actualiza la UI con la puntuación actual
-   */
-  updateDie(a) {
-    this.die = a;
-  }
-
-  onCollision(){
-    this.flipX = !this.flipX;
-    this.speed = -this.speed;
-    this.body.setVelocityX(this.speed);
-  }
-
-
-  /**
-   * Métodos preUpdate de Phaser. En este caso solo se encarga del movimiento del jugador.
-   * Como se puede ver, no se tratan las colisiones con las estrellas, ya que estas colisiones 
-   * ya son gestionadas por la estrella (no gestionar las colisiones dos veces)
-   * @override
-   */
-  preUpdate(t,dt) {
-    super.preUpdate(t,dt);
-
-    this.body.collideWorldBounds=true;
-    this.body.onWorldBounds=true;
-
-    this.scene.physics.world.on('worldbounds', (body, up, down, left, right)=>{
-        if(left || right){
-          this.flipX = !this.flipX;
-          this.speed = -this.speed;
-          this.body.setVelocityX(this.speed);
-        }
-      }); 
-  }
-  
 }
