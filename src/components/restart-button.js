@@ -3,7 +3,7 @@
 
 export default class RestartButton extends Phaser.GameObjects.Sprite {
   constructor(scene, data) {
-    super(scene, 400, 230, 'button')
+    super(scene, 400, 230, 'buttonRestart')
     this.scene.add.existing(this)
     // this.relatedScene = scene;
     this.name = data.key;

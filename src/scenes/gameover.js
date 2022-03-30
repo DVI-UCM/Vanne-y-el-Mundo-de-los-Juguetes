@@ -1,4 +1,5 @@
 import RestartButton  from "../components/restart-button.js";
+import ReturnButton  from "../components/returnLobby-button.js";
 
 export default class Gameover extends Phaser.Scene {
   constructor() {
@@ -6,9 +7,10 @@ export default class Gameover extends Phaser.Scene {
   }
 
   preload() {
-    this.load.image('backGroundGameOver', 'assets/sprites/congratulationsBackGround.jpg');
+    this.load.image('backGroundGameOver', 'assets/sprites/gameOverBackGround.jpg');
     this.load.image('gameover', 'assets/sprites/gameover.png');
-    this.load.spritesheet('button', 'assets/sprites/restart.png', { frameWidth: 190, frameHeight: 49 }); 
+    this.load.spritesheet('buttonRestart', 'assets/sprites/restart.png', { frameWidth: 190, frameHeight: 49 }); 
+    this.load.spritesheet('buttonReturnLobby', 'assets/sprites/returnLobby.png', { frameWidth: 190, frameHeight: 49 });
   }
 
   init(data) {
@@ -17,6 +19,7 @@ export default class Gameover extends Phaser.Scene {
   
   create() {
     this.restartButton = new RestartButton(this, this.keyData);
+    this.returnButton = new ReturnButton(this);
     this.add.image(410, 250, 'backGroundGameOver');
     this.gameoverImage = this.add.image(400, 90, 'gameover');
   }
