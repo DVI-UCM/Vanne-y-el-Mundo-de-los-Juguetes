@@ -1,5 +1,4 @@
 import Wall from '../sprites/wall.js';
-import PlayerAerial from '../sprites/playerAerial.js';
 import Ghost from '../sprites/ghost.js';
 import Laser from '../sprites/laser.js';
 import Key from '../sprites/key.js';
@@ -22,6 +21,8 @@ export default class Level2 extends Phaser.Scene {
   }
 
   preload(){
+    this.load.image('LEGO_LEVEL2', 'assets/tiles/LEGO_LEVEL2.png');
+    this.load.tilemapTiledJSON('MAPA2', 'assets/tiles/MAPA2.json');
     this.load.image("lego", "assets/sprites/fondoPrueba.png");
   }
   /**
@@ -61,7 +62,7 @@ export default class Level2 extends Phaser.Scene {
       }
     });
 
-    this.walls = this.physics.add.staticGroup();
+
     //this.doors = this.physics.add.staticGroup();
     //this.keys = this.physics.add.staticGroup();
     this.ghosts = this.physics.add.group({
@@ -90,20 +91,31 @@ export default class Level2 extends Phaser.Scene {
       this.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.UP)
 		];
 
-    //Crear el marco del laberinto
-    this.marco();
-    this.nivel();
+
+    this.map = this.make.tilemap({ 
+        key: 'MAPA2',
+        tileWidth: 50, 
+        tileHeight: 50
+    
+    });
+  
+    const tileset2 = this.map.addTilesetImage('LEGO_LEVEL2', 'LEGO_LEVEL2');
+      
+    this.groundLayer = this.map.createLayer("Capa de patrones 1", tileset2);
 
     this.createColliders();
 
   }
 
   createColliders(){
-    this.physics.add.collider(this.player, this.walls);
 
-    this.physics.add.collider(this.ghosts, this.walls, (ghost) => {
-      ghost.onCollision();
-    });
+    this.groundLayer.setCollisionByProperty({ colisiona: true });
+    this.physics.add.collider(this.player, this.groundLayer);
+    this.physics.add.collider(this.ghosts, this.groundLayer, (ghost) => {
+        ghost.onCollision();
+      });
+
+
 
     this.physics.add.collider(this.player, this.ghosts, () => {
       this.player.body.setVelocityX(0);
@@ -111,9 +123,7 @@ export default class Level2 extends Phaser.Scene {
       this.endGame();
     });
 
-    this.physics.add.overlap(this.lasers, this.walls, (laser) => {
-      laser.onCollision();
-    });
+
 
     this.physics.add.collider(this.lasers, this.ghosts, (laser, ghost) => {
       laser.onCollision();
@@ -185,99 +195,5 @@ export default class Level2 extends Phaser.Scene {
     
   }
 
-  marco(){
-    for(let i = 0; i < 9;i++){
-      this.walls.add(new Wall(this, this.player,this.ghost, this.ghost2, 20, i*40+20));
-    }
-    for(let i = 0; i < 9;i++){
-      this.walls.add(new Wall(this, this.player,this.ghost, this.ghost2, 980, i*40+160));
-    }
-    for(let i = 0; i < 25;i++){
-      this.walls.add(new Wall(this, this.player,this.ghost, this.ghost2, i*40+60, 20));
-    }
-    for(let i = 0; i < 25;i++){
-      this.walls.add(new Wall(this, this.player,this.ghost, this.ghost2, i*40+20, 480));
-    } 
-  }
-
-  nivel(){
-    this.walls.add(new Wall(this, this.player,this.ghost, this.ghost2, 140, 160));
-    this.walls.add(new Wall(this, this.player,this.ghost,this.ghost2, 140, 180));
-    this.walls.add(new Wall(this, this.player,this.ghost,this.ghost2, 140, 320));
-    this.walls.add(new Wall(this, this.player,this.ghost,this.ghost2, 140, 360));
-    this.walls.add(new Wall(this, this.player,this.ghost,this.ghost2, 140, 400));
-    this.walls.add(new Wall(this, this.player,this.ghost,this.ghost2, 140, 440));
-
-    this.walls.add(new Wall(this, this.player,this.ghost,this.ghost2, 180, 160));
-    this.walls.add(new Wall(this, this.player,this.ghost,this.ghost2, 180, 180));
-
-    this.walls.add(new Wall(this, this.player,this.ghost,this.ghost2, 220, 160));
-    this.walls.add(new Wall(this, this.player,this.ghost,this.ghost2, 220, 180));
-
-    this.walls.add(new Wall(this, this.player,this.ghost,this.ghost2, 260, 160));
-    this.walls.add(new Wall(this, this.player,this.ghost,this.ghost2, 260, 160));
-    this.walls.add(new Wall(this, this.player,this.ghost,this.ghost2, 260, 200));
-    this.walls.add(new Wall(this, this.player,this.ghost,this.ghost2, 260, 240));
-    this.walls.add(new Wall(this, this.player,this.ghost,this.ghost2, 260, 280));
-    this.walls.add(new Wall(this, this.player,this.ghost,this.ghost2, 260, 320));
-    this.walls.add(new Wall(this, this.player,this.ghost,this.ghost2, 260, 340));
-
-    this.walls.add(new Wall(this, this.player,this.ghost,this.ghost2, 300, 260));
-
-    this.walls.add(new Wall(this, this.player,this.ghost,this.ghost2, 340, 260));
-
-    this.walls.add(new Wall(this, this.player,this.ghost,this.ghost2, 380, 60));
-    this.walls.add(new Wall(this, this.player,this.ghost,this.ghost2, 380, 100));
-    this.walls.add(new Wall(this, this.player,this.ghost,this.ghost2, 380, 120));
-    this.walls.add(new Wall(this, this.player,this.ghost,this.ghost2, 380, 260));
-    this.walls.add(new Wall(this, this.player,this.ghost,this.ghost2, 380, 400));
-    this.walls.add(new Wall(this, this.player,this.ghost,this.ghost2, 380, 440));
-
-    this.walls.add(new Wall(this, this.player,this.ghost,this.ghost2, 420, 260));
-
-    this.walls.add(new Wall(this, this.player,this.ghost,this.ghost2, 460, 260));
-
-    this.walls.add(new Wall(this, this.player,this.ghost,this.ghost2, 500, 160));
-    this.walls.add(new Wall(this, this.player,this.ghost,this.ghost2, 500, 180));
-    this.walls.add(new Wall(this, this.player,this.ghost,this.ghost2, 500, 220));
-    this.walls.add(new Wall(this, this.player,this.ghost,this.ghost2, 500, 260));
-    this.walls.add(new Wall(this, this.player,this.ghost,this.ghost2, 500, 300));
-    this.walls.add(new Wall(this, this.player,this.ghost,this.ghost2, 500, 340));
-    this.walls.add(new Wall(this, this.player,this.ghost,this.ghost2, 500, 360));
-    this.walls.add(new Wall(this, this.player,this.ghost,this.ghost2, 500, 400));
-    this.walls.add(new Wall(this, this.player,this.ghost,this.ghost2, 500, 440));
-
-    this.walls.add(new Wall(this, this.player,this.ghost,this.ghost2, 620, 40));
-    this.walls.add(new Wall(this, this.player,this.ghost,this.ghost2, 620, 80));
-    this.walls.add(new Wall(this, this.player,this.ghost,this.ghost2, 620, 120));
-    this.walls.add(new Wall(this, this.player,this.ghost,this.ghost2, 620, 160));
-    this.walls.add(new Wall(this, this.player,this.ghost,this.ghost2, 620, 180));
-    this.walls.add(new Wall(this, this.player,this.ghost,this.ghost2, 620, 220));
-    this.walls.add(new Wall(this, this.player,this.ghost,this.ghost2, 620, 260));
-    this.walls.add(new Wall(this, this.player,this.ghost,this.ghost2, 620, 300));
-    this.walls.add(new Wall(this, this.player,this.ghost,this.ghost2, 620, 340));
-
-    this.walls.add(new Wall(this, this.player,this.ghost,this.ghost2, 660, 160));
-
-    this.walls.add(new Wall(this, this.player,this.ghost,this.ghost2, 700, 160));
-
-    this.walls.add(new Wall(this, this.player,this.ghost,this.ghost2, 740, 160));
-    this.walls.add(new Wall(this, this.player,this.ghost,this.ghost2, 740, 200));
-    this.walls.add(new Wall(this, this.player,this.ghost,this.ghost2, 740, 240));
-    this.walls.add(new Wall(this, this.player,this.ghost,this.ghost2, 740, 380));
-    this.walls.add(new Wall(this, this.player,this.ghost,this.ghost2, 740, 400));
-    this.walls.add(new Wall(this, this.player,this.ghost,this.ghost2, 740, 440));
-
-    this.walls.add(new Wall(this, this.player,this.ghost,this.ghost2, 860, 160));
-    this.walls.add(new Wall(this, this.player,this.ghost,this.ghost2, 860, 180));
-    this.walls.add(new Wall(this, this.player,this.ghost,this.ghost2, 860, 220));
-    this.walls.add(new Wall(this, this.player,this.ghost,this.ghost2, 860, 260));
-    this.walls.add(new Wall(this, this.player,this.ghost,this.ghost2, 860, 300));
-    this.walls.add(new Wall(this, this.player,this.ghost,this.ghost2, 860, 340));
-
-    this.walls.add(new Wall(this, this.player,this.ghost,this.ghost2, 900, 160));
-
-    this.walls.add(new Wall(this, this.player,this.ghost,this.ghost2, 940, 160));
-  }
   
 }
