@@ -33,19 +33,38 @@ export default class Level4 extends Phaser.Scene {
    * Creación de los elementos de la escena principal de juego
    */
   create() {
-
-    let image = this.add.image(this.cameras.main.width / 2, this.cameras.main.height / 2, 'castillo_background');
+    const width = this.scale.width;
+    const height = this.scale.height;
+    
+    const w = this.textures.get('castillo_background').getSourceImage().width;
+    const h = this.textures.get('castillo_background').getSourceImage().height;
+    const totalWidth = w * 2;
+    const totalHeight = h * 2;
+    //const count = Math.ceil(totalWidth / w) * scrollFactor;
+    //let image = this.add.image(this.cameras.main.width / 2, this.cameras.main.height / 2, 'castillo_background');
     //let scaleX = this.cameras.main.width / image.width;
     //let scaleY = this.cameras.main.height / image.height;
     //let scale = Math.max(scaleX, scaleY);
     //image.setScale(scale).setScrollFactor(0);
     //Align.scaleToGameW(image, 2);
-    this.cameras.main.setBounds(0, 0, image.displayWidth, image.displayHeight);
+    let x = 0;
+    let y = 0;
+    for(let i = 0; i < 4; i++){
+      const c = this.add.image(x, y, 'castillo_background').setOrigin(0);
+      if(i % 2 == 0){
+        x += c.width;
+      }
+      else{
+        x = 0;
+        y += c.height;
+      }
+    }
+
+    this.cameras.main.setBounds(0,0, totalWidth, totalHeight);
+    this.physics.world.setBounds(0,0, totalWidth, totalHeight);
+    //this.cameras.main.setBounds(0, 0, image.displayWidth, image.displayHeight);
     
 
-    
-
-    
     let exit = this.add.image(this.cameras.main.width - 20, 20, "exit").setInteractive();
     exit.setDepth(1);
     exit.on('pointerdown', function () { this.setScale(0.9); });
@@ -67,9 +86,6 @@ export default class Level4 extends Phaser.Scene {
       }
     });
 
-    //this.walls = this.physics.add.staticGroup();
-    //this.doors = this.physics.add.staticGroup();
-    //this.keys = this.physics.add.staticGroup();
     this.ghosts = this.physics.add.group({
       allowGravity:false
     });
@@ -79,7 +95,7 @@ export default class Level4 extends Phaser.Scene {
     
     this.player = new SpaceShip(this, 0, 412).setDepth(1);
     this.player.body.setAllowGravity(false);
-    this.ghost1 = new Ghost(this, 800, 420, 'ghost');
+    this.ghost1 = new Ghost(this, 800, 370, 'ghost');
     this.ghost2 = new Ghost(this, 350, 200, 'ghost2');
     this.door = new Door(this, 1977, 90);
     this.key;
@@ -118,8 +134,9 @@ export default class Level4 extends Phaser.Scene {
   createColliders(){
     this.groundLayer.setCollisionByProperty({ colisiona: true });
     this.physics.add.collider(this.player, this.groundLayer);
-    //this.physics.add.collider(this.player, this.groundLayer);
-    
+    this.physics.add.collider(this.lasers, this.groundLayer, (laser) => {
+      laser.onCollision();
+    });    
     this.physics.add.collider(this.ghosts, this.groundLayer, (ghost) => {
       ghost.onCollision();
     });

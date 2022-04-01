@@ -20,7 +20,6 @@ export default class Player extends Phaser.GameObjects.Sprite {
     
     this.anims.play('idle', true);
 
-    //this.score = 0;
     this.scene.add.existing(this);
     this.scene.physics.add.existing(this);
     // Queremos que el jugador no se salga de los límites del mundo
@@ -29,11 +28,7 @@ export default class Player extends Phaser.GameObjects.Sprite {
     this.speed = 300;
     this.jumpSpeed = -550;
 
-    // Esta label es la UI en la que pondremos la puntuación del jugador
-    //this.label = this.scene.add.text(10, 10, "");
-    this.cursors = this.scene.input.keyboard.createCursorKeys();
-    //this.updateScore();
-    
+    this.cursors = this.scene.input.keyboard.createCursorKeys();    
   }
 
   createAnims(){
@@ -90,22 +85,6 @@ export default class Player extends Phaser.GameObjects.Sprite {
       repeat: 0
     });
 
-  }
-
-  /**
-   * El jugador ha recogido una estrella por lo que este método añade un punto y
-   * actualiza la UI con la puntuación actual.
-   */
-  point() {
-    //this.score++;
-    //this.updateScore();
-  }
-  
-  /**
-   * Actualiza la UI con la puntuación actual
-   */
-  updateScore() {
-    //this.label.text = 'Score: ' + this.score;
   }
 
   muere(){

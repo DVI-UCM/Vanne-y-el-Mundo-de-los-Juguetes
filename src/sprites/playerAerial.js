@@ -1,6 +1,3 @@
-import Star from './star.js';
-import Calabaza from './calabaza.js';
-
 /**
  * Clase que representa el jugador del juego. El jugador se mueve por el mundo usando los cursores.
  * También almacena la puntuación o número de estrellas que ha recogido hasta el momento.
@@ -29,10 +26,7 @@ export default class PlayerAerial extends Phaser.GameObjects.Sprite {
     this.speed = 200;
     this.setScale(.95);
 
-    // Esta label es la UI en la que pondremos la puntuación del jugador
-    //this.label = this.scene.add.text(10, 10, "");
     this.cursors = this.scene.input.keyboard.createCursorKeys();
-    //this.updateScore();
   }
 
   createAnims(){
@@ -58,29 +52,10 @@ export default class PlayerAerial extends Phaser.GameObjects.Sprite {
     });
   }
 
-  /**
-   * El jugador ha recogido una estrella por lo que este método añade un punto y
-   * actualiza la UI con la puntuación actual.
-   */
-  point() {
-    //this.score++;
-    //this.updateScore();
-  }
-  
-  /**
-   * Actualiza la UI con la puntuación actual
-   */
-  updateScore() {
-    //this.label.text = 'Score: ' + this.score;
-  }
-
   muere(){
-    this.body.setVelocityX(0);
-    this.body.setVelocityY(0);
+    this.body.setVelocity(0, 0);
     this.muerte = true;
-    //this.anims.play('dead');
     this.body.setOffset(35, 0);
-    //this.label.text = 'Has muerto: ' + this.score;
   }
 
   /**

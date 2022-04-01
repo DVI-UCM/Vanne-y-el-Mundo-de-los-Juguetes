@@ -1,4 +1,3 @@
-import Wall from '../sprites/wall.js';
 import Ghost from '../sprites/ghost.js';
 import Laser from '../sprites/laser.js';
 import Key from '../sprites/key.js';
@@ -62,7 +61,6 @@ export default class Level2 extends Phaser.Scene {
       }
     });
 
-
     //this.doors = this.physics.add.staticGroup();
     //this.keys = this.physics.add.staticGroup();
     this.ghosts = this.physics.add.group({
@@ -72,12 +70,13 @@ export default class Level2 extends Phaser.Scene {
       allowGravity: false
     });
     
-    this.player = new SpaceShip(this, 0, 412).setDepth(1);
+    this.player = new SpaceShip(this, 0, 412);
     this.player.body.setAllowGravity(false);
     this.ghost1 = new Ghost(this, 800, 420, 'ghost');
     this.ghost2 = new Ghost(this, 350, 200, 'ghost2');
-    this.door = new Door(this, 977, 90);
+    this.door = new Door(this, 977, 100);
     this.key;
+    this.laserCollider;
     
     this.ghosts.add(this.ghost1);
     this.ghosts.add(this.ghost2);
@@ -111,11 +110,12 @@ export default class Level2 extends Phaser.Scene {
 
     this.groundLayer.setCollisionByProperty({ colisiona: true });
     this.physics.add.collider(this.player, this.groundLayer);
+    this.physics.add.collider(this.lasers, this.groundLayer, (laser) => {
+      laser.onCollision();
+    });
     this.physics.add.collider(this.ghosts, this.groundLayer, (ghost) => {
         ghost.onCollision();
       });
-
-
 
     this.physics.add.collider(this.player, this.ghosts, () => {
       this.player.body.setVelocityX(0);
@@ -123,14 +123,13 @@ export default class Level2 extends Phaser.Scene {
       this.endGame();
     });
 
-
-
-    this.physics.add.collider(this.lasers, this.ghosts, (laser, ghost) => {
+    this.laserCollider = this.physics.add.collider(this.lasers, this.ghosts, (laser, ghost) => {
       laser.onCollision();
       ghost.updateDie(true);
       ghost.destroy();
+
       if(this.ghost1.die && this.ghost2.die){
-        this.key = new Key(this, 450, 420);
+        this.key = new Key(this, 375, 420);
         this.physics.add.overlap(this.player, this.key, (player, key) =>{
           this.door.setTexture('openDoor');
           this.door.setOpen();
