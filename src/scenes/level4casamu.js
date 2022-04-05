@@ -27,7 +27,7 @@ export default class Level4 extends Phaser.Scene {
   preload(){
     this.load.image('LEGO_LEVEL4', 'assets/tiles/lego_level4.png');
     this.load.tilemapTiledJSON('MAPA4', 'assets/tiles/MAPA4.json');
-    this.load.image("fondoPantalla", "assets/sprites/fondoPrueba.png");
+    this.load.image("fondoPantalla", "assets/sprites/backGroundLevel4.jpg");
   }
   /**
    * Creación de los elementos de la escena principal de juego
@@ -35,11 +35,13 @@ export default class Level4 extends Phaser.Scene {
   create() {
     const width = this.scale.width;
     const height = this.scale.height;
-    
-    const w = this.textures.get('castillo_background').getSourceImage().width;
-    const h = this.textures.get('castillo_background').getSourceImage().height;
-    const totalWidth = w * 2;
-    const totalHeight = h * 2;
+    let x = 0;
+    let y = 0;
+    this.add.image(x, y, 'fondoPantalla').setOrigin(0);
+   // const w = this.textures.get('castillo_background').getSourceImage().width;
+    //const h = this.textures.get('castillo_background').getSourceImage().height;
+    const totalWidth = this.textures.get('fondoPantalla').getSourceImage().width;
+    const totalHeight = this.textures.get('fondoPantalla').getSourceImage().height;
     //const count = Math.ceil(totalWidth / w) * scrollFactor;
     //let image = this.add.image(this.cameras.main.width / 2, this.cameras.main.height / 2, 'castillo_background');
     //let scaleX = this.cameras.main.width / image.width;
@@ -47,9 +49,8 @@ export default class Level4 extends Phaser.Scene {
     //let scale = Math.max(scaleX, scaleY);
     //image.setScale(scale).setScrollFactor(0);
     //Align.scaleToGameW(image, 2);
-    let x = 0;
-    let y = 0;
-    for(let i = 0; i < 4; i++){
+
+    /*for(let i = 0; i < 4; i++){
       const c = this.add.image(x, y, 'castillo_background').setOrigin(0);
       if(i % 2 == 0){
         x += c.width;
@@ -58,7 +59,7 @@ export default class Level4 extends Phaser.Scene {
         x = 0;
         y += c.height;
       }
-    }
+    }*/
 
     this.cameras.main.setBounds(0,0, totalWidth, totalHeight);
     this.physics.world.setBounds(0,0, totalWidth, totalHeight);
@@ -96,7 +97,7 @@ export default class Level4 extends Phaser.Scene {
     this.player = new SpaceShip(this, 0, 412).setDepth(1);
     this.player.body.setAllowGravity(false);
     this.ghost1 = new Ghost(this, 800, 370, 'ghost');
-    this.ghost2 = new Ghost(this, 350, 200, 'ghost2');
+    this.ghost2 = new Ghost(this, 350, 160, 'ghost2');
     this.door = new Door(this, 1977, 90);
     this.key;
 
@@ -213,6 +214,7 @@ export default class Level4 extends Phaser.Scene {
         laser.shoot(this.player.x, this.player.y + 20, dir);
       }
     } 
+    if(this.player.x > 1970)this.endGame(true);
   }
 
   

@@ -42,28 +42,56 @@ export default class SpaceShip extends Phaser.GameObjects.Sprite {
     
     if(!this.cursors.space.isDown){
       if (this.cursors.up.isDown) {
+
         this.body.setVelocityY(-this.speed);
         this.setTexture('spaceshipUp');
         this.body.setSize(25, 45);
         this.flipY = false;
+
+        if(this.cursors.left.isDown){
+          this.body.setVelocityX(-this.speed);
+          this.rotation = -1;
+        }
+        else if(this.cursors.right.isDown){
+          this.body.setVelocityX(this.speed);
+          this.rotation = 1;
+        }
+        else{
+          this.rotation = 0;
+        }
       }
       else if (this.cursors.down.isDown){
         this.body.setVelocityY(this.speed);
         this.setTexture('spaceshipUp');
         this.body.setSize(25, 45);
         this.flipY = true;
+        this.rotation = 0;
+        
+        if(this.cursors.left.isDown){
+          this.body.setVelocityX(-this.speed);
+          this.rotation = 1;
+        }
+        else if(this.cursors.right.isDown){
+          this.body.setVelocityX(this.speed);
+          this.rotation = -1;
+        }
+        else{
+          this.rotation = 0;
+        }
       }
-      if (this.cursors.left.isDown) {
+      else if (this.cursors.left.isDown) {
         this.body.setVelocityX(-this.speed);
         this.setTexture('spaceshipRight');
         this.body.setSize(45, 25);
         this.flipX = true;
+        this.rotation = 0;
       }
       else if (this.cursors.right.isDown) {
         this.body.setVelocityX(this.speed);
         this.setTexture('spaceshipRight');
         this.body.setSize(45, 25);
         this.flipX = false;
+        this.rotation = 0;
       }
     }
 
