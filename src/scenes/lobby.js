@@ -46,9 +46,9 @@ export default class Lobby extends Phaser.Scene {
     this.load.image('4', 'Number4.png');
     this.load.image('5', 'Number5.png');
     this.load.image('6', 'Number6.png');
-    this.load.image('7', 'Number7.png');
-    this.load.image('8', 'Number8.png');
-    this.load.image('9', 'Number9.png');
+    //this.load.image('7', 'Number7.png');
+    //this.load.image('8', 'Number8.png');
+    //this.load.image('9', 'Number9.png');
     this.load.image('music1', 'music1.png');
     this.load.image('music2', 'music2.png');
     this.load.image('mute1', 'mute1.png');
@@ -79,6 +79,15 @@ export default class Lobby extends Phaser.Scene {
     this.graphics_settings;
 
     this.player = new Player(this, 500, 500);
+
+    this.inputKeys = [
+			this.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.ONE),
+			this.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.TWO),
+      this.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.THREE),
+      this.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.FOUR),
+      this.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.FIVE),
+      this.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.SIX)
+		];
 
     this.btnLevels = this.physics.add.staticSprite(270, 295, 'brick');
     this.physics.add.collider(this.btnLevels, this.player, () => {
@@ -132,13 +141,13 @@ export default class Lobby extends Phaser.Scene {
   }
 
   showLevelSelector() {
-    this.graphics_levels = this.add.graphics().fillRoundedRect(100,100, 300, 300, 32).fillStyle(0xE2AB4B, 0.5);
+    this.graphics_levels = this.add.graphics().fillRoundedRect(100,200, 300, 200, 32).fillStyle(0xE2AB4B, 0.9);
 
-    for(let i = 0; i < 3; i ++){
+    for(let i = 0; i < 2; i ++){
       for(let j = 0; j < 3; j ++){  
         let levelNumber = i*3 + j + 1;
-        let levelThumb = this.add.sprite(j*100 + 100, i*100 + 100, levelNumber).setOrigin(0).setInteractive();
-        levelThumb.on('pointerdown', function (ptr)       { this.setScale(0.9, 0.9) } );
+        let levelThumb = this.add.sprite(j*100 + 100, i*100 + 200, levelNumber).setOrigin(0).setInteractive();
+        levelThumb.on('pointerdown', function (ptr)       { this.setScale(.9, .9) } );
         levelThumb.on('pointerup', () => {
           var level = "level" + levelNumber;
           this.scene.start(level);
@@ -146,6 +155,7 @@ export default class Lobby extends Phaser.Scene {
         this.levelThumbsGroup.add(levelThumb);
       }
     }
+
     this.is_levelSelector = true;
   }
 
@@ -248,7 +258,30 @@ export default class Lobby extends Phaser.Scene {
   } 
 
   update(){
-    
+    if (this.inputKeys[0].isDown) {
+      var level = "level" + 1;
+      this.scene.start(level);
+    }
+    if (this.inputKeys[1].isDown) {
+      var level = "level" + 2;
+      this.scene.start(level);
+    }
+    if (this.inputKeys[2].isDown) {
+      var level = "level" + 3;
+      this.scene.start(level);
+    }
+    if (this.inputKeys[3].isDown) {
+      var level = "level" + 4;
+      this.scene.start(level);
+    }
+    if (this.inputKeys[4].isDown) {
+      var level = "level" + 5;
+      this.scene.start(level);
+    }
+    if (this.inputKeys[5].isDown) {
+      var level = "level" + 6;
+      this.scene.start(level);
+    }
   }
 
 }
