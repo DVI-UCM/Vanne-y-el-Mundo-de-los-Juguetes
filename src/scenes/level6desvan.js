@@ -23,7 +23,7 @@ export default class Level6 extends Phaser.Scene {
   preload(){
     this.load.image('LEGO_LEVEL2', 'assets/tiles/LEGO_LEVEL2.png');
     this.load.tilemapTiledJSON('MAPA2', 'assets/tiles/MAPA2.json');
-    this.load.image("lego", "assets/sprites/fondoPrueba.png");
+    this.load.image("fondoDesvan", "assets/sprites/fondoDesvan.png");
   }
   /**
    * Creación de los elementos de la escena principal de juego
@@ -34,13 +34,16 @@ export default class Level6 extends Phaser.Scene {
     background.displayHeight = this.sys.game.config.height;
     background.scaleX = background.scaleY; 
     background.setScrollFactor(0);*/
-
-    let image = this.add.image(this.cameras.main.width / 2, this.cameras.main.height / 2, 'lego');
+    /*
+    let image = this.add.image(this.cameras.main.width / 2, this.cameras.main.height / 2, 'fondoDesvan');
     let scaleX = this.cameras.main.width / image.width;
     let scaleY = this.cameras.main.height / image.height;
     let scale = Math.max(scaleX, scaleY);
     image.setScale(scale).setScrollFactor(0);
-    
+    */
+
+    this.parallax1 = this.add.tileSprite(0, 0, 5000, 1000, 'fondoDesvan');
+
     let exit = this.add.image(this.cameras.main.width - 20, 20, "exit").setInteractive();
     exit.setDepth(1);
     exit.on('pointerdown', function () { this.setScale(0.9); });
@@ -191,6 +194,21 @@ export default class Level6 extends Phaser.Scene {
         laser.shoot(this.player.x, this.player.y + 20, dir);
       }
     }
+    if(!this.player.muerte){
+      if(this.inputKeys[1].isDown){
+        this.parallax1.tilePositionY += 0.25;
+      }
+      else if (this.inputKeys[2].isDown){
+        this.parallax1.tilePositionX -= 0.25;
+      }
+      else if (this.inputKeys[3].isDown){
+        this.parallax1.tilePositionX += 0.25;
+      }
+      else if (this.inputKeys[4].isDown){
+        this.parallax1.tilePositionY -= 0.25;
+      }
+    }
+
 
     
   }

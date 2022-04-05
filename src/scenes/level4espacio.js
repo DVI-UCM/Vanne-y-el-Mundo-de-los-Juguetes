@@ -37,7 +37,7 @@ export default class Level4 extends Phaser.Scene {
     const height = this.scale.height;
     let x = 0;
     let y = 0;
-    this.add.image(x, y, 'fondoPantalla').setOrigin(0);
+   // this.add.image(x, y, 'fondoPantalla').setOrigin(0);
    // const w = this.textures.get('castillo_background').getSourceImage().width;
     //const h = this.textures.get('castillo_background').getSourceImage().height;
     const totalWidth = this.textures.get('fondoPantalla').getSourceImage().width;
@@ -65,6 +65,7 @@ export default class Level4 extends Phaser.Scene {
     this.physics.world.setBounds(0,0, totalWidth, totalHeight);
     //this.cameras.main.setBounds(0, 0, image.displayWidth, image.displayHeight);
     
+    this.parallax1 = this.add.tileSprite(0, 0, 10000, 2000, 'fondoPantalla');
 
     let exit = this.add.image(this.cameras.main.width - 20, 20, "exit").setInteractive();
     exit.setDepth(1);
@@ -214,6 +215,22 @@ export default class Level4 extends Phaser.Scene {
         laser.shoot(this.player.x, this.player.y + 20, dir);
       }
     } 
+
+    if(!this.player.muerte){
+      if(this.inputKeys[1].isDown){
+        this.parallax1.tilePositionY += 0.25;
+      }
+      else if (this.inputKeys[2].isDown){
+        this.parallax1.tilePositionX -= 0.25;
+      }
+      else if (this.inputKeys[3].isDown){
+        this.parallax1.tilePositionX += 0.25;
+      }
+      else if (this.inputKeys[4].isDown){
+        this.parallax1.tilePositionY -= 0.25;
+      }
+    }
+
     if(this.player.x > 1970)this.endGame(true);
   }
 

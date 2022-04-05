@@ -41,22 +41,23 @@ export default class Level3 extends Phaser.Scene {
   preload(){
     this.load.image('fondo1carreras', 'assets/sprites/fondo1carreras.png');
     this.load.image('fondo2carreras', 'assets/sprites/fondo2carreras.png');
-    this.load.image('fondo3carreras', 'assets/sprites/fondo3carreras.png');  }
+    this.load.image('fondo3carreras', 'assets/sprites/fondo3carreras.png');
+   }
   /**
    * Creación de los elementos de la escena principal de juego
    */
   create() {
 
     //var image = scene.add.tileSprite(x, y, width, height, textureKey);
-    
+    /*
     const width = this.scale.width;
     const height = this.scale.height;
     const totalWidth = width * 3;
     const totalheight = height * 2;
-
-    this.parallax1 = this.add.tileSprite(0, 0, totalWidth, totalheight, 'fondo1carreras');
-    this.parallax2 = this.add.tileSprite(0, 0, totalWidth, totalheight,  'fondo2carreras');
-    this.parallax3 = this.add.tileSprite(0, 0, totalWidth, totalheight, 'fondo3carreras');
+    */
+    this.parallax1 = this.add.tileSprite(0, 0, 5000, 1000, 'fondo1carreras');
+    this.parallax2 = this.add.tileSprite(0, 0, 5000, 1000,  'fondo2carreras');
+    this.parallax3 = this.add.tileSprite(0, 0, 5000, 1000, 'fondo3carreras');
 
 
 

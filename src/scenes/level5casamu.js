@@ -39,30 +39,17 @@ export default class Level5 extends Phaser.Scene {
   }
 
   preload(){
-    this.load.image('fondo1carreras', 'assets/sprites/fondo1carreras.png');
-    this.load.image('fondo2carreras', 'assets/sprites/fondo2carreras.png');
-    this.load.image('fondo3carreras', 'assets/sprites/fondo3carreras.png');  }
-  /**
+    this.load.image('fondoCasaMunecas', 'assets/sprites/fondoCasaMunecas.png');
+   /**
    * Creación de los elementos de la escena principal de juego
    */
+  }
   create() {
 
     //var image = scene.add.tileSprite(x, y, width, height, textureKey);
     
-    const width = this.scale.width;
-    const height = this.scale.height;
-    const totalWidth = width * 3;
-    const totalheight = height * 2;
-
-    this.parallax1 = this.add.tileSprite(0, 0, totalWidth, totalheight, 'fondo1carreras');
-    this.parallax2 = this.add.tileSprite(0, 0, totalWidth, totalheight,  'fondo2carreras');
-    this.parallax3 = this.add.tileSprite(0, 0, totalWidth, totalheight, 'fondo3carreras');
-
-
-
-
-
-
+    this.parallax1 = this.add.tileSprite(0, 0, 2500, 1000, 'fondoCasaMunecas');
+    
 
 
     /* antiguo1
@@ -137,15 +124,11 @@ export default class Level5 extends Phaser.Scene {
     if(!this.player.muerte){
       if(this.player.cursors.left.isDown){
         //cam.scrollX -= speed;
-        this.parallax1.tilePositionX -= 0.15;
-        this.parallax2.tilePositionX -= 0.40;
-        this.parallax3.tilePositionX -= 1.10;
+        this.parallax1.tilePositionX -= 0.25;
       }
       else if (this.player.cursors.right.isDown){
        // cam.scrollX += speed;
-        this.parallax1.tilePositionX += 0.15;
-        this.parallax2.tilePositionX += 0.40;
-        this.parallax3.tilePositionX += 1.10;
+        this.parallax1.tilePositionX += 0.25;
       }
     }
 
