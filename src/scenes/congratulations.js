@@ -1,4 +1,4 @@
-import RestartButton  from "../components/restart-button.js";
+import ContinueButton  from "../components/continue-button.js";
 import ReturnButton  from "../components/returnLobby-button.js";
 
 export default class Congratulations extends Phaser.Scene {
@@ -20,7 +20,7 @@ export default class Congratulations extends Phaser.Scene {
   create() {
     this.add.image(410, 250, 'backGroundConcratulations');
     this.congratulationsImage = this.add.image(400, 90, 'congratulations');
-    this.restartButton = new RestartButton(this, this.keyData);
+    this.continueButton = new ContinueButton(this, this.keyData);
     this.returnButton = new ReturnButton(this);
   }
 }
