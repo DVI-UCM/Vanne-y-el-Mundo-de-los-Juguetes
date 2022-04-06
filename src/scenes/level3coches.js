@@ -1,6 +1,8 @@
 import Platform from '../sprites/platform.js';
 import Player from '../sprites/player.js';
 import Calabaza from '../sprites/calabaza.js';
+import ExitButton from '../components/exit-button.js';
+import FullScreenButton from '../components/fullScreen-button.js';
 
 /*
 const createAligned = (scene, totalWidth, texture, scrollFactor) => {
@@ -120,13 +122,15 @@ export default class Level3 extends Phaser.Scene {
     //this.bases = this.add.group();
     this.player = new Player(this, 500, 500);
     //this.calabaza = new Calabaza(this,0,500);
+    this.exit = new ExitButton(this, this.cameras.main.width - 20, 20);
+    this.fullScreen = new FullScreenButton(this, this.cameras.main.width - 50, 20);
 
     //plataformas
-    //new Platform(this, this.player, 500, 350);
-    //new Platform(this, this.player, 850, 250);
-    //new Platform(this, this.player, 500, 150);
-    //new Platform(this, this.player, 150, 250);
-    //this.spawn();
+    /* new Platform(this, this.player, 500, 350);
+    new Platform(this, this.player, 850, 250);
+    new Platform(this, this.player, 500, 150);
+    new Platform(this, this.player, 150, 250);
+    this.spawn(); */
 
   }
 
@@ -153,35 +157,5 @@ export default class Level3 extends Phaser.Scene {
    // this.exit.setPosition(this.cameras.main.width - 20, 20);
   //this.fullScreen.setPosition(this.cameras.main.width - 50, 20);
   }
-
-  /**
-   * Genera una estrella en una de las bases del escenario
-   * @param {Array<Base>} from Lista de bases sobre las que se puede crear una estrella
-   * Si es null, entonces se crea aleatoriamente sobre cualquiera de las bases existentes
-   */
-  // spawn(from = null) {
-  //   Phaser.Math.RND.pick(from || this.bases.children.entries).spawn();
-  // }
-
-  /**
-   * Método que se ejecuta al coger una estrella. Se pasa la base
-   * sobre la que estaba la estrella cogida para evitar repeticiones
-   * @param {Base} base La base sobre la que estaba la estrella que se ha cogido
-   */
-  // starPickt (base) {
-  //   this.player.point();
-  //     if (this.player.score == this.stars/*&& this.ant.die*/) {
-  //       this.scene.start('end');
-  //     }
-  //     else {
-  //       let s = this.bases.children.entries;
-  //       this.spawn(s.filter(o => o !== base));
-
-  //     }
-  // }
-
-  /*calabazaChoca () {
-    this.player.muere();
-  }*/
   
 }

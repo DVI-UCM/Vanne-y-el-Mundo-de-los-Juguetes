@@ -3,6 +3,8 @@ import Laser from '../sprites/laser.js';
 import Key from '../sprites/key.js';
 import Door from '../sprites/door.js';
 import SpaceShip from '../sprites/spaceship.js';
+import ExitButton from '../components/exit-button.js';
+import FullScreenButton from '../components/fullScreen-button.js';
 
 /**
  * @extends Phaser.Scene
@@ -40,26 +42,8 @@ export default class Level2 extends Phaser.Scene {
     let scale = Math.max(scaleX, scaleY);
     image.setScale(scale).setScrollFactor(0);
     
-    let exit = this.add.image(this.cameras.main.width - 20, 20, "exit").setInteractive();
-    exit.setDepth(1);
-    exit.on('pointerdown', function () { this.setScale(0.9); });
-    exit.on('pointerup', () => {
-      this.scene.start("lobby");
-    });
-
-    let fullScreen = this.add.image(this.cameras.main.width - 50, 20, "fullScreen").setInteractive();
-    fullScreen.setDepth(1);
-    fullScreen.on('pointerdown', () => { this.setScale(0.9); });
-    fullScreen.on('pointerup', () => {
-      if (this.scale.isFullscreen){
-        fullScreen.setTexture("fullScreen");
-        this.scale.stopFullscreen();
-      }
-      else{
-        fullScreen.setTexture("fullScreen2");
-        this.scale.startFullscreen();
-      }
-    });
+    this.exit = new ExitButton(this, this.cameras.main.width - 20, 20);
+    this.fullScreen = new FullScreenButton(this, this.cameras.main.width - 50, 20);
 
     //this.doors = this.physics.add.staticGroup();
     //this.keys = this.physics.add.staticGroup();

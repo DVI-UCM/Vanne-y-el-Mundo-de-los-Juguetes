@@ -107,6 +107,9 @@ export default class Level5 extends Phaser.Scene {
     this.player = new Player(this, 500, 500);
     //this.calabaza = new Calabaza(this,0,500);
 
+    this.exit = new ExitButton(this, this.cameras.main.width - 20, 20);
+    this.fullScreen = new FullScreenButton(this, this.cameras.main.width - 50, 20);
+
     //plataformas
     //new Platform(this, this.player, 500, 350);
     //new Platform(this, this.player, 850, 250);

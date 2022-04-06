@@ -44,26 +44,8 @@ export default class Level6 extends Phaser.Scene {
 
     this.parallax1 = this.add.tileSprite(0, 0, 5000, 1000, 'fondoDesvan');
 
-    let exit = this.add.image(this.cameras.main.width - 20, 20, "exit").setInteractive();
-    exit.setDepth(1);
-    exit.on('pointerdown', function () { this.setScale(0.9); });
-    exit.on('pointerup', () => {
-      this.scene.start("lobby");
-    });
-
-    let fullScreen = this.add.image(this.cameras.main.width - 50, 20, "fullScreen").setInteractive();
-    fullScreen.setDepth(1);
-    fullScreen.on('pointerdown', () => { this.setScale(0.9); });
-    fullScreen.on('pointerup', () => {
-      if (this.scale.isFullscreen){
-        fullScreen.setTexture("fullScreen");
-        this.scale.stopFullscreen();
-      }
-      else{
-        fullScreen.setTexture("fullScreen2");
-        this.scale.startFullscreen();
-      }
-    });
+    this.exit = new ExitButton(this, this.cameras.main.width - 20, 20);
+    this.fullScreen = new FullScreenButton(this, this.cameras.main.width - 50, 20);
 
 
     //this.doors = this.physics.add.staticGroup();

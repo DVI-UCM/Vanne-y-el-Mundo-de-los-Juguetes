@@ -5,6 +5,8 @@ import Cristales from '../sprites/cristales.js';
 import MonstruoVolador from '../sprites/monstruoVolador.js';
 import Cupcake from '../sprites/cupcake.js';
 import Level2 from './level2.js';
+import ExitButton from '../components/exit-button.js';
+import FullScreenButton from '../components/fullScreen-button.js';
 
 
 
@@ -68,24 +70,8 @@ export default class Level1 extends Phaser.Scene {
     //this.physics.world.setBounds(0, 0, totalWidth, height);
     //this.cameras.main.setBounds(0, 0, totalWidth, height);
 
-    this.exit = this.add.image(this.cameras.main.width - 20, 20, "exit").setInteractive();
-    this.exit.on('pointerdown', function (ptr) { this.setScale(0.9, 0.9) } );
-    this.exit.on('pointerup', () => {
-      this.scene.start("lobby");
-    });
-
-    this.fullScreen = this.add.image(this.cameras.main.width - 50, 20, "fullScreen").setInteractive();
-    this.fullScreen.on('pointerdown', function (ptr) { this.setScale(0.9, 0.9) } );
-    this.fullScreen.on('pointerup', () => {
-      if (this.scale.isFullscreen){
-        this.fullScreen.setTexture("fullScreen");
-        this.scale.stopFullscreen();
-      }
-      else{
-        this.fullScreen.setTexture("fullScreen2");
-          this.scale.startFullscreen();
-      }
-    });
+    this.exit = new ExitButton(this, this.cameras.main.width - 20, 20);
+    this.fullScreen = new FullScreenButton(this, this.cameras.main.width - 50, 20);
 
     this.player = new Player(this, 500, 500);
     this.calabaza = new Calabaza(this, 50, 500);
