@@ -22,12 +22,13 @@ export default class Player extends Phaser.GameObjects.Sprite {
 
     this.scene.add.existing(this);
     this.scene.physics.add.existing(this);
+    
     // Queremos que el jugador no se salga de los límites del mundo
     //this.body.setCollideWorldBounds();
     this.body.setCollideWorldBounds(true, 0, 0);
     this.speed = 300;
     this.jumpSpeed = -550;
-
+    this.attacking = false;
     this.cursors = this.scene.input.keyboard.createCursorKeys();    
   }
 
@@ -53,30 +54,29 @@ export default class Player extends Phaser.GameObjects.Sprite {
       repeat: -1    // Animación en bucle
     });
 
-    this.anims.create({
+    /* this.anims.create({
       key: 'slide',
       frames: this.anims.generateFrameNames('player', { prefix: 'slide__00',
       start: 0,
       end: 9}),
       frameRate: 15, // Velocidad de la animación
       repeat: 0    // Animación en bucle
-    });
+    }); */
 
     this.anims.create({
       key: 'attack',
-      frames: this.anims.generateFrameNames('player', { prefix: 'attack__00',
-      start: 0,
-      end: 9}),
+      frames: 'player_attack',
       frameRate: 15 , // Velocidad de la animación
+      repeat:0
     });
 
-    this.anims.create({
+    /* this.anims.create({
       key: 'jump_attack',
       frames: this.anims.generateFrameNames('player', { prefix: 'jump_attack__00',
       start: 0,
       end: 9}),
       frameRate: 15 , // Velocidad de la animación
-    });
+    }); */
 
     this.anims.create({
       key: 'dead',
@@ -103,11 +103,12 @@ export default class Player extends Phaser.GameObjects.Sprite {
    */
   preUpdate(t,dt) {
     super.preUpdate(t,dt);
-
+    const spaceJustPressed = Phaser.Input.Keyboard.JustDown(this.cursors.space);
+    const upJustPressed = Phaser.Input.Keyboard.JustDown(this.cursors.up);
     if(!this.muerte){
-      if(this.cursors.up.isDown && this.body.onFloor()) {
+      if(upJustPressed && this.body.onFloor()) {
         this.body.setVelocityY(this.jumpSpeed);
-        this.anims.play('jump', true);
+        this.anims.play('jump');
       }
 
       if (this.cursors.left.isDown) {
@@ -120,6 +121,9 @@ export default class Player extends Phaser.GameObjects.Sprite {
             this.anims.play('run', true);
             this.body.setOffset(8, 2);
           }
+        }
+        else{
+          this.anims.play('jump', true);
         }
       }
       else if (this.cursors.right.isDown) {
@@ -138,26 +142,44 @@ export default class Player extends Phaser.GameObjects.Sprite {
           this.anims.play('jump', true);
         }
       }
-      else if (this.cursors.space.isDown){
-        if(this.body.onFloor()) 
-          this.anims.play('attack', true);
-        else
+      else if (spaceJustPressed){
+        this.attacking = true;
+        if(this.body.onFloor()){
+          this.anims.play('attack');
+        }
+        else{
           this.anims.play('jump_attack', true);
+        }
+        this.on('animationcomplete', () => {
+          console.log("animation complete");
+          this.attacking = false;
+        })
       }
       else{
-        if(this.body.onFloor()){
-          this.anims.play('idle', true);
-          this.body.setOffset(0);
+        if(!this.attacking){
+          if(this.body.onFloor()){
+              this.anims.play('idle', true);
+              this.body.setOffset(0);
+          }
+          else {
+            this.anims.play('jump', true);
+          }
+          this.body.setVelocityX(0);
         }
-        else {
-          this.anims.play('jump', true);
-        }
-        this.body.setVelocityX(0);
-      }  
-
-      if(this.muerte){
-        this.anims.play('dead', true);
       }
     }
+    else{
+      this.anims.play('dead', true);
+    }
+
+    //codigo de @kittykatattack en https://phaser.discourse.group/t/riding-moving-platforms/7330/6
+    if (this.isOnPlatform && this.currentPlatform) {
+      this.x += this.currentPlatform.vx;
+      this.y += this.currentPlatform.vy;
+  
+      this.isOnPlatform = false;
+      this.currentPlatform = null;
+    }
+    //--
   }
 }

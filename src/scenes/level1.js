@@ -86,13 +86,21 @@ export default class Level1 extends Phaser.Scene {
     var _this = this;
     this.monstruos.children.iterate(function (child) {
       _this.tweens.add({
-          targets: child,
-          x: 700,
-          ease: 'Linear',
-          duration: 1500,
-          yoyo: true,
-          flipX: true,
-          repeat: -1,
+        targets: child,
+        x: 700,
+        ease: 'Linear',
+        duration: 1500,
+        yoyo: true,
+        flipX: true,
+        repeat: -1,
+        //codigo de @kittykatattack en https://phaser.discourse.group/t/riding-moving-platforms/7330/6
+        onUpdate: () => {
+          child.vx = child.body.position.x - child.previousX;
+          child.vy = child.body.position.y - child.previousY;
+          child.previousX = child.body.position.x; 
+          child.previousY = child.body.position.y; 
+        }
+        //--
       });
     });
 
@@ -112,6 +120,30 @@ export default class Level1 extends Phaser.Scene {
       player.body.setOffset(20, 10);
       player.muere();
     });
+
+    //codigo de @kittykatattack en https://phaser.discourse.group/t/riding-moving-platforms/7330/6
+    const collisionMovingPlatform = (sprite, platform) => {
+      if (platform.body.touching.up && sprite.body.touching.down) {
+        sprite.isOnPlatform = true;
+        sprite.currentPlatform = platform;      
+      }
+      else{
+        //this.player.muere();
+      }
+    };
+    //Only allow collisions from top
+    const isCollisionFromTop = (sprite, platform) => {
+      return platform.body.y > sprite.body.y;
+    };
+
+    this.physics.add.collider(
+      this.player,
+      this.monstruos,
+      collisionMovingPlatform,
+      isCollisionFromTop,
+      this
+    );
+    //--
 
     this.physics.add.collider(this.player, this.calabaza, (player, calabaza) => {
       if(!player.body.touching.down){
