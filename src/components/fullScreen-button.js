@@ -4,6 +4,7 @@ export default class FullScreenButton extends Phaser.GameObjects.Sprite {
 
         this.scene.add.existing(this);
         this.setInteractive();
+        this.setDepth(1);
 
         this.on('pointerdown', function (ptr) { this.setScale(0.9, 0.9) } );
         this.on('pointerup', () => {
