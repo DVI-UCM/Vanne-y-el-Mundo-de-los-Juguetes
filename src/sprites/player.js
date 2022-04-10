@@ -1,6 +1,3 @@
-import Star from './star.js';
-import Calabaza from './calabaza.js';
-
 /**
  * Clase que representa el jugador del juego. El jugador se mueve por el mundo usando los cursores.
  * También almacena la puntuación o número de estrellas que ha recogido hasta el momento.
@@ -22,15 +19,17 @@ export default class Player extends Phaser.GameObjects.Sprite {
 
     this.scene.add.existing(this);
     this.scene.physics.add.existing(this);
-    
     // Queremos que el jugador no se salga de los límites del mundo
     //this.body.setCollideWorldBounds();
     this.body.setCollideWorldBounds(true, 0, 0);
     this.speed = 300;
-    this.jumpSpeed = -550;
+    this.jumpSpeed = -400;
     this.attacking = false;
-    this.cursors = this.scene.input.keyboard.createCursorKeys();    
-  }
+    this.cursors = this.scene.input.keyboard.createCursorKeys();  
+    //this.body.setSize(this.width, this.height, true);  
+    //console.log(this.width, this.height);
+    //console.log(this.body.width, this.body.height);
+  } 
 
   createAnims(){
     this.anims.create({
@@ -103,10 +102,24 @@ export default class Player extends Phaser.GameObjects.Sprite {
    */
   preUpdate(t,dt) {
     super.preUpdate(t,dt);
+
+    /* this.body.offset.x     =     ( 0 );
+    this.body.offset.y     =     ( -4 );
+    this.__spriteW = ( this.width ); //width del sprite
+    this.__spriteH = ( this.height ); //width del sprite
+    this.__spriteBodW = ( this.body.width ); //width del hitbox
+    this.__spriteBodH = ( this.body.height ); //hight del hitbox*/
+    //this.__realFrameW = ( this.frame.realWidth );
+    //this.__realFrameH = ( this.frame.realHeight ); 
+    //this.body.setSize(this.__realFrameW, this.__realFrameH, true);  
+
+
     const spaceJustPressed = Phaser.Input.Keyboard.JustDown(this.cursors.space);
     const upJustPressed = Phaser.Input.Keyboard.JustDown(this.cursors.up);
+
     if(!this.muerte){
       if(upJustPressed && this.body.onFloor()) {
+        //this.body.setSize ( this.__spriteW, this.__spriteH, true );
         this.body.setVelocityY(this.jumpSpeed);
         this.anims.play('jump');
       }
@@ -118,8 +131,9 @@ export default class Player extends Phaser.GameObjects.Sprite {
           if(this.cursors.down.isDown)
             this.anims.play('slide', true);
           else{
+            //this.body.setSize( this.__spriteW, this.__spriteH, true);
             this.anims.play('run', true);
-            this.body.setOffset(8, 2);
+            //this.body.setOffset(8, 2);
           }
         }
         else{
@@ -129,13 +143,14 @@ export default class Player extends Phaser.GameObjects.Sprite {
       else if (this.cursors.right.isDown) {
         this.flipX = false;
         this.body.setVelocityX(this.speed);
-
+        
         if(this.body.onFloor()){
           if(this.cursors.down.isDown)
-            this.anims.play('slide', true);
+          this.anims.play('slide', true);
           else{
+            //this.body.setSize( this.__spriteW, this.__spriteH, true);
             this.anims.play('run', true);
-            this.body.setOffset(10, 2);
+            //this.body.setOffset(10, 2);
           }
         }
         else{
@@ -151,15 +166,15 @@ export default class Player extends Phaser.GameObjects.Sprite {
           this.anims.play('jump_attack', true);
         }
         this.on('animationcomplete', () => {
-          console.log("animation complete");
           this.attacking = false;
         })
       }
       else{
         if(!this.attacking){
           if(this.body.onFloor()){
-              this.anims.play('idle', true);
-              this.body.setOffset(0);
+            //this.body.setSize(this.__realFrameW, this.__realFrameH, true);
+            this.anims.play('idle', true);
+            //this.body.setOffset(0);
           }
           else {
             this.anims.play('jump', true);

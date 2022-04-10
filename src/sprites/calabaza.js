@@ -2,17 +2,44 @@
  * Clase que representa el jugador del juego. El jugador se mueve por el mundo usando los cursores.
  * También almacena la puntuación o número de estrellas que ha recogido hasta el momento.
  */
-export default class Player extends Phaser.GameObjects.Sprite {
+export default class Calabaza extends Phaser.GameObjects.Sprite {
   
   /**
    * Constructor del jugador
    * @param {Phaser.Scene} scene Escena a la que pertenece el jugador
-   * @param {number} x Coordenada X
-   * @param {number} y Coordenada Y
+   * @param {number} fromX Coordenada X de inicio. Si el sprite cambia de sentido lo hará en este punto.
+   * @param {number} fromY Coordenada Y de inicio. Si el sprite cambia de sentido lo hará en este punto.
+   * @param {number} toX Coordenada X final. Si el sprite cambia de sentido lo hará en este punto.
+   * @param {number} toY Coordenada Y final. Si el sprite cambia de sentido lo hará en este punto.
    */
-   constructor(scene, x, y) {
-    super(scene, x, y, 'calabaza');
+   constructor(scene, fromX, fromY, toX, toY) {
+    super(scene, fromX, fromY, 'calabaza');
+    
+    this.scene.add.existing(this);
+    this.scene.physics.add.existing(this);
 
+    this.fromX = fromX;
+    this.fromY = fromY;
+    this.toX = toX;
+    this.toY = toY;
+
+
+    this.createAnims();
+    this.anims.play('run', true);
+    
+    this.die = false;
+  
+    // Queremos que el jugador no se salga de los límites del mundo
+    this.body.setCollideWorldBounds(true, 0, 0);
+    
+    this.setScale(.15);
+    
+    this.speed = 100;
+    this.body.setVelocityX(this.speed);
+
+  }
+
+  createAnims(){
     this.anims.create({
       key: 'idle',
       frames: this.anims.generateFrameNames('calabaza', { prefix: 'idle__00',
@@ -30,26 +57,6 @@ export default class Player extends Phaser.GameObjects.Sprite {
       frameRate: 10, // Velocidad de la animación
       repeat: -1    // Animación en bucle
     });
-
-
-      
-    this.anims.play('run', true);
-
-    
-    this.die = false;
-  
-    this.scene.add.existing(this);
-    this.scene.physics.add.existing(this);
-    
-    // Queremos que el jugador no se salga de los límites del mundo
-    this.body.setCollideWorldBounds(true, 0, 0);
-    
-    this.speed = 100;
-    
-    this.setScale(.15);
-
-    this.body.setVelocityX(this.speed);
-
   }
 
   muere(){
@@ -74,6 +81,12 @@ export default class Player extends Phaser.GameObjects.Sprite {
         this.body.setVelocityX(this.speed);
       }
     });
-  }
+
+    if(this.x < this.fromX || this.x >= this.toX) {
+      this.flipX = !this.flipX;
+      this.speed = -this.speed;
+      this.body.setVelocityX(this.speed);
+    }
+  } 
   
 }
