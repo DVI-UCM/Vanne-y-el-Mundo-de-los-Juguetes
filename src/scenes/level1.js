@@ -4,7 +4,6 @@ import Calabaza from '../sprites/calabaza.js';
 import Cristales from '../sprites/cristales.js';
 import MonstruoVolador from '../sprites/monstruoVolador.js';
 import Cupcake from '../sprites/cupcake.js';
-import Level2 from './level2.js';
 import ExitButton from '../components/exit-button.js';
 import FullScreenButton from '../components/fullScreen-button.js';
 
@@ -18,17 +17,21 @@ import FullScreenButton from '../components/fullScreen-button.js';
  * @param {string} texture 
  * @param {number} scrollFactor 
  */
-const createAligned = (scene, totalWidth, texture, scrollFactor) => {
+const createAligned = (scene, totalWidth, texture, scrollFactor, originX, originY) => {
   const w = scene.textures.get(texture).getSourceImage().width;
   const count = Math.ceil(totalWidth / w) * scrollFactor;
   let x = 0;
+  let img;
   for(let i = 0; i < count; i++){
     const c = scene.add.image(x, scene.scale.height, texture)
-      .setOrigin(0,1)
+      .setOrigin(originX,originY)
       .setScrollFactor(scrollFactor);
 
     x += c.width;
+    img = c
   }
+
+  return img;
 }
 
 /**
@@ -53,7 +56,11 @@ export default class Level1 extends Phaser.Scene {
   }
 
   preload(){
-    this.load.image("chuche", "assets/sprites/chuche.png");
+    //this.load.image("chuche", "assets/sprites/chuche.png");
+    this.load.image("chuche1", "assets/backgrounds/level1/Far_Layer_Background.png");
+    this.load.image("chuche2", "assets/backgrounds/level1/Middle_Layer_Background.png");
+    this.load.image("chuche3", "assets/backgrounds/level1/Close_Layer_Background.png");
+    this.load.image("chuche4", "assets/backgrounds/level1/Clouds.png");
   }
   
   /**
@@ -65,7 +72,11 @@ export default class Level1 extends Phaser.Scene {
     const height = this.scale.height;
     const totalWidth = width * 3;
 
-    createAligned(this, totalWidth, 'chuche', 0.80);
+    createAligned(this, totalWidth, 'chuche1', 0.35, 0, 1);
+    createAligned(this, totalWidth, 'chuche2', 0.45, 0, 1);
+    createAligned(this, totalWidth, 'chuche3', 0.65, 0, 1);
+    let bg_clouds = createAligned(this, totalWidth, 'chuche4', 0.35, 0, 1);
+
     this.cameras.main.setBounds(0,0, totalWidth, height);
     //this.physics.world.setBounds(0, 0, totalWidth, height);
     //this.cameras.main.setBounds(0, 0, totalWidth, height);
@@ -94,6 +105,7 @@ export default class Level1 extends Phaser.Scene {
         flipX: true,
         repeat: -1,
         //codigo de @kittykatattack en https://phaser.discourse.group/t/riding-moving-platforms/7330/6
+        //Para que player se mueva con la plataforma
         onUpdate: () => {
           child.vx = child.body.position.x - child.previousX;
           child.vy = child.body.position.y - child.previousY;
