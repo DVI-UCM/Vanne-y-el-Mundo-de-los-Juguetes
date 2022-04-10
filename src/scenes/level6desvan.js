@@ -21,9 +21,9 @@ export default class Level6 extends Phaser.Scene {
   }
 
   preload(){
-    this.load.image('LEGO_LEVEL2', 'assets/tiles/LEGO_LEVEL2.png');
-    this.load.tilemapTiledJSON('MAPA2', 'assets/tiles/MAPA2.json');
-    this.load.image("fondoDesvan", "assets/sprites/fondoDesvan.png");
+    this.load.image('LEGO_LEVEL2', 'assets/tiles/level2/LEGO_LEVEL2.png');
+    this.load.tilemapTiledJSON('MAPA2', 'assets/tiles/level2/MAPA2.json');
+    this.load.image("fondoDesvan", "assets/backgrounds/fondoDesvan.png");
   }
   /**
    * Creación de los elementos de la escena principal de juego

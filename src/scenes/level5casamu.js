@@ -39,7 +39,7 @@ export default class Level5 extends Phaser.Scene {
   }
 
   preload(){
-    this.load.image('fondoCasaMunecas', 'assets/sprites/fondoCasaMunecas.png');
+    this.load.image('fondoCasaMunecas', 'assets/backgrounds/fondoCasaMunecas.png');
    /**
    * Creación de los elementos de la escena principal de juego
    */

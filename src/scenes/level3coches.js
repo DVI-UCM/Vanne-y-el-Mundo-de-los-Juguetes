@@ -41,9 +41,9 @@ export default class Level3 extends Phaser.Scene {
   }
 
   preload(){
-    this.load.image('fondo1carreras', 'assets/sprites/fondo1carreras.png');
-    this.load.image('fondo2carreras', 'assets/sprites/fondo2carreras.png');
-    this.load.image('fondo3carreras', 'assets/sprites/fondo3carreras.png');
+    this.load.image('fondo1carreras', 'assets/backgrounds/level3/fondo1carreras.png');
+    this.load.image('fondo2carreras', 'assets/backgrounds/level3/fondo2carreras.png');
+    this.load.image('fondo3carreras', 'assets/backgrounds/level3/fondo3carreras.png');
    }
   /**
    * Creación de los elementos de la escena principal de juego

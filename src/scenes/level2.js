@@ -22,9 +22,9 @@ export default class Level2 extends Phaser.Scene {
   }
 
   preload(){
-    this.load.image('LEGO_LEVEL2', 'assets/tiles/LEGO_LEVEL2.png');
-    this.load.tilemapTiledJSON('MAPA2', 'assets/tiles/MAPA2.json');
-    this.load.image("lego", "assets/sprites/fondoPrueba.png");
+    this.load.image('LEGO_LEVEL2', 'assets/tiles/level2/LEGO_LEVEL2.png');
+    this.load.tilemapTiledJSON('MAPA2', 'assets/tiles/level2/MAPA2.json');
+    this.load.image("lego", "assets/backgrounds/fondoPrueba.png");
   }
   /**
    * Creación de los elementos de la escena principal de juego

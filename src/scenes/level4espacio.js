@@ -25,9 +25,9 @@ export default class Level4 extends Phaser.Scene {
   }
 
   preload(){
-    this.load.image('LEGO_LEVEL4', 'assets/tiles/lego_level4.png');
-    this.load.tilemapTiledJSON('MAPA4', 'assets/tiles/MAPA4.json');
-    this.load.image("fondoPantalla", "assets/sprites/backGroundLevel4.jpg");
+    this.load.image('LEGO_LEVEL4', 'assets/tiles/level4/lego_level4.png');
+    this.load.tilemapTiledJSON('MAPA4', 'assets/tiles/level4/MAPA4.json');
+    this.load.image("fondoPantalla", "assets/backgrounds/backGroundLevel4.jpg");
   }
   /**
    * Creación de los elementos de la escena principal de juego
