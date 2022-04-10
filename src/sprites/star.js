@@ -4,7 +4,7 @@
  * una nueva estrella en otra posición, si el juego no ha terminado.
  * @extends Phaser.GameObjects.Sprite
  */
-export default class Star extends Phaser.GameObjects.Sprite {
+//export default class Star extends Phaser.GameObjects.Sprite {
   
   /**
    * Constructor de Star
@@ -13,19 +13,19 @@ export default class Star extends Phaser.GameObjects.Sprite {
    * @param {number} x coordenada x
    * @param {number} y coordenada y
    */
-  constructor(scene, base, x, y) {
+  /* constructor(scene, base, x, y) {
     super(scene, x, y, 'star');
     this.scene.add.existing(this);
     this.scene.physics.add.existing(this, true);
     this.y -= this.height;
     this.base = base;
-  }
+  } */
 
   /**
    * Redefinición del preUpdate de Phaser
    * @override
    */
-  preUpdate() {
+ /*  preUpdate() {
     // IMPORTANTE: Si no ponemos esta instrucción y el sprite está animado
     // no se podrá ejecutar la animación del sprite. 
     super.preUpdate();
@@ -37,3 +37,4 @@ export default class Star extends Phaser.GameObjects.Sprite {
     }
   }
 }
+ */

@@ -63,40 +63,42 @@ export default class Boot extends Phaser.Scene {
     });
     this.startText.setOrigin(0.5);
     
+    // Con setPath podemos establecer el prefijo que se añadirá a todos los load que aparecen a continuación
+    this.load.setPath('assets/sprites/');
+    //this.load.image('ant','ant.png');
+    this.load.image('closeDoor','closeDoor.png');
+    this.load.image('key', 'key.png')
+    this.load.image("laser", "shoot_blue.png");
+    this.load.image('lego_verde', 'lego_verde.png');
+    this.load.image('openDoor','openDoor.png');
+    this.load.image('platform', 'platform.png');
+    
     this.load.setPath('assets/sprites/gui');
-    this.load.image("exit", "grey_crossGrey.png");
     this.load.image("fullScreen", "full_screen.png");
     this.load.image("fullScreen2", "full_screen2.png");
+    this.load.image("exit", "grey_crossGrey.png");
 
     this.load.setPath('/assets/backgrounds/');
     this.load.image("castillo_background", "castillo.png");
 
-    // Con setPath podemos establecer el prefijo que se añadirá a todos los load que aparecen a continuación
-    this.load.setPath('assets/sprites/');
-    this.load.image('platform', 'platform.png');
-    this.load.image('lego_verde', 'lego_verde.png');
-    this.load.image('key', 'key.png')
-    this.load.image('ant','ant.png');
-    this.load.image('ghost','ghost.png');
-    this.load.image('ghost2','ghost2.png');
-    this.load.image('closeDoor','closeDoor.png');
-    this.load.image('openDoor','openDoor.png');
-    this.load.image('cristales','cristales.png');
-    this.load.image('monstruoVolador','monstruoVolador.png');
-    this.load.image('cupcake','cupcake.png');
-    this.load.image("laser", "shoot_blue.png");
-    this.load.image("lego_verde", "lego_verde.png");
+    this.load.setPath('/assets/sprites/enemigos/');
+    this.load.atlas('calabaza', 'calabaza/calabaza.png', 'calabaza/calabaza.json');
+    this.load.image('ghost','fantasma/ghost.png');
+    this.load.image('ghost2','fantasma/ghost2.png');
+    this.load.image('monstruoVolador','monstruo_volador/monstruoVolador.png');
+
+    
+    this.load.setPath('/assets/sprites/nave/');
+    this.load.image('spaceshipUp', 'spaceshipUp.png');
+    this.load.image('spaceshipRight', 'spaceshipRight.png');
+    
+    this.load.setPath('/assets/sprites/player/');
     //this.load.atlas('player', 'ninjagirl.png', 'ninjagirl_atlas.json');
-    this.load.atlas('calabaza', 'calabaza.png', 'calabaza.json');
-    this.load.image('spaceshipUp', 'nave/spaceshipUp.png');
-    this.load.image('spaceshipRight', 'nave/spaceshipRight.png');
-    //this.load.image('spaceshipLeft', 'nave/spaceshipLeft.png');
-    //this.load.image('spaceshipDown', 'nave/spaceshipDown.png');
-    this.load.spritesheet('player_idle', 'player/idle_spritesheet.png', {frameWidth: 58, frameHeight: 100});
-    this.load.spritesheet('player_run', 'player/run_spritesheet.png', {frameWidth: 75, frameHeight: 104});
-    this.load.spritesheet('player_jump', 'player/jump_spritesheet.png', {frameWidth: 80, frameHeight: 109});
-    this.load.spritesheet('player_dead', 'player/dead_spritesheet.png', {frameWidth: 116, frameHeight: 120});
-    this.load.spritesheet('player_attack', 'player/attack_spritesheet.png', {frameWidth: 105, frameHeight: 113})
+    this.load.spritesheet('player_idle', 'idle_spritesheet.png', {frameWidth: 58, frameHeight: 100});
+    this.load.spritesheet('player_run', 'run_spritesheet.png', {frameWidth: 75, frameHeight: 104});
+    this.load.spritesheet('player_jump', 'jump_spritesheet.png', {frameWidth: 80, frameHeight: 109});
+    this.load.spritesheet('player_dead', 'dead_spritesheet.png', {frameWidth: 116, frameHeight: 120});
+    this.load.spritesheet('player_attack', 'attack_spritesheet.png', {frameWidth: 105, frameHeight: 113})
 
     this.load.on('progress', function (value) {
       console.log(value);

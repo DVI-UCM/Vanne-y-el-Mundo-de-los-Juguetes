@@ -52,9 +52,8 @@ export default class Player extends Phaser.GameObjects.Sprite {
 
   }
 
- 
-  updateDie(a) {
-    this.die = a;
+  muere(){
+    this.destroy();
   }
 
   /**
@@ -75,8 +74,6 @@ export default class Player extends Phaser.GameObjects.Sprite {
         this.body.setVelocityX(this.speed);
       }
     });
-
-  
   }
   
 }

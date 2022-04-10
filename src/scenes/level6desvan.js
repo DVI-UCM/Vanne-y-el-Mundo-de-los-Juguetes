@@ -1,4 +1,3 @@
-import Wall from '../sprites/wall.js';
 import Ghost from '../sprites/ghost.js';
 import Laser from '../sprites/laser.js';
 import Key from '../sprites/key.js';
