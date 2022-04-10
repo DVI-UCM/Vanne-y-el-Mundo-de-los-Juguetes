@@ -68,11 +68,13 @@ export default class Boot extends Phaser.Scene {
     this.load.image("fullScreen", "full_screen.png");
     this.load.image("fullScreen2", "full_screen2.png");
 
+    this.load.setPath('/assets/backgrounds/');
+    this.load.image("castillo_background", "castillo.png");
+
     // Con setPath podemos establecer el prefijo que se añadirá a todos los load que aparecen a continuación
     this.load.setPath('assets/sprites/');
     this.load.image('platform', 'platform.png');
     this.load.image('lego_verde', 'lego_verde.png');
-    this.load.image('star', 'star.png');
     this.load.image('key', 'key.png')
     this.load.image('ant','ant.png');
     this.load.image('ghost','ghost.png');
@@ -84,7 +86,6 @@ export default class Boot extends Phaser.Scene {
     this.load.image('cupcake','cupcake.png');
     this.load.image("laser", "shoot_blue.png");
     this.load.image("lego_verde", "lego_verde.png");
-    this.load.image("castillo_background", "castillo.png");
     //this.load.atlas('player', 'ninjagirl.png', 'ninjagirl_atlas.json');
     this.load.atlas('calabaza', 'calabaza.png', 'calabaza.json');
     this.load.image('spaceshipUp', 'nave/spaceshipUp.png');
