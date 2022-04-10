@@ -3,6 +3,8 @@ import Laser from '../sprites/laser.js';
 import Key from '../sprites/key.js';
 import Door from '../sprites/door.js';
 import SpaceShip from '../sprites/spaceship.js';
+import ExitButton from '../components/exit-button.js';
+import FullScreenButton from '../components/fullScreen-button.js';
 
 /**
  * Escena principal del juego. La escena se compone de una serie de plataformas 
@@ -66,10 +68,7 @@ export default class Level4 extends Phaser.Scene {
     //this.cameras.main.setBounds(0, 0, image.displayWidth, image.displayHeight);
     
     this.parallax1 = this.add.tileSprite(0, 0, 10000, 2000, 'fondoPantalla');
-
-    this.exit = new ExitButton(this, this.cameras.main.width - 20, 20);
-    this.fullScreen = new FullScreenButton(this, this.cameras.main.width - 50, 20);
-
+    
     this.ghosts = this.physics.add.group({
       allowGravity:false
     });
@@ -109,8 +108,10 @@ export default class Level4 extends Phaser.Scene {
     const tileset1 = this.map.addTilesetImage('LEGO_LEVEL4', 'LEGO_LEVEL4');
     
     this.groundLayer = this.map.createLayer("Capa de patrones 1", tileset1);
-    //this.groundLayer.setCollisionByProperty({ colisiona: true });
     //------------------
+
+    this.exit = new ExitButton(this, this.cameras.main.width - 20, 20);
+    this.fullScreen = new FullScreenButton(this, this.cameras.main.width - 50, 20);
 
     this.createColliders();
   }

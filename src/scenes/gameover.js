@@ -7,7 +7,7 @@ export default class Gameover extends Phaser.Scene {
   }
 
   preload() {
-    this.load.image('backGroundGameOver', 'assets/background/gameOverBackGround.jpg');
+    this.load.image('backGroundGameOver', 'assets/backgrounds/gameOverBackGround.jpg');
     this.load.image('gameover', 'assets/sprites/gameover.png');
     this.load.spritesheet('buttonRestart', 'assets/sprites/restart.png', { frameWidth: 190, frameHeight: 49 }); 
     this.load.spritesheet('buttonReturnLobby', 'assets/sprites/returnLobby.png', { frameWidth: 190, frameHeight: 49 });
