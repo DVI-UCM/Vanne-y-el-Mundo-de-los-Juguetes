@@ -39,6 +39,7 @@ export default class Level4 extends Phaser.Scene {
     const height = this.scale.height;
     let x = 0;
     let y = 0;
+    this.add.image(x, y, 'fondoPantalla').setOrigin(0);
    // this.add.image(x, y, 'fondoPantalla').setOrigin(0);
    // const w = this.textures.get('castillo_background').getSourceImage().width;
     //const h = this.textures.get('castillo_background').getSourceImage().height;
@@ -67,7 +68,7 @@ export default class Level4 extends Phaser.Scene {
     this.physics.world.setBounds(0,0, totalWidth, totalHeight);
     //this.cameras.main.setBounds(0, 0, image.displayWidth, image.displayHeight);
     
-    this.parallax1 = this.add.tileSprite(0, 0, 10000, 2000, 'fondoPantalla');
+   
     
     this.ghosts = this.physics.add.group({
       allowGravity:false
@@ -80,7 +81,7 @@ export default class Level4 extends Phaser.Scene {
     this.player.body.setAllowGravity(false);
     this.ghost1 = new Ghost(this, 800, 370, 'ghost');
     this.ghost2 = new Ghost(this, 350, 160, 'ghost2');
-    this.door = new Door(this, 1977, 90);
+    this.door = new Door(this, 1977, 412);
     this.key;
 
     this.cameras.main.startFollow(this.player);
@@ -110,8 +111,8 @@ export default class Level4 extends Phaser.Scene {
     this.groundLayer = this.map.createLayer("Capa de patrones 1", tileset1);
     //------------------
 
-    this.exit = new ExitButton(this, this.cameras.main.width - 20, 20);
-    this.fullScreen = new FullScreenButton(this, this.cameras.main.width - 50, 20);
+    this.exit = new ExitButton(this, this.cameras.main.width - 20, this.cameras.main.height -320);
+    this.fullScreen = new FullScreenButton(this, this.cameras.main.width - 50, this.cameras.main.height - 320);
 
     this.createColliders();
   }
@@ -177,6 +178,8 @@ export default class Level4 extends Phaser.Scene {
   }
 
   update(){
+    //this.exit.position(this.cameras.main.width - 20, this.cameras.main.height -320);
+    //this.fullScreen.position(this.cameras.main.width - 50, this.cameras.main.height -320);
     // If key was just pressed down, shoot the laser.
     if (this.inputKeys[0].isDown) {
       let dir = "";
@@ -198,22 +201,7 @@ export default class Level4 extends Phaser.Scene {
         laser.shoot(this.player.x, this.player.y + 20, dir);
       }
     } 
-
-    if(!this.player.muerte){
-      if(this.inputKeys[1].isDown){
-        this.parallax1.tilePositionY += 0.25;
-      }
-      else if (this.inputKeys[2].isDown){
-        this.parallax1.tilePositionX -= 0.25;
-      }
-      else if (this.inputKeys[3].isDown){
-        this.parallax1.tilePositionX += 0.25;
-      }
-      else if (this.inputKeys[4].isDown){
-        this.parallax1.tilePositionY -= 0.25;
-      }
-    }
-
+ 
     if(this.player.x > 1970)this.endGame(true);
   }
 

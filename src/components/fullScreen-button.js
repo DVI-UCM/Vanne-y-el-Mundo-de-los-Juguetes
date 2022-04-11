@@ -18,4 +18,8 @@ export default class FullScreenButton extends Phaser.GameObjects.Sprite {
         }
     });
     }
+    position(x,y){
+        this.x = x;
+        this.y = y;
+    }
 }

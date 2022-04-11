@@ -12,4 +12,8 @@ export default class ExitButton extends Phaser.GameObjects.Sprite {
             this.scene.scene.start("lobby");
         });
     }
+    position(x,y){
+        this.x = x;
+        this.y = y;
+    }
 }
