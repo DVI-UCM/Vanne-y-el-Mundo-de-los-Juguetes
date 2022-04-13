@@ -188,11 +188,17 @@ export default class Level1 extends Phaser.Scene {
 
     this.physics.add.collider(this.player, this.calabaza, (player, calabaza) => {
       if(!player.body.touching.down){
-        calabaza.anims.play('idle', true);
-        calabaza.body.setVelocityX(0);
-        player.body.setOffset(29, 0);
-        player.muere();
-        this.endGame(); 
+        if(player.anims.play('attack, true')){
+          calabaza.muere();
+        }
+        else{
+          calabaza.anims.play('idle', true);
+          calabaza.body.setVelocityX(0);
+          player.body.setOffset(29, 0);
+          player.muere();
+          this.endGame(); 
+        }
+        
       }
       else {
         calabaza.muere();

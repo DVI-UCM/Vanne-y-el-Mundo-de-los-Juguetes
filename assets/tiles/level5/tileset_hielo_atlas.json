@@ -1,0 +1,177 @@
+{
+    "frames": [
+        {
+            "filename": "baseHieloResbala",
+            "frame": {
+                "w": 480,
+                "h": 480,
+                "x": 0,
+                "y": 0
+            },
+            "anchor": {
+                "x": 0.5,
+                "y": 0.5
+            }
+        },
+        {
+            "filename": "baseHielo",
+            "frame": {
+                "w": 480,
+                "h": 480,
+                "x": 0,
+                "y": 480
+            },
+            "anchor": {
+                "x": 0.5,
+                "y": 0.5
+            }
+        },
+        {
+            "filename": "basePiedra",
+            "frame": {
+                "w": 480,
+                "h": 480,
+                "x": 0,
+                "y": 960
+            },
+            "anchor": {
+                "x": 0.5,
+                "y": 0.5
+            }
+        },
+        {
+            "filename": "cuboHielo",
+            "frame": {
+                "w": 150,
+                "h": 138,
+                "x": 0,
+                "y": 1440
+            },
+            "anchor": {
+                "x": 0.5,
+                "y": 0.5
+            }
+        },
+        {
+            "filename": "bolaNieve",
+            "frame": {
+                "w": 300,
+                "h": 302,
+                "x": 0,
+                "y": 1578
+            },
+            "anchor": {
+                "x": 0.5,
+                "y": 0.5
+            }
+        },
+        {
+            "filename": "cristalesHielo",
+            "frame": {
+                "w": 356,
+                "h": 476,
+                "x": 0,
+                "y": 1880
+            },
+            "anchor": {
+                "x": 0.5,
+                "y": 0.5
+            }
+        },
+        {
+            "filename": "pina",
+            "frame": {
+                "w": 300,
+                "h": 356,
+                "x": 0,
+                "y": 2356
+            },
+            "anchor": {
+                "x": 0.5,
+                "y": 0.5
+            }
+        },
+        {
+            "filename": "base1",
+            "frame": {
+                "w": 886,
+                "h": 268,
+                "x": 0,
+                "y": 2712
+            },
+            "anchor": {
+                "x": 0.5,
+                "y": 0.5
+            }
+        },
+        {
+            "filename": "base2",
+            "frame": {
+                "w": 886,
+                "h": 410,
+                "x": 0,
+                "y": 2980
+            },
+            "anchor": {
+                "x": 0.5,
+                "y": 0.5
+            }
+        },
+        {
+            "filename": "corazon",
+            "frame": {
+                "w": 306,
+                "h": 276,
+                "x": 0,
+                "y": 3390
+            },
+            "anchor": {
+                "x": 0.5,
+                "y": 0.5
+            }
+        },
+        {
+            "filename": "moneda",
+            "frame": {
+                "w": 270,
+                "h": 270,
+                "x": 0,
+                "y": 3666
+            },
+            "anchor": {
+                "x": 0.5,
+                "y": 0.5
+            }
+        },
+        {
+            "filename": "cristal1",
+            "frame": {
+                "w": 480,
+                "h": 480,
+                "x": 0,
+                "y": 3936
+            },
+            "anchor": {
+                "x": 0.5,
+                "y": 0.5
+            }
+        },
+        {
+            "filename": "cristal2",
+            "frame": {
+                "w": 480,
+                "h": 480,
+                "x": 0,
+                "y": 4416
+            },
+            "anchor": {
+                "x": 0.5,
+                "y": 0.5
+            }
+        }
+    ],
+    "meta": {
+        "description": "Atlas generado con Atlas Packer Gamma V2",
+        "web": "https://gammafp.github.io/atlas-packer-phaser/"
+    }
+}

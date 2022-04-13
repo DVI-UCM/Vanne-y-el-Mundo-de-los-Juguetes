@@ -1,21 +1,35 @@
 import Platform from '../sprites/platform.js';
+import Cupcake from '../sprites/cupcake.js';
+import ExitButton from '../components/exit-button.js';
+import FullScreenButton from '../components/fullScreen-button.js';
 import Player from '../sprites/player.js';
-import Calabaza from '../sprites/calabaza.js';
 
-/*
-const createAligned = (scene, totalWidth, texture, scrollFactor) => {
+
+/**
+ * 
+ * @param {Phaser.Scene} scene 
+ * @param {number} totalWidth 
+ * @param {string} texture 
+ * @param {number} scrollFactor 
+ */
+ const createAligned = (scene, totalWidth, texture, scrollFactor, originX, originY) => {
   const w = scene.textures.get(texture).getSourceImage().width;
+  const h = scene.textures.get(texture).getSourceImage().height;
   const count = Math.ceil(totalWidth / w) * scrollFactor;
   let x = 0;
+  let img;
   for(let i = 0; i < count; i++){
     const c = scene.add.image(x, scene.scale.height, texture)
-      .setOrigin(0,1)
+      .setOrigin(originX,originY)
       .setScrollFactor(scrollFactor);
 
     x += c.width;
+    img = c
   }
+
+  return img;
 }
-*/
+
 
 /**
  * Escena principal del juego. La escena se compone de una serie de plataformas 
@@ -33,140 +47,119 @@ export default class Level5 extends Phaser.Scene {
     super({ key: 'level5' });
   }
 
-
-  init(){
-
-  }
-
   preload(){
-    this.load.image('fondoCasaMunecas', 'assets/backgrounds/fondoCasaMunecas.png');
-   /**
-   * Creación de los elementos de la escena principal de juego
-   */
+    //this.load.image('fondoCasaMunecas', 'assets/backgrounds/fondoCasaMunecas.png');
+    // this.load.setPath('assets/sprites/');
+    // this.load.image('cristales','cristales.png');
+    // this.load.image('cupcake','cupcake.png');
+
+    this.load.setPath('assets/backgrounds/level5/');
+    this.load.image("hielo1", "fondohielo7.png");
+    this.load.image("hielo2", "fondohielo6.png");
+    this.load.image("hielo3", "fondohielo5.png");
+    this.load.image("hielo4", "fondohielo4.png");
+    this.load.image("hielo5", "fondohielo3.png");
+    this.load.image("hielo6", "fondohielo2.png");
+    this.load.image("hielo7", "fondohielo1.png");
+
+
+    this.load.setPath('assets/tiles/level5/');
+    this.load.image('level5_tileset', 'tileset_hielo.png');
+    this.load.tilemapTiledJSON('level5_map', 'tileset_hielo_atlas.json');
   }
   create() {
-
-    //var image = scene.add.tileSprite(x, y, width, height, textureKey);
-    
-    this.parallax1 = this.add.tileSprite(0, 0, 2500, 1000, 'fondoCasaMunecas');
-    
-
-
-    /* antiguo1
-    let image = this.add.image(this.cameras.main.width / 2, this.cameras.main.height / 2, 'fondocoches');
-    let scaleX = this.cameras.main.width / image.width;
-    let scaleY = this.cameras.main.height / image.height;
-    let scale = Math.max(scaleX, scaleY);
-    
-    image.setScale(scale).setScrollFactor(0);  
-    let fullScreen = this.add.image(this.cameras.main.width - 50, 20, "fullScreen").setInteractive();
-    fullScreen.on('pointerdown', function (ptr) { this.setScale(0.9, 0.9) } );
-    fullScreen.on('pointerup', () => {
-      if (this.scale.isFullscreen){
-        fullScreen.setTexture("fullScreen");
-        this.scale.stopFullscreen();
-      }
-      else{
-        fullScreen.setTexture("fullScreen2");
-          this.scale.startFullscreen();
-      }
-    });
-    */
-    
-    /* ANTIGUO 2
+    //Fondo parallax
     const width = this.scale.width;
     const height = this.scale.height;
-    const totalWidth = width * 3;
+    const totalWidth = width * 2;
 
-    createAligned(this, totalWidth, 'fondo1carreras', 0.80);
-    this.cameras.main.setBounds(0,0, totalWidth, height);
+    createAligned(this, totalWidth, 'hielo1', 0.35, 0, 1);
+    createAligned(this, totalWidth, 'hielo2', 0.45, 0, 1);
+    createAligned(this, totalWidth, 'hielo3', 0.65, 0, 1);
+    createAligned(this, totalWidth, 'hielo4', 0.35, 0, 1);
 
-    this.exit = this.add.image(this.cameras.main.width - 20, 20, "exit").setInteractive();
-    this.exit.on('pointerdown', function (ptr) { this.setScale(0.9, 0.9) } );
-    this.exit.on('pointerup', () => {
-    this.scene.start("lobby");
+    createAligned(this, totalWidth, 'hielo5', 0.35, 0, 1);
+    createAligned(this, totalWidth, 'hielo6', 0.35, 0, 1);
+    createAligned(this, totalWidth, 'hielo7', 0.35, 0, 1);
 
-    });
 
-    this.fullScreen = this.add.image(this.cameras.main.width - 50, 20, "fullScreen").setInteractive();
-    this.fullScreen.on('pointerdown', function (ptr) { this.setScale(0.9, 0.9) } );
-    this.fullScreen.on('pointerup', () => {
-      if (this.scale.isFullscreen){
-        this.fullScreen.setTexture("fullScreen");
-        this.scale.stopFullscreen();
-      }
-      else{
-        this.fullScreen.setTexture("fullScreen2");
-          this.scale.startFullscreen();
-      }
-    });
-    */
-    
+    this.physics.world.setBounds(0, 0, totalWidth, height, true, true, false, false);
+    this.cameras.main.setBounds(0, 0, totalWidth, height);
+    this.cameras.main.centerOn(0, 30);
 
-    //this.bases = this.add.group();
-    this.player = new Player(this, 500, 500);
-    //this.calabaza = new Calabaza(this,0,500);
-
+  
     this.exit = new ExitButton(this, this.cameras.main.width - 20, 20);
     this.fullScreen = new FullScreenButton(this, this.cameras.main.width - 50, 20);
 
-    //plataformas
-    //new Platform(this, this.player, 500, 350);
-    //new Platform(this, this.player, 850, 250);
-    //new Platform(this, this.player, 500, 150);
-    //new Platform(this, this.player, 150, 250);
-    //this.spawn();
+    const map = this.make.tilemap({key: 'level5_map'});
 
-  }
+    const tileset = map.addTilesetImage('Ice_World', 'level5_tileset');
+      
+    this.groundLayer = map.createLayer("baseHielo", tileset);
+    map.createLayer("baseHielo", tileset);
+    map.createLayer("baseHielo", tileset);
+    map.createLayer("baseHielo", tileset); 
 
-  update(){
     
-
-    //const cam = this.cameras.main;
-    //const speed = 3;
-    if(!this.player.muerte){
-      if(this.player.cursors.left.isDown){
-        //cam.scrollX -= speed;
-        this.parallax1.tilePositionX -= 0.25;
-      }
-      else if (this.player.cursors.right.isDown){
-       // cam.scrollX += speed;
-        this.parallax1.tilePositionX += 0.25;
-      }
-    }
-
-   // this.exit.setPosition(this.cameras.main.width - 20, 20);
-  //this.fullScreen.setPosition(this.cameras.main.width - 50, 20);
+    this.player = new Player(this, 50, 425);
+    this.cameras.main.startFollow(this.player);
+    //this.cupcake = new Cupcake(this, 100, 80); 
+    
+    
+    this.createColliders();
   }
 
-  /**
-   * Genera una estrella en una de las bases del escenario
-   * @param {Array<Base>} from Lista de bases sobre las que se puede crear una estrella
-   * Si es null, entonces se crea aleatoriamente sobre cualquiera de las bases existentes
-   */
-  // spawn(from = null) {
-  //   Phaser.Math.RND.pick(from || this.bases.children.entries).spawn();
-  // }
+  createColliders(){
+    this.groundLayer.setCollisionByProperty({ colisiona: true });
+    this.physics.add.collider(this.player, this.groundLayer);
+    // this.physics.add.collider(this.monstruos, this.groundLayer);
 
-  /**
-   * Método que se ejecuta al coger una estrella. Se pasa la base
-   * sobre la que estaba la estrella cogida para evitar repeticiones
-   * @param {Base} base La base sobre la que estaba la estrella que se ha cogido
-   */
-  // starPickt (base) {
-  //   this.player.point();
-  //     if (this.player.score == this.stars/*&& this.ant.die*/) {
-  //       this.scene.start('end');
-  //     }
-  //     else {
-  //       let s = this.bases.children.entries;
-  //       this.spawn(s.filter(o => o !== base));
 
-  //     }
-  // }
+    //codigo de @kittykatattack en https://phaser.discourse.group/t/riding-moving-platforms/7330/6
+    const collisionMovingPlatform = (sprite, platform) => {
+      if (platform.body.touching.up && sprite.body.touching.down) {
+        sprite.isOnPlatform = true;
+        sprite.currentPlatform = platform;      
+      }
+      else{
+        //this.player.muere();
+      }
+    };
 
-  /*calabazaChoca () {
-    this.player.muere();
-  }*/
+    //Only allow collisions from top
+    const isCollisionFromTop = (sprite, platform) => {
+      return platform.body.y > sprite.body.y;
+    };
+
+    this.physics.add.collider(
+      this.player,
+      collisionMovingPlatform,
+      isCollisionFromTop,
+      this
+    );
+
+  }
+
+  endGame(completed = false) {
+      if(!completed) {
+        this.scene.launch('gameover', {key: this.scene.key });
+      } else {
+        this.scene.launch('congratulations', {key: this.scene.key });
+      }
+  }
+  
+  update(){
+      //parallax
+      const cam = this.cameras.main;
+      const speed = 3;
+      if(!this.player.muerte){
+        if(this.player.cursors.left.isDown){
+          cam.scrollX -= speed;
+        }
+        else if (this.player.cursors.right.isDown){
+          cam.scrollX += speed;
+        }
+      }
+  }
   
 }
