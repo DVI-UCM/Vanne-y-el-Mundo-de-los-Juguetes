@@ -101,12 +101,12 @@ export default class Level6 extends Phaser.Scene {
   }
 
   createLights(){
-    const x = 400
-		const y = 300
+    const x = 1000
+		const y = 500
 
-		const reveal = this.add.image(x, y, 'fondoPantalla')
-		this.cover = this.add.image(x, y, 'fondoPantalla')
+		this.cover = this.add.image(x, y, 'fondoPantalla') //Capa de encima
 		this.cover.setTint(0x004c99)
+
 
 		const width = this.cover.width
 		const height = this.cover.height
@@ -127,9 +127,8 @@ export default class Level6 extends Phaser.Scene {
 		this.cover.mask = new Phaser.Display.Masks.BitmapMask(this, maskImage)
 		this.cover.mask.invertAlpha = true
 
-		reveal.mask = new Phaser.Display.Masks.BitmapMask(this, maskImage)
-
-		this.light = this.add.circle(0, 0, 70, 0x000000, 1)
+//El 200 es el tamaño del circulo
+		this.light = this.add.circle(0, 0, 200, 0x000000, 1)
 		this.light.visible = false
 
 		this.input.on(Phaser.Input.Events.POINTER_MOVE, this.playerLightMove, this)
