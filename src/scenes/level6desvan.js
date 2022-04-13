@@ -3,8 +3,15 @@ import Laser from '../sprites/laser.js';
 import Key from '../sprites/key.js';
 import Door from '../sprites/door.js';
 import SpaceShip from '../sprites/spaceship.js';
+import ExitButton from '../components/exit-button.js';
+import FullScreenButton from '../components/fullScreen-button.js';
 
 /**
+ * Escena principal del juego. La escena se compone de una serie de plataformas 
+ * sobre las que se sitúan las bases en las podrán aparecer las estrellas. 
+ * El juego comienza generando aleatoriamente una base sobre la que generar una estrella. 
+ * Cada vez que el jugador recoge la estrella, aparece una nueva en otra base.
+ * El juego termina cuando el jugador ha recogido 10 estrellas.
  * @extends Phaser.Scene
  */
 export default class Level6 extends Phaser.Scene {
@@ -20,35 +27,30 @@ export default class Level6 extends Phaser.Scene {
   }
 
   preload(){
-    this.load.image('LEGO_LEVEL2', 'assets/tiles/level2/LEGO_LEVEL2.png');
-    this.load.tilemapTiledJSON('MAPA2', 'assets/tiles/level2/MAPA2.json');
-    this.load.image("fondoDesvan", "assets/backgrounds/fondoDesvan.png");
+    this.load.image('LEGO_LEVEL4', 'assets/tiles/level4/lego_level4.png');
+    this.load.tilemapTiledJSON('MAPA4', 'assets/tiles/level4/MAPA4.json');
+    this.load.image("fondoPantalla", "assets/backgrounds/backGroundLevel4.jpg");
   }
   /**
    * Creación de los elementos de la escena principal de juego
    */
   create() {
+    const width = this.scale.width;
+    const height = this.scale.height;
+    let x = 0;
+    let y = 0;
+    this.add.image(x, y, 'fondoPantalla').setOrigin(0);
+
+    const totalWidth = this.textures.get('fondoPantalla').getSourceImage().width;
+    const totalHeight = this.textures.get('fondoPantalla').getSourceImage().height;
+
+
+    this.cameras.main.setBounds(0,0, totalWidth, totalHeight);
+    this.physics.world.setBounds(0,0, totalWidth, totalHeight);
+
     
-    /*let background = this.add.tileSprite(0, 0, 0, 0, "lego").setOrigin(0,0);
-    background.displayHeight = this.sys.game.config.height;
-    background.scaleX = background.scaleY; 
-    background.setScrollFactor(0);*/
-    /*
-    let image = this.add.image(this.cameras.main.width / 2, this.cameras.main.height / 2, 'fondoDesvan');
-    let scaleX = this.cameras.main.width / image.width;
-    let scaleY = this.cameras.main.height / image.height;
-    let scale = Math.max(scaleX, scaleY);
-    image.setScale(scale).setScrollFactor(0);
-    */
-
-    this.parallax1 = this.add.tileSprite(0, 0, 5000, 1000, 'fondoDesvan');
-
-    this.exit = new ExitButton(this, this.cameras.main.width - 20, 20);
-    this.fullScreen = new FullScreenButton(this, this.cameras.main.width - 50, 20);
-
-
-    //this.doors = this.physics.add.staticGroup();
-    //this.keys = this.physics.add.staticGroup();
+   
+    
     this.ghosts = this.physics.add.group({
       allowGravity:false
     });
@@ -58,14 +60,15 @@ export default class Level6 extends Phaser.Scene {
     
     this.player = new SpaceShip(this, 0, 412).setDepth(1);
     this.player.body.setAllowGravity(false);
-    this.ghost1 = new Ghost(this, 800, 420, 'ghost');
-    this.ghost2 = new Ghost(this, 350, 200, 'ghost2');
-    this.door = new Door(this, 977, 90);
+    this.ghost1 = new Ghost(this, 800, 370, 'ghost');
+    this.ghost2 = new Ghost(this, 350, 160, 'ghost2');
+    this.door = new Door(this, 1977, 412);
     this.key;
-    
+
+    this.cameras.main.startFollow(this.player);
     this.ghosts.add(this.ghost1);
     this.ghosts.add(this.ghost2);
-    this.lasers.add(new Laser(this, this.player.x, this.player.y + 20));
+    this.lasers.add(new Laser(this, this.player.x, this.player.y ));
 
     this.inputKeys = [
 			this.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.SPACE),
@@ -75,39 +78,89 @@ export default class Level6 extends Phaser.Scene {
       this.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.UP)
 		];
 
-
+   
+    //CREAR MAPA
     this.map = this.make.tilemap({ 
-        key: 'MAPA2',
-        tileWidth: 50, 
-        tileHeight: 50
-    
-    });
+      key: 'MAPA4',
+      tileWidth: 50, 
+      tileHeight: 50
   
-    const tileset2 = this.map.addTilesetImage('LEGO_LEVEL2', 'LEGO_LEVEL2');
-      
-    this.groundLayer = this.map.createLayer("Capa de patrones 1", tileset2);
+    });
+
+    const tileset1 = this.map.addTilesetImage('LEGO_LEVEL4', 'LEGO_LEVEL4');
+    
+    this.groundLayer = this.map.createLayer("Capa de patrones 1", tileset1);
+    //------------------
+
+    this.exit = new ExitButton(this, this.cameras.main.width - 20, this.cameras.main.height -320);
+    this.fullScreen = new FullScreenButton(this, this.cameras.main.width - 50, this.cameras.main.height - 320);
 
     this.createColliders();
-
+     //CREAR LUCES
+    this.createLights();
   }
 
-  createColliders(){
+  createLights(){
+    const x = 400
+		const y = 300
 
+		const reveal = this.add.image(x, y, 'fondoPantalla')
+		this.cover = this.add.image(x, y, 'fondoPantalla')
+		this.cover.setTint(0x004c99)
+
+		const width = this.cover.width
+		const height = this.cover.height
+
+		const rt = this.make.renderTexture({
+			width,
+			height,
+			add: false
+		})
+
+		const maskImage = this.make.image({
+			x,
+			y,
+			key: rt.texture.key,
+			add: false
+		})
+
+		this.cover.mask = new Phaser.Display.Masks.BitmapMask(this, maskImage)
+		this.cover.mask.invertAlpha = true
+
+		reveal.mask = new Phaser.Display.Masks.BitmapMask(this, maskImage)
+
+		this.light = this.add.circle(0, 0, 70, 0x000000, 1)
+		this.light.visible = false
+
+		this.input.on(Phaser.Input.Events.POINTER_MOVE, this.playerLightMove, this)
+
+		this.renderTexture = rt
+	}
+
+  playerLightMove()
+	{
+		const x = this.player.x- this.cover.x + this.cover.width * 0.5
+		const y = this.player.y - this.cover.y + this.cover.height * 0.5
+
+		this.renderTexture.clear()
+		this.renderTexture.draw(this.light, x, y)
+	}
+
+  createColliders(){
     this.groundLayer.setCollisionByProperty({ colisiona: true });
     this.physics.add.collider(this.player, this.groundLayer);
+    this.physics.add.collider(this.lasers, this.groundLayer, (laser) => {
+      laser.onCollision();
+    });    
     this.physics.add.collider(this.ghosts, this.groundLayer, (ghost) => {
-        ghost.onCollision();
-      });
-
-
+      ghost.onCollision();
+    });
 
     this.physics.add.collider(this.player, this.ghosts, () => {
       this.player.body.setVelocityX(0);
       this.player.muere();
       this.endGame();
     });
-
-
 
     this.physics.add.collider(this.lasers, this.ghosts, (laser, ghost) => {
       laser.onCollision();
@@ -154,7 +207,11 @@ export default class Level6 extends Phaser.Scene {
   }
 
   update(){
+    //this.exit.position(this.cameras.main.width - 20, this.cameras.main.height -320);
+    //this.fullScreen.position(this.cameras.main.width - 50, this.cameras.main.height -320);
     // If key was just pressed down, shoot the laser.
+
+    this.playerLightMove();
     if (this.inputKeys[0].isDown) {
       let dir = "";
       if(this.inputKeys[1].isDown){
@@ -174,24 +231,9 @@ export default class Level6 extends Phaser.Scene {
       if (laser) {
         laser.shoot(this.player.x, this.player.y + 20, dir);
       }
-    }
-    if(!this.player.muerte){
-      if(this.inputKeys[1].isDown){
-        this.parallax1.tilePositionY += 0.25;
-      }
-      else if (this.inputKeys[2].isDown){
-        this.parallax1.tilePositionX -= 0.25;
-      }
-      else if (this.inputKeys[3].isDown){
-        this.parallax1.tilePositionX += 0.25;
-      }
-      else if (this.inputKeys[4].isDown){
-        this.parallax1.tilePositionY -= 0.25;
-      }
-    }
-
-
-    
+    } 
+ 
+    if(this.player.x > 1970)this.endGame(true);
   }
 
   
