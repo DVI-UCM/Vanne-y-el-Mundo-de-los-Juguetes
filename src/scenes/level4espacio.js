@@ -1,7 +1,5 @@
 import Ghost from '../sprites/ghost.js';
 import Laser from '../sprites/laser.js';
-import Key from '../sprites/key.js';
-import Door from '../sprites/door.js';
 import SpaceShip from '../sprites/spaceship.js';
 import ExitButton from '../components/exit-button.js';
 import FullScreenButton from '../components/fullScreen-button.js';
@@ -82,7 +80,6 @@ export default class Level4 extends Phaser.Scene {
     this.player.body.setAllowGravity(false);
     this.ghost1 = new Ghost(this, 800, 370, 'ghost');
     this.ghost2 = new Ghost(this, 350, 160, 'ghost2');
-    this.door = new Door(this, 1977, 412);
     this.key;
 
     this.cameras.main.startFollow(this.player);
@@ -139,24 +136,10 @@ export default class Level4 extends Phaser.Scene {
       laser.onCollision();
       ghost.updateDie(true);
       ghost.destroy();
-      if(this.ghost1.die && this.ghost2.die){
-        this.key = new Key(this, 450, 420);
-        this.physics.add.overlap(this.player, this.key, (player, key) =>{
-          this.door.setTexture('openDoor');
-          this.door.setOpen();
-          key.destroy();
-        });
-      }
+
     });
 
-    this.physics.add.overlap(this.player, this.door, (player, door)=>{
-      if(!door.close){//Si la puerta está abierta
-        this.endGame(true); //Termino el juego
-      }
-      //else{
-        //Mostrar texto indicando que tiene que matar a los bichos para que salga la llave
-      //}
-    });
+
   }
 
   endGame(completed = false) {
@@ -172,14 +155,34 @@ export default class Level4 extends Phaser.Scene {
     laser.shoot(this.player.x, this.player.y + 20, dir);
   }
 
-  keyPick(){
-    if(this.player.x == 450 && this.player.y == 380){
-      this.key.destroy();
-      this.door.setOpen();
+
+  checkTp(){
+    //Inicial 1
+    if(this.player.x >=60 && this.player.x <= 90 && this.player.y <= 285 && this.player.y >= 265){
+      this.player.y = 400; 
+    }
+    if(this.player.x >=60 && this.player.x <= 90 && this.player.y <= 385 && this.player.y >= 365){
+      this.player.y = 250; 
+    }
+    //Inicial 2
+    if(this.player.x >=60 && this.player.x <= 90 && this.player.y <= 535 && this.player.y >= 515){
+      this.player.y = 650; 
+    }
+    if(this.player.x >=60 && this.player.x <= 90 && this.player.y <= 635 && this.player.y >= 615){
+      this.player.y = 500; 
+    }
+    //Final
+    if(this.player.x >=1810 && this.player.x <= 1840 && this.player.y <= 935 && this.player.y >= 915){
+      this.player.y = 850; 
+      this.player.x = 1925;
+    }
+    if(this.player.x >=1910 && this.player.x <= 1940 && this.player.y <= 935 && this.player.y >= 915){
+      this.player.y = 850; 
+      this.player.x = 1825;
     }
   }
-
   update(){
+    this.checkTp();
     //this.exit.position(this.cameras.main.width - 20, this.cameras.main.height -320);
     //this.fullScreen.position(this.cameras.main.width - 50, this.cameras.main.height -320);
     // If key was just pressed down, shoot the laser.
@@ -200,7 +203,7 @@ export default class Level4 extends Phaser.Scene {
       // Get the first available sprite in the group
       const laser = this.lasers.getFirstDead(false);
       if (laser) {
-        laser.shoot(this.player.x, this.player.y + 20, dir);
+        laser.shoot(this.player.x, this.player.y, dir);
       }
     } 
  

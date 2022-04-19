@@ -1,7 +1,6 @@
 import Ghost from '../sprites/ghost.js';
 import Laser from '../sprites/laser.js';
 import Key from '../sprites/key.js';
-import Door from '../sprites/door.js';
 import SpaceShip from '../sprites/spaceship.js';
 import ExitButton from '../components/exit-button.js';
 import FullScreenButton from '../components/fullScreen-button.js';
@@ -207,11 +206,61 @@ export default class Level6 extends Phaser.Scene {
     }
   }
 
+  
+  checkTp(){
+    //Inicial
+    if(this.player.x >=60 && this.player.x <= 90 && this.player.y <= 90 && this.player.y >= 60){
+      this.player.y = 125;
+      this.player.x = 175; 
+    }
+    if(this.player.x >=160 && this.player.x <= 190 && this.player.y <= 90 && this.player.y >= 60){
+      this.player.y = 125;
+      this.player.x = 75; 
+    }
+    //Medio 1
+    if(this.player.x >=260 && this.player.x <= 290 && this.player.y <= 940 && this.player.y >= 910){
+      this.player.y = 925; 
+      this.player.x = 425; 
+    }
+    if(this.player.x >=360 && this.player.x <= 390 && this.player.y <= 940 && this.player.y >= 910){
+      this.player.y = 875 ;
+      this.player.x = 275;  
+    }
+
+    //Medio 2
+    if(this.player.x >=860 && this.player.x <= 890 && this.player.y <= 90 && this.player.y >= 60){
+      this.player.y = 125; 
+      this.player.x = 975; 
+    }
+    if(this.player.x >=960 && this.player.x <= 990 && this.player.y <= 90 && this.player.y >= 60){
+      this.player.y = 125; 
+      this.player.x = 875; 
+    }
+
+    //Medio 3
+    if(this.player.x >=960 && this.player.x <= 990 && this.player.y <= 440 && this.player.y >= 410){
+      this.player.x = 1125; 
+    }
+    if(this.player.x >=1060 && this.player.x <= 1090 && this.player.y <= 440 && this.player.y >= 410){
+      this.player.x = 925; 
+
+    }    
+    //Final
+    if(this.player.x >=1810 && this.player.x <= 1840 && this.player.y <= 940 && this.player.y >= 910){
+      this.player.y = 850; 
+      this.player.x = 1925;
+    }
+    if(this.player.x >=1910 && this.player.x <= 1940 && this.player.y <= 940 && this.player.y >= 910){
+      this.player.y = 850; 
+      this.player.x = 1825;
+    }
+  }
+
   update(){
     //this.exit.position(this.cameras.main.width - 20, this.cameras.main.height -320);
     //this.fullScreen.position(this.cameras.main.width - 50, this.cameras.main.height -320);
     // If key was just pressed down, shoot the laser.
-
+    this.checkTp();
     this.playerLightMove();
     if (this.inputKeys[0].isDown) {
       let dir = "";
@@ -230,7 +279,7 @@ export default class Level6 extends Phaser.Scene {
       // Get the first available sprite in the group
       const laser = this.lasers.getFirstDead(false);
       if (laser) {
-        laser.shoot(this.player.x, this.player.y + 20, dir);
+        laser.shoot(this.player.x, this.player.y, dir);
       }
     } 
  

@@ -142,7 +142,7 @@ export default class Level2 extends Phaser.Scene {
   }
 
   shoot(laser, dir){
-    laser.shoot(this.player.x, this.player.y + 20, dir);
+    laser.shoot(this.player.x, this.player.y, dir);
   }
 
   keyPick(){
