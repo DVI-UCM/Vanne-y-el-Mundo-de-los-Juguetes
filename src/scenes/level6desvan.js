@@ -27,8 +27,9 @@ export default class Level6 extends Phaser.Scene {
   }
 
   preload(){
-    this.load.image('LEGO_LEVEL4', 'assets/tiles/level4/lego_level4.png');
-    this.load.tilemapTiledJSON('MAPA4', 'assets/tiles/level4/MAPA4.json');
+    this.load.image('LEGO_LEVEL6', 'assets/tiles/level6/lego_level6.png');
+    this.load.image('portal', 'assets/tiles/level6/portal.png');
+    this.load.tilemapTiledJSON('MAPA6', 'assets/tiles/level6/MAPA6.json');
     this.load.image("fondoPantalla", "assets/backgrounds/backGroundLevel4.jpg");
   }
   /**
@@ -58,10 +59,10 @@ export default class Level6 extends Phaser.Scene {
       allowGravity: false
     });
     
-    this.player = new SpaceShip(this, 0, 412).setDepth(1);
+    this.player = new SpaceShip(this, 0, 200).setDepth(1);
     this.player.body.setAllowGravity(false);
-    this.ghost1 = new Ghost(this, 800, 370, 'ghost');
-    this.ghost2 = new Ghost(this, 350, 160, 'ghost2');
+    this.ghost1 = new Ghost(this, 600, 150, 'ghost');
+    this.ghost2 = new Ghost(this, 200, 375, 'ghost2');
     this.door = new Door(this, 1977, 412);
     this.key;
 
@@ -81,15 +82,16 @@ export default class Level6 extends Phaser.Scene {
    
     //CREAR MAPA
     this.map = this.make.tilemap({ 
-      key: 'MAPA4',
+      key: 'MAPA6',
       tileWidth: 50, 
       tileHeight: 50
   
     });
 
-    const tileset1 = this.map.addTilesetImage('LEGO_LEVEL4', 'LEGO_LEVEL4');
+    const tileset1 = this.map.addTilesetImage('LEGO_LEVEL6', 'LEGO_LEVEL6');
+    const tileset2 = this.map.addTilesetImage('portal', 'portal');
     
-    this.groundLayer = this.map.createLayer("Capa de patrones 1", tileset1);
+    this.groundLayer = this.map.createLayer("Capa de patrones 1", [tileset1, tileset2]);
     //------------------
 
     this.exit = new ExitButton(this, this.cameras.main.width - 20, this.cameras.main.height -320);
