@@ -29,6 +29,7 @@ export default class Level4 extends Phaser.Scene {
   preload(){
     this.load.image('LEGO_LEVEL4', 'assets/tiles/level4/lego_level4.png');
     this.load.tilemapTiledJSON('MAPA4', 'assets/tiles/level4/MAPA4.json');
+    this.load.image('portal', 'assets/tiles/level6/portal.png');
     this.load.image("fondoPantalla", "assets/backgrounds/backGroundLevel4.jpg");
   }
   /**
@@ -107,8 +108,9 @@ export default class Level4 extends Phaser.Scene {
     });
 
     const tileset1 = this.map.addTilesetImage('LEGO_LEVEL4', 'LEGO_LEVEL4');
+    const tileset2 = this.map.addTilesetImage('portal', 'portal');
     
-    this.groundLayer = this.map.createLayer("Capa de patrones 1", tileset1);
+    this.groundLayer = this.map.createLayer("Capa de patrones 1", [tileset1, tileset2]);
     //------------------
 
     this.exit = new ExitButton(this, this.cameras.main.width - 20, this.cameras.main.height -320);
