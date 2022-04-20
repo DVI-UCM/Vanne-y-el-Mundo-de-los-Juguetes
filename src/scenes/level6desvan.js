@@ -29,7 +29,7 @@ export default class Level6 extends Phaser.Scene {
     this.load.image('LEGO_LEVEL6', 'assets/tiles/level6/lego_level6.png');
     this.load.image('portal', 'assets/tiles/level6/portal.png');
     this.load.tilemapTiledJSON('MAPA6', 'assets/tiles/level6/MAPA6.json');
-    this.load.image("fondoPantalla", "assets/backgrounds/backGroundLevel4.jpg");
+    this.load.image("fondoPantalla", "assets/backgrounds/fondociudad.png");
   }
   /**
    * Creación de los elementos de la escena principal de juego
@@ -284,7 +284,21 @@ export default class Level6 extends Phaser.Scene {
     } 
  
     if(this.player.x > 1970)this.endGame(true);
-  }
 
-  
+  if(!this.player.muerte){
+    if(this.player.cursors.left.isDown){
+      this.parallax.tilePositionX -= 0.3;
+    }
+    else if (this.player.cursors.right.isDown){
+      this.parallax.tilePositionX += 0.3;
+    }
+    else if (this.player.cursors.down.isDown){
+      this.parallax.tilePositionY += 0.3;
+    }
+    else if (this.player.cursors.up.isDown){
+      this.parallax.tilePositionY -= 0.3;
+    }
+  }
+  }
 }
+  

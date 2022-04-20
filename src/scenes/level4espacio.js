@@ -28,7 +28,7 @@ export default class Level4 extends Phaser.Scene {
     this.load.image('LEGO_LEVEL4', 'assets/tiles/level4/lego_level4.png');
     this.load.tilemapTiledJSON('MAPA4', 'assets/tiles/level4/MAPA4.json');
     this.load.image('portal', 'assets/tiles/level6/portal.png');
-    this.load.image("fondoPantalla", "assets/backgrounds/backGroundLevel4.jpg");
+    this.load.image("fondoPantalla", "assets/backgrounds/fondoespacio.png");
   }
   /**
    * Creación de los elementos de la escena principal de juego
@@ -44,6 +44,8 @@ export default class Level4 extends Phaser.Scene {
     //const h = this.textures.get('castillo_background').getSourceImage().height;
     const totalWidth = this.textures.get('fondoPantalla').getSourceImage().width;
     const totalHeight = this.textures.get('fondoPantalla').getSourceImage().height;
+    this.parallax = this.add.tileSprite(0, 0, 5000, 2500, 'fondoPantalla');
+
     //const count = Math.ceil(totalWidth / w) * scrollFactor;
     //let image = this.add.image(this.cameras.main.width / 2, this.cameras.main.height / 2, 'castillo_background');
     //let scaleX = this.cameras.main.width / image.width;
@@ -208,7 +210,21 @@ export default class Level4 extends Phaser.Scene {
     } 
  
     if(this.player.x > 1970)this.endGame(true);
-  }
 
-  
+   if(!this.player.muerte){
+    if(this.player.cursors.left.isDown){
+      this.parallax.tilePositionX -= 0.5;
+    }
+    else if (this.player.cursors.right.isDown){
+      this.parallax.tilePositionX += 0.5;
+    }
+    else if (this.player.cursors.down.isDown){
+      this.parallax.tilePositionY += 0.5;
+    }
+    else if (this.player.cursors.up.isDown){
+      this.parallax.tilePositionY -= 0.5;
+    }
+    }
+
+  }
 }
