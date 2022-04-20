@@ -40,6 +40,7 @@ export default class Level6 extends Phaser.Scene {
     let x = 0;
     let y = 0;
     this.add.image(x, y, 'fondoPantalla').setOrigin(0);
+    this.parallax = this.add.tileSprite(0, 0, 5000, 2500, 'fondoPantalla');
 
     const totalWidth = this.textures.get('fondoPantalla').getSourceImage().width;
     const totalHeight = this.textures.get('fondoPantalla').getSourceImage().height;
@@ -62,7 +63,6 @@ export default class Level6 extends Phaser.Scene {
     this.player.body.setAllowGravity(false);
     this.ghost1 = new Ghost(this, 600, 150, 'ghost');
     this.ghost2 = new Ghost(this, 200, 375, 'ghost2');
-    this.door = new Door(this, 1977, 412);
     this.key;
 
     this.cameras.main.startFollow(this.player);
@@ -166,24 +166,9 @@ export default class Level6 extends Phaser.Scene {
       laser.onCollision();
       ghost.updateDie(true);
       ghost.destroy();
-      if(this.ghost1.die && this.ghost2.die){
-        this.key = new Key(this, 450, 420);
-        this.physics.add.overlap(this.player, this.key, (player, key) =>{
-          this.door.setTexture('openDoor');
-          this.door.setOpen();
-          key.destroy();
-        });
-      }
     });
 
-    this.physics.add.overlap(this.player, this.door, (player, door)=>{
-      if(!door.close){//Si la puerta está abierta
-        this.endGame(true); //Termino el juego
-      }
-      //else{
-        //Mostrar texto indicando que tiene que matar a los bichos para que salga la llave
-      //}
-    });
+
   }
 
   endGame(completed = false) {
@@ -197,13 +182,6 @@ export default class Level6 extends Phaser.Scene {
 
   shoot(laser, dir){
     laser.shoot(this.player.x, this.player.y + 20, dir);
-  }
-
-  keyPick(){
-    if(this.player.x == 450 && this.player.y == 380){
-      this.key.destroy();
-      this.door.setOpen();
-    }
   }
 
   
