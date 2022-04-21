@@ -21,7 +21,7 @@ export default class Gameover extends Phaser.Scene {
     this.add.image(410, 250, 'backGroundGameOver');
     this.gameoverImage = this.add.image(400, 90, 'gameover');
     this.restartButton = new RestartButton(this, this.keyData);
-    this.returnButton = new ReturnButton(this);
+    this.returnButton = new ReturnButton(this, this.keyData);
   }
 
   returnLobby(){
