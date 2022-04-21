@@ -89,8 +89,8 @@ export default class Level1 extends Phaser.Scene {
     this.cameras.main.centerOn(0, 30);
 
 
-    this.exit = new ExitButton(this, this.cameras.main.width - 20, 20);
-    this.fullScreen = new FullScreenButton(this, this.cameras.main.width - 50, 20);
+    this.exit = new ExitButton(this, this.cameras.main.width - 20, 20).setScrollFactor(0);
+    this.fullScreen = new FullScreenButton(this, this.cameras.main.width - 50, 20).setScrollFactor(0);
 
     const map = this.make.tilemap({key: 'level1_map'});
 
@@ -110,7 +110,7 @@ export default class Level1 extends Phaser.Scene {
     //this.plataformas = this.physics.add.staticGroup();
     //this.cristales = this.physics.add.staticGroup();
     
-    this.monstruos.add(new MonstruoVolador(this, 100, 200));
+    this.monstruos.add(new MonstruoVolador(this, 100, 250));
     
     var _this = this;
     this.monstruos.children.iterate(function (child) {
@@ -134,16 +134,6 @@ export default class Level1 extends Phaser.Scene {
       });
     });
     
-    /* this.plataformas.add(new Platform(this, this.player, 600, 350));
-    this.plataformas.add(new Platform(this, this.player, 910, 250));
-    //new Platform(this, this.player, 500, 150);
-    this.plataformas.add(new Platform(this, this.player, 90, 170));
-    this.plataformas.add(new Platform(this, this.player, 272, 170));
-    
-    this.cristales.add(new Cristales(this, 800, 235));
-    this.cristales.add(new Cristales(this, 800, 255));
-    this.cristales.add(new Cristales(this, 800, 270));*/
-    
     this.cupcake = new Cupcake(this, 100, 80); 
     
     
@@ -155,11 +145,6 @@ export default class Level1 extends Phaser.Scene {
     this.physics.add.collider(this.player, this.groundLayer);
     this.physics.add.collider(this.calabaza, this.groundLayer);
     this.physics.add.collider(this.monstruos, this.groundLayer);
-
-    /* this.physics.add.collider(this.cristales, this.player, (player) => {
-      player.body.setOffset(20, 10);
-      player.muere();
-    }); */
 
     //codigo de @kittykatattack en https://phaser.discourse.group/t/riding-moving-platforms/7330/6
     const collisionMovingPlatform = (sprite, platform) => {
@@ -188,7 +173,7 @@ export default class Level1 extends Phaser.Scene {
 
     this.physics.add.collider(this.player, this.calabaza, (player, calabaza) => {
       if(!player.body.touching.down){
-        if(player.anims.play('attack, true')){
+        if(player.anims.getName() == 'attack'){
           calabaza.muere();
         }
         else{
@@ -213,9 +198,9 @@ export default class Level1 extends Phaser.Scene {
 
   endGame(completed = false) {
     if(!completed) {
-      this.scene.launch('gameover', {key: this.scene.key });
+      this.scene.launch('gameover', {_sceneKey: this.scene.key });
     } else {
-      this.scene.launch('congratulations', {key: this.scene.key });
+      this.scene.launch('congratulations', {_sceneKey: this.scene.key });
     }
   }
   update(){

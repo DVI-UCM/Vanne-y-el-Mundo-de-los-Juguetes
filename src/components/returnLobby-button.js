@@ -13,6 +13,8 @@ export default class ReturnButton extends Phaser.GameObjects.Sprite {
       });
       this.on('pointerdown', () => { this.setScale(0.95) } );
       this.on('pointerup', () => {
+        this.scene.scene.stop('level1');
+
         this.scene.scene.start("lobby");
       });
     }
