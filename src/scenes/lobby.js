@@ -34,7 +34,7 @@ export default class Lobby extends Phaser.Scene {
 
   preload(){
 
-    this.load.image("backgroundLobby", "assets/backgrounds/tilemap_nivel1_background.png");
+    this.load.image("backgroundLobby", "assets/backgrounds/lobby3.png");
 
     this.load.setPath('assets/sprites'); 
     this.load.image("brick", "brickSpecial08.png");
