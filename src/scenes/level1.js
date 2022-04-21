@@ -172,8 +172,8 @@ export default class Level1 extends Phaser.Scene {
     //-- 
 
     this.physics.add.collider(this.player, this.calabaza, (player, calabaza) => {
-      if(!player.body.touching.down){
-        if(player.anims.getName() == 'attack'){
+      //if(!player.body.touching.down){
+        if(player.anims.currentAnim.key == 'attack'){
           calabaza.muere();
         }
         else{
@@ -184,10 +184,10 @@ export default class Level1 extends Phaser.Scene {
           this.endGame(); 
         }
         
-      }
+     /*  }
       else {
         calabaza.muere();
-      }
+      } */
     });
 
     this.physics.add.collider(this.cupcake, this.player, () => {

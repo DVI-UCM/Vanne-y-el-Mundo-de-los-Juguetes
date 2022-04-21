@@ -65,7 +65,6 @@ export default class Boot extends Phaser.Scene {
     
     // Con setPath podemos establecer el prefijo que se añadirá a todos los load que aparecen a continuación
     this.load.setPath('assets/sprites/');
-    //this.load.image('ant','ant.png');
     this.load.image('closeDoor','closeDoor.png');
     this.load.image('key', 'key.png')
     this.load.image("laser", "shoot_blue.png");
@@ -93,12 +92,13 @@ export default class Boot extends Phaser.Scene {
     this.load.image('spaceshipRight', 'spaceshipRight.png');
     
     this.load.setPath('/assets/sprites/player/');
-    //this.load.atlas('player', 'ninjagirl.png', 'ninjagirl_atlas.json');
-    this.load.spritesheet('player_idle', 'idle_spritesheet.png', {frameWidth: 58, frameHeight: 100});
-    this.load.spritesheet('player_run', 'run_spritesheet.png', {frameWidth: 75, frameHeight: 104});
-    this.load.spritesheet('player_jump', 'jump_spritesheet.png', {frameWidth: 80, frameHeight: 109});
+    this.load.spritesheet('player_attack', 'attack_spritesheet.png', {frameWidth: 105, frameHeight: 113});
     this.load.spritesheet('player_dead', 'dead_spritesheet.png', {frameWidth: 116, frameHeight: 120});
-    this.load.spritesheet('player_attack', 'attack_spritesheet.png', {frameWidth: 105, frameHeight: 113})
+    this.load.spritesheet('player_idle', 'idle_spritesheet.png', {frameWidth: 58, frameHeight: 100});
+    this.load.spritesheet('player_jump', 'jump_spritesheet.png', {frameWidth: 80, frameHeight: 109});
+    this.load.spritesheet('player_run', 'run_spritesheet.png', {frameWidth: 75, frameHeight: 104});
+    this.load.spritesheet('player_slide', 'slide_spritesheet.png', {frameWidth: 79, frameHeight: 80});
+
 
     this.load.on('progress', function (value) {
       console.log(value);
