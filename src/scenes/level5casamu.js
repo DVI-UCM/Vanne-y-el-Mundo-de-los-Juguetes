@@ -47,25 +47,24 @@ export default class Level5 extends Phaser.Scene {
     super({ key: 'level5' });
   }
 
-  preload(){
-    //this.load.image('fondoCasaMunecas', 'assets/backgrounds/fondoCasaMunecas.png');
-    // this.load.setPath('assets/sprites/');
-    // this.load.image('cristales','cristales.png');
-    // this.load.image('cupcake','cupcake.png');
+  init(){
 
+  }
+
+  preload(){
     this.load.setPath('assets/backgrounds/level5/');
-    this.load.image("hielo1", "fondohielo7.png");
-    this.load.image("hielo2", "fondohielo6.png");
-    this.load.image("hielo3", "fondohielo5.png");
-    this.load.image("hielo4", "fondohielo4.png");
-    this.load.image("hielo5", "fondohielo3.png");
-    this.load.image("hielo6", "fondohielo2.png");
-    this.load.image("hielo7", "fondohielo1.png");
+    this.load.image("hielo1", "hielo6.png");
+    this.load.image("hielo2", "hielo7.png");
+    this.load.image("hielo3", "hielo1.png");
+    this.load.image("hielo4", "hielo2.png");
+    this.load.image("hielo5", "hielo3.png");
+    this.load.image("hielo6", "hielo4.png");
+    this.load.image("hielo7", "hielo5.png");
 
 
     this.load.setPath('assets/tiles/level5/');
-    this.load.image('level5_tileset', 'tileset_hielo.png');
-    this.load.tilemapTiledJSON('level5_map', 'tileset_hielo_atlas.json');
+    this.load.image('level5_tileset', 'iceWorld.png');
+    this.load.tilemapTiledJSON('level5_map', 'iceWorld.json');
   }
   create() {
     //Fondo parallax
@@ -93,15 +92,14 @@ export default class Level5 extends Phaser.Scene {
 
     const map = this.make.tilemap({key: 'level5_map'});
 
-    const tileset = map.addTilesetImage('Ice_World', 'level5_tileset');
+    const tileset = map.addTilesetImage('IceWorld', 'level5_tileset');
       
-    this.groundLayer = map.createLayer("baseHielo", tileset);
-    map.createLayer("baseHielo", tileset);
-    map.createLayer("baseHielo", tileset);
-    map.createLayer("baseHielo", tileset); 
+    this.groundLayer = map.createLayer("Suelo", tileset);
+    map.createLayer("Decoracion_1", tileset);
+    map.createLayer("Decoracion_2", tileset);
 
     
-    this.player = new Player(this, 50, 425);
+    this.player = new Player(this, 150, 125);
     this.cameras.main.startFollow(this.player);
     //this.cupcake = new Cupcake(this, 100, 80); 
     
@@ -110,7 +108,7 @@ export default class Level5 extends Phaser.Scene {
   }
 
   createColliders(){
-    this.groundLayer.setCollisionByProperty({ colisiona: true });
+    this.groundLayer.setCollisionByProperty({ colision: true });
     this.physics.add.collider(this.player, this.groundLayer);
     // this.physics.add.collider(this.monstruos, this.groundLayer);
 
@@ -131,12 +129,7 @@ export default class Level5 extends Phaser.Scene {
       return platform.body.y > sprite.body.y;
     };
 
-    this.physics.add.collider(
-      this.player,
-      collisionMovingPlatform,
-      isCollisionFromTop,
-      this
-    );
+
 
   }
 
