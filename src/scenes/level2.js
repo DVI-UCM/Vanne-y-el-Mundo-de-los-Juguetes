@@ -24,7 +24,7 @@ export default class Level2 extends Phaser.Scene {
   preload(){
     this.load.image('LEGO_LEVEL2', 'assets/tiles/level2/LEGO_LEVEL2.png');
     this.load.tilemapTiledJSON('MAPA2', 'assets/tiles/level2/MAPA2.json');
-    this.load.image("lego", "assets/backgrounds/fondoPrueba.png");
+    this.load.image('lego', 'assets/backgrounds/fonditoLego.png');
   }
   /**
    * Creación de los elementos de la escena principal de juego
@@ -36,16 +36,21 @@ export default class Level2 extends Phaser.Scene {
     background.scaleX = background.scaleY; 
     background.setScrollFactor(0);*/
 
+    
+
     let image = this.add.image(this.cameras.main.width / 2, this.cameras.main.height / 2, 'lego');
     let scaleX = this.cameras.main.width / image.width;
     let scaleY = this.cameras.main.height / image.height;
     let scale = Math.max(scaleX, scaleY);
     image.setScale(scale).setScrollFactor(0);
     
+    //parallax aqui abajo
+    //this.parallax = this.add.tileSprite(0, 0, 2000, 1000, 'lego');
+
+
     this.exit = new ExitButton(this, this.cameras.main.width - 20, 20);
     this.fullScreen = new FullScreenButton(this, this.cameras.main.width - 50, 20);
 
-    //this.doors = this.physics.add.staticGroup();
     //this.keys = this.physics.add.staticGroup();
     this.ghosts = this.physics.add.group({
       allowGravity:false
@@ -65,6 +70,14 @@ export default class Level2 extends Phaser.Scene {
     this.ghosts.add(this.ghost1);
     this.ghosts.add(this.ghost2);
     this.lasers.add(new Laser(this, this.player.x, this.player.y + 20));
+
+
+    var needKeyText = "Necesitas matar a\ntodos los fantasmas\ny desbloquear la llave\npara abrir la puerta";
+
+    this.textKey = this.add.text(750, 220, needKeyText,  { font: "20px Arial", fill: '#000000', backgroundColor: 'rgba(255,255,255,1)' });
+    this.textKey.lineSpacing = 30;
+    this.textKey.depth = 1;
+
 
     this.inputKeys = [
 			this.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.SPACE),
@@ -123,13 +136,10 @@ export default class Level2 extends Phaser.Scene {
     });
 
     this.physics.add.overlap(this.player, this.door, (player, door)=>{
-      if(!door.close){//Si la puerta está abierta
-        this.endGame(true); //Termino el juego
-      }
-      //else{
-        //Mostrar texto indicando que tiene que matar a los bichos para que salga la llave
-      //}
-    });
+        if(!door.close){//Si la puerta está abierta
+          this.endGame(true); //Termino el juego
+        }
+      });
   }
 
   endGame(completed = false) {
@@ -174,7 +184,29 @@ export default class Level2 extends Phaser.Scene {
         laser.shoot(this.player.x, this.player.y + 20, dir);
       }
     }
-
+    if(this.door.close){
+      if(this.player.x > 950){
+        this.textKey.visible = true;
+      }
+      else {
+        this.textKey.visible = false;
+      }
+    }
+/*
+    if(!this.player.muerte){
+      if(this.player.cursors.left.isDown){
+        this.parallax.tilePositionX -= 0.5;
+      }
+      else if (this.player.cursors.right.isDown){
+        this.parallax.tilePositionX += 0.5;
+      }
+      else if (this.player.cursors.down.isDown){
+        this.parallax.tilePositionY += 0.5;
+      }
+      else if (this.player.cursors.up.isDown){
+        this.parallax.tilePositionY -= 0.5;
+      }
+    }*/
     
   }
 
