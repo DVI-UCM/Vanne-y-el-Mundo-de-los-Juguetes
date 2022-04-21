@@ -1,6 +1,8 @@
 import Ghost from '../sprites/ghost.js';
 import Laser from '../sprites/laser.js';
 import SpaceShip from '../sprites/spaceship.js';
+import Key from '../sprites/key.js';
+import Door from '../sprites/door.js';
 import ExitButton from '../components/exit-button.js';
 import FullScreenButton from '../components/fullScreen-button.js';
 
@@ -44,32 +46,17 @@ export default class Level4 extends Phaser.Scene {
     //const h = this.textures.get('castillo_background').getSourceImage().height;
     const totalWidth = this.textures.get('fondoPantalla').getSourceImage().width;
     const totalHeight = this.textures.get('fondoPantalla').getSourceImage().height;
-    this.parallax = this.add.tileSprite(0, 0, 5000, 2500, 'fondoPantalla');
-
-    //const count = Math.ceil(totalWidth / w) * scrollFactor;
-    //let image = this.add.image(this.cameras.main.width / 2, this.cameras.main.height / 2, 'castillo_background');
-    //let scaleX = this.cameras.main.width / image.width;
-    //let scaleY = this.cameras.main.height / image.height;
-    //let scale = Math.max(scaleX, scaleY);
-    //image.setScale(scale).setScrollFactor(0);
-    //Align.scaleToGameW(image, 2);
-
-    /*for(let i = 0; i < 4; i++){
-      const c = this.add.image(x, y, 'castillo_background').setOrigin(0);
-      if(i % 2 == 0){
-        x += c.width;
-      }
-      else{
-        x = 0;
-        y += c.height;
-      }
-    }*/
+    //this.parallax = this.add.tileSprite(0, 0, 5000, 2500, 'fondoPantalla');
 
     this.cameras.main.setBounds(0,0, totalWidth, totalHeight);
     this.physics.world.setBounds(0,0, totalWidth, totalHeight);
     //this.cameras.main.setBounds(0, 0, image.displayWidth, image.displayHeight);
     
-   
+    var needKeyText = "Necesitas matar a\ntodos los fantasmas\ny desbloquear la llave\npara abrir la puerta";
+
+    this.textKey = this.add.text(1750, 570, needKeyText,  { font: "20px Arial", fill: '#000000', backgroundColor: 'rgba(255,255,255,1)' });
+    this.textKey.lineSpacing = 30;
+    this.textKey.depth = 1;
     
     this.ghosts = this.physics.add.group({
       allowGravity:false
@@ -82,6 +69,7 @@ export default class Level4 extends Phaser.Scene {
     this.player.body.setAllowGravity(false);
     this.ghost1 = new Ghost(this, 800, 370, 'ghost');
     this.ghost2 = new Ghost(this, 350, 160, 'ghost2');
+    this.door = new Door(this, 1977, 450);
     this.key;
 
     this.cameras.main.startFollow(this.player);
@@ -139,10 +127,33 @@ export default class Level4 extends Phaser.Scene {
       ghost.updateDie(true);
       ghost.destroy();
 
+      if(this.ghost1.die && this.ghost2.die){
+        this.key = new Key(this, 1725, 375);
+        this.physics.add.overlap(this.player, this.key, (player, key) =>{
+          this.door.setTexture('openDoor');
+          this.door.setOpen();
+          key.destroy();
+        });
+      }
+
     });
 
+    this.physics.add.overlap(this.player, this.door, (player, door)=>{
+      if(!door.close){//Si la puerta está abierta
+        this.endGame(true); //Termino el juego
+      }
+      else{
+        this.needKey = this.add.text(1777, 400, 'Necesitas matar a todos los fantasmas y desbloquear la llave para abrir la puerta', { 
+          fontSize: '20px', 
+          fill: '#fff', 
+          fontFamily: 'verdana, arial, sans-serif'
+        });
+      }
+    });
+}
 
-  }
+
+  
 
   endGame(completed = false) {
     if(! completed) {
@@ -155,6 +166,13 @@ export default class Level4 extends Phaser.Scene {
 
   shoot(laser, dir){
     laser.shoot(this.player.x, this.player.y + 20, dir);
+  }
+
+  keyPick(){
+    if(this.player.x == 450 && this.player.y == 380){
+      this.key.destroy();
+      this.door.setOpen();
+    }
   }
 
 
@@ -208,9 +226,16 @@ export default class Level4 extends Phaser.Scene {
         laser.shoot(this.player.x, this.player.y, dir);
       }
     } 
- 
-    if(this.player.x > 1970)this.endGame(true);
 
+    if(this.door.close){
+      if(this.player.x > 950){
+        this.textKey.visible = true;
+      }
+      else {
+        this.textKey.visible = false;
+      }
+    }
+ /*
    if(!this.player.muerte){
     if(this.player.cursors.left.isDown){
       this.parallax.tilePositionX -= 0.5;
@@ -224,7 +249,7 @@ export default class Level4 extends Phaser.Scene {
     else if (this.player.cursors.up.isDown){
       this.parallax.tilePositionY -= 0.5;
     }
-    }
+    }*/
 
   }
 }

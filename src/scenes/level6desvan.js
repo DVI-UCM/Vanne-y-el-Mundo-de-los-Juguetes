@@ -1,6 +1,7 @@
 import Ghost from '../sprites/ghost.js';
 import Laser from '../sprites/laser.js';
 import Key from '../sprites/key.js';
+import Door from '../sprites/door.js';
 import SpaceShip from '../sprites/spaceship.js';
 import ExitButton from '../components/exit-button.js';
 import FullScreenButton from '../components/fullScreen-button.js';
@@ -40,7 +41,7 @@ export default class Level6 extends Phaser.Scene {
     let x = 0;
     let y = 0;
     this.add.image(x, y, 'fondoPantalla').setOrigin(0);
-    this.parallax = this.add.tileSprite(0, 0, 5000, 2500, 'fondoPantalla');
+    //this.parallax = this.add.tileSprite(0, 0, 5000, 2500, 'fondoPantalla');
 
     const totalWidth = this.textures.get('fondoPantalla').getSourceImage().width;
     const totalHeight = this.textures.get('fondoPantalla').getSourceImage().height;
@@ -63,12 +64,19 @@ export default class Level6 extends Phaser.Scene {
     this.player.body.setAllowGravity(false);
     this.ghost1 = new Ghost(this, 600, 150, 'ghost');
     this.ghost2 = new Ghost(this, 200, 375, 'ghost2');
+    this.door = new Door(this, 1977, 600);
     this.key;
 
     this.cameras.main.startFollow(this.player);
     this.ghosts.add(this.ghost1);
     this.ghosts.add(this.ghost2);
     this.lasers.add(new Laser(this, this.player.x, this.player.y ));
+
+    var needKeyText = "Necesitas matar a\ntodos los fantasmas\ny desbloquear la llave\npara abrir la puerta";
+
+    this.textKey = this.add.text(1750, 720, needKeyText,  { font: "20px Arial", fill: '#000000', backgroundColor: 'rgba(255,255,255,1)' });
+    this.textKey.lineSpacing = 30;
+    this.textKey.depth = 1;
 
     this.inputKeys = [
 			this.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.SPACE),
@@ -166,10 +174,30 @@ export default class Level6 extends Phaser.Scene {
       laser.onCollision();
       ghost.updateDie(true);
       ghost.destroy();
+
+      if(this.ghost1.die && this.ghost2.die){
+        this.key = new Key(this, 1575, 675);
+        this.physics.add.overlap(this.player, this.key, (player, key) =>{
+          this.door.setTexture('openDoor');
+          this.door.setOpen();
+          key.destroy();
+        });
+      }
     });
 
-
-  }
+    this.physics.add.overlap(this.player, this.door, (player, door)=>{
+      if(!door.close){//Si la puerta está abierta
+        this.endGame(true); //Termino el juego
+      }
+      else{
+        this.needKey = this.add.text(1777, 400, 'Necesitas matar a todos los fantasmas y desbloquear la llave para abrir la puerta', { 
+          fontSize: '20px', 
+          fill: '#fff', 
+          fontFamily: 'verdana, arial, sans-serif'
+        })
+      }
+    });
+}
 
   endGame(completed = false) {
     if(! completed) {
@@ -182,6 +210,13 @@ export default class Level6 extends Phaser.Scene {
 
   shoot(laser, dir){
     laser.shoot(this.player.x, this.player.y + 20, dir);
+  }
+
+  keyPick(){
+    if(this.player.x == 450 && this.player.y == 380){
+      this.key.destroy();
+      this.door.setOpen();
+    }
   }
 
   
@@ -261,9 +296,15 @@ export default class Level6 extends Phaser.Scene {
       }
     } 
  
-    if(this.player.x > 1970)this.endGame(true);
-
-  if(!this.player.muerte){
+    if(this.door.close){
+      if(this.player.x > 950){
+        this.textKey.visible = true;
+      }
+      else {
+        this.textKey.visible = false;
+      }
+    }
+  /*if(!this.player.muerte){
     if(this.player.cursors.left.isDown){
       this.parallax.tilePositionX -= 0.3;
     }
@@ -276,7 +317,7 @@ export default class Level6 extends Phaser.Scene {
     else if (this.player.cursors.up.isDown){
       this.parallax.tilePositionY -= 0.3;
     }
-  }
+  }*/
   }
 }
   

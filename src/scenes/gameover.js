@@ -25,6 +25,6 @@ export default class Gameover extends Phaser.Scene {
   }
 
   returnLobby(){
-    this.scene.start("lobby");
+    this.scene.scene.start("lobby");
   }
 }
