@@ -33,13 +33,13 @@ export default class End extends Phaser.Scene {
     this.cursors = this.input.keyboard.createCursorKeys();
 
     this.input.on('pointerdown', function(){
-      this.scene.start('inicio');
+      this.scene.start('levelSelector');
     }, this);
   }
 
   update(){
     if(this.cursors.space.isDown){
-      this.scene.start('lobby');
+      this.scene.start('levelSelector');
 
     }
   }

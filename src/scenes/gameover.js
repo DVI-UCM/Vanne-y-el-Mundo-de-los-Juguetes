@@ -23,8 +23,4 @@ export default class Gameover extends Phaser.Scene {
     this.restartButton = new RestartButton(this, this.keyData);
     this.returnButton = new ReturnButton(this, this.keyData);
   }
-
-  returnLobby(){
-    this.scene.scene.start("lobby");
-  }
 }

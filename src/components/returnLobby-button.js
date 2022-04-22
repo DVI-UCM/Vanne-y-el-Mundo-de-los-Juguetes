@@ -16,7 +16,7 @@ export default class ReturnButton extends Phaser.GameObjects.Sprite {
       this.on('pointerup', () => {
         this.scene.scene.stop(this.name);
 
-        this.scene.scene.start("lobby");
+        this.scene.scene.start("levelSelector");
       });
     }
   }

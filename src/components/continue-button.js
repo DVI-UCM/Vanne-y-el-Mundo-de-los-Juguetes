@@ -19,7 +19,7 @@ export default class ContinueButton extends Phaser.GameObjects.Sprite {
       this.on('pointerdown', () => { this.setScale(0.95, 0.95) } );
       this.on('pointerup', () => {
         if(this.name[this.name.length-1] == 6){
-            this.scene.scene.start('lobby');
+            this.scene.scene.start('levelSelector');
         }
         else{
             this.scene.scene.start(this.name);
