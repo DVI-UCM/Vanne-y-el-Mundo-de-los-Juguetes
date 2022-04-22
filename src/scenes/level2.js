@@ -144,10 +144,10 @@ export default class Level2 extends Phaser.Scene {
 
   endGame(completed = false) {
     if(! completed) {
-      this.scene.launch('gameover', {key: this.scene.key });
+      this.scene.launch('gameover', {_sceneKey: this.scene.key });
     } 
     else {
-      this.scene.launch('congratulations', {key: this.scene.key });
+      this.scene.launch('congratulations', {_sceneKey: this.scene.key });
     }
   }
 
