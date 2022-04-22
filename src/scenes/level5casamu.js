@@ -1,4 +1,3 @@
-import Platform from '../sprites/platform.js';
 import Cupcake from '../sprites/cupcake.js';
 import ExitButton from '../components/exit-button.js';
 import FullScreenButton from '../components/fullScreen-button.js';
@@ -75,11 +74,10 @@ export default class Level5 extends Phaser.Scene {
     createAligned(this, totalWidth, 'hielo1', 0.35, 0, 1);
     createAligned(this, totalWidth, 'hielo2', 0.45, 0, 1);
     createAligned(this, totalWidth, 'hielo3', 0.65, 0, 1);
-    createAligned(this, totalWidth, 'hielo4', 0.35, 0, 1);
-
-    createAligned(this, totalWidth, 'hielo5', 0.35, 0, 1);
-    createAligned(this, totalWidth, 'hielo6', 0.35, 0, 1);
     createAligned(this, totalWidth, 'hielo7', 0.35, 0, 1);
+    //createAligned(this, totalWidth, 'hielo4', 0.35, 0, 1);
+    //createAligned(this, totalWidth, 'hielo5', 0.35, 0, 1);
+    //createAligned(this, totalWidth, 'hielo6', 0.35, 0, 1);
 
 
     this.physics.world.setBounds(0, 0, totalWidth, height, true, true, false, false);
@@ -93,7 +91,8 @@ export default class Level5 extends Phaser.Scene {
     const map = this.make.tilemap({key: 'level5_map'});
 
     const tileset = map.addTilesetImage('IceWorld', 'level5_tileset');
-      
+    
+    map.createLayer("Agua", tileset);
     this.groundLayer = map.createLayer("Suelo", tileset);
     map.createLayer("Decoracion_1", tileset);
     map.createLayer("Decoracion_2", tileset);
