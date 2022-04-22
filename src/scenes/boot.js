@@ -142,7 +142,7 @@ export default class Boot extends Phaser.Scene {
     });
 
     this.input.on('pointerdown', function(){
-      this.scene.start('lobby');
+      this.scene.start('levelSelector');
     }, this);
   }
 }

@@ -2,6 +2,7 @@ import Boot from './scenes/boot.js';
 import End from './scenes/end.js';
 import Inicio from './scenes/inicio.js';
 import Lobby from './scenes/lobby.js';
+import LevelSelector from './scenes/levelSelector.js';
 import Level1 from './scenes/level1.js';
 import Level2 from './scenes/level2.js';
 import Level3 from './scenes/level3coches.js'
@@ -29,12 +30,12 @@ let config = {
         autoCenter: Phaser.Scale.CENTER_HORIZONTALLY
     },
     pixelArt: true,
-    scene: [Boot, Inicio, Lobby, Level1, Level2, Level3, Level4, Level5, Level6, Level7, End, Congratulations,GameOver],
+    scene: [Boot, Inicio, Lobby, LevelSelector,Level1, Level2, Level3, Level4, Level5, Level6, Level7, End, Congratulations,GameOver],
     physics: {
         default: 'arcade',
         arcade: {
             gravity: { y: 800 },
-            debug: true
+            debug: false
         }
     }
 };

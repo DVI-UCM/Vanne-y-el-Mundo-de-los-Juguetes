@@ -117,14 +117,6 @@ export default class Lobby extends Phaser.Scene {
 
     this.btnExit = this.physics.add.staticSprite(background.displayWidth - 160, 330, 'brick');
     this.physics.add.collider(this.btnExit, this.player, () => {
-      /*let tween = this.tweens.add({
-        targets: this.btnExit,
-        y: 10,
-        duration: 500,
-        yoyo: true,
-        ease: 'Cubic.easeOut',
-        repeat: 0
-      });*/
       if(this.player.body.touching.up){
         if(!this.is_exit){
           this.showExitNotice();
