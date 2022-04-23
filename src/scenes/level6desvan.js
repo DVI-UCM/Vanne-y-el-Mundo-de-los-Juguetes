@@ -30,7 +30,7 @@ export default class Level6 extends Phaser.Scene {
     this.load.image('LEGO_LEVEL6', 'assets/tiles/level6/lego_level6.png');
     this.load.image('portal', 'assets/tiles/level6/portal.png');
     this.load.tilemapTiledJSON('MAPA6', 'assets/tiles/level6/MAPA6.json');
-    this.load.image("fondoPantalla", "assets/backgrounds/fondociudad.png");
+    this.load.image("fondoPantalla6", "assets/backgrounds/fondociudad.png");
   }
   /**
    * Creación de los elementos de la escena principal de juego
@@ -40,11 +40,11 @@ export default class Level6 extends Phaser.Scene {
     const height = this.scale.height;
     let x = 0;
     let y = 0;
-    this.add.image(x, y, 'fondoPantalla').setOrigin(0);
-    //this.parallax = this.add.tileSprite(0, 0, 5000, 2500, 'fondoPantalla');
+    this.add.image(x, y, 'fondoPantalla6').setOrigin(0);
+    //this.parallax = this.add.tileSprite(0, 0, 5000, 2500, 'fondoPantalla6');
 
-    const totalWidth = this.textures.get('fondoPantalla').getSourceImage().width;
-    const totalHeight = this.textures.get('fondoPantalla').getSourceImage().height;
+    const totalWidth = this.textures.get('fondoPantalla6').getSourceImage().width;
+    const totalHeight = this.textures.get('fondoPantalla6').getSourceImage().height;
 
 
     this.cameras.main.setBounds(0,0, totalWidth, totalHeight);
@@ -113,7 +113,7 @@ export default class Level6 extends Phaser.Scene {
     const x = 1000
 		const y = 500
 
-		this.cover = this.add.image(x, y, 'fondoPantalla') //Capa de encima
+		this.cover = this.add.image(x, y, 'fondoPantalla6') //Capa de encima
 		this.cover.setTint(0x004c99)
 
 
