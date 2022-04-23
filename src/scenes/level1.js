@@ -192,7 +192,7 @@ export default class Level1 extends Phaser.Scene {
 
     this.physics.add.collider(this.cupcake, this.player, () => {
       this.cupcake.destroy();
-      this.scene.start("level2");
+      this.endGame(true)
     });
   }
 

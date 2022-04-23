@@ -9,7 +9,7 @@ export default class Congratulations extends Phaser.Scene {
   preload() {
     this.load.image('backGroundConcratulations', 'assets/backgrounds/congratulationsBackGround.jpg');
     this.load.image('congratulations', 'assets/sprites/congratulations.png');
-    this.load.spritesheet('buttonRestart', 'assets/sprites/restart.png', { frameWidth: 190, frameHeight: 49 });
+    this.load.spritesheet('continueButton', 'assets/sprites/continue.png', { frameWidth: 190, frameHeight: 49 });
     this.load.spritesheet('buttonReturnLobby', 'assets/sprites/returnLobby.png', { frameWidth: 190, frameHeight: 49 });     
   }
 

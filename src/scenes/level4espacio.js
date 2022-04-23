@@ -155,14 +155,15 @@ export default class Level4 extends Phaser.Scene {
 
   
 
-  endGame(completed = false) {
-    if(! completed) {
-      this.scene.launch('gameover', {_sceneKey: this.scene.key });
-    } 
-    else {
-      this.scene.launch('congratulations', {_sceneKey: this.scene.key });
-    }
+endGame(completed = false) {
+  this.scene.stop(this.scene.key)
+  if(! completed) {
+    this.scene.launch('gameover', {_sceneKey: this.scene.key });
+  } 
+  else {
+    this.scene.launch('congratulations', {_sceneKey: this.scene.key });
   }
+}
 
   shoot(laser, dir){
     laser.shoot(this.player.x, this.player.y + 20, dir);

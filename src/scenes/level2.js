@@ -59,6 +59,7 @@ export default class Level2 extends Phaser.Scene {
       allowGravity: false
     });
     
+    this.endGameBool = false;
     this.player = new SpaceShip(this, 0, 412);
     this.player.body.setAllowGravity(false);
     this.ghost1 = new Ghost(this, 800, 420, 'ghost');
@@ -103,7 +104,7 @@ export default class Level2 extends Phaser.Scene {
 
   }
 
-  createColliders(){
+createColliders(){
 
     this.groundLayer.setCollisionByProperty({ colisiona: true });
     this.physics.add.collider(this.player, this.groundLayer);
@@ -137,12 +138,14 @@ export default class Level2 extends Phaser.Scene {
 
     this.physics.add.overlap(this.player, this.door, (player, door)=>{
         if(!door.close){//Si la puerta está abierta
+          this.player.body.setVelocityX(0);
           this.endGame(true); //Termino el juego
         }
       });
   }
 
   endGame(completed = false) {
+    this.scene.stop(this.scene.key)
     if(! completed) {
       this.scene.launch('gameover', {_sceneKey: this.scene.key });
     } 
@@ -164,49 +167,35 @@ export default class Level2 extends Phaser.Scene {
 
   update(){
     // If key was just pressed down, shoot the laser.
-    if (this.inputKeys[0].isDown) {
-      let dir = "";
-      if(this.inputKeys[1].isDown){
-        dir = "down";
+      if (this.inputKeys[0].isDown) {
+        let dir = "";
+        if(this.inputKeys[1].isDown){
+          dir = "down";
+        }
+        else if(this.inputKeys[2].isDown){
+          dir = "left";
+        }
+        else if(this.inputKeys[3].isDown){
+          dir = "right";
+        }
+        else if(this.inputKeys[4].isDown){
+          dir = "up";
+        }
+        // Get the first available sprite in the group
+        const laser = this.lasers.getFirstDead(false);
+        if (laser) {
+          laser.shoot(this.player.x, this.player.y + 20, dir);
+        }
       }
-      else if(this.inputKeys[2].isDown){
-        dir = "left";
+      if(this.door.close){
+        if(this.player.x > 950){
+          this.textKey.visible = true;
+        }
+        else {
+          this.textKey.visible = false;
+        }
       }
-      else if(this.inputKeys[3].isDown){
-        dir = "right";
-      }
-      else if(this.inputKeys[4].isDown){
-        dir = "up";
-      }
-      // Get the first available sprite in the group
-      const laser = this.lasers.getFirstDead(false);
-      if (laser) {
-        laser.shoot(this.player.x, this.player.y + 20, dir);
-      }
-    }
-    if(this.door.close){
-      if(this.player.x > 950){
-        this.textKey.visible = true;
-      }
-      else {
-        this.textKey.visible = false;
-      }
-    }
-/*
-    if(!this.player.muerte){
-      if(this.player.cursors.left.isDown){
-        this.parallax.tilePositionX -= 0.5;
-      }
-      else if (this.player.cursors.right.isDown){
-        this.parallax.tilePositionX += 0.5;
-      }
-      else if (this.player.cursors.down.isDown){
-        this.parallax.tilePositionY += 0.5;
-      }
-      else if (this.player.cursors.up.isDown){
-        this.parallax.tilePositionY -= 0.5;
-      }
-    }*/
+    
     
   }
 

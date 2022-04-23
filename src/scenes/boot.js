@@ -123,6 +123,8 @@ export default class Boot extends Phaser.Scene {
     });
   }
 
+
+   
   /**
    * Creación de la escena. En este caso, solo cambiamos a la escena que representa el
    * nivel del juego
@@ -130,7 +132,7 @@ export default class Boot extends Phaser.Scene {
   create() {
     this.add.image(0, 0, 'castillo_background').setOrigin(0).setDepth(0);
     this.startBox.fillStyle(0x222222, 0.8).fillRoundedRect(this.width / 2 - (280/2), this.height - 100, 280, 50, 10).setDepth(1);
-    this.startText.setText('Haz click para empezar').setDepth(1);
+    this.startText.setText('Pulsa espacio para empezar').setDepth(1);
     
     this.tweens.add({
       targets: [this.startText],
@@ -144,5 +146,16 @@ export default class Boot extends Phaser.Scene {
     this.input.on('pointerdown', function(){
       this.scene.start('levelSelector');
     }, this);
+
+    this.inputKeys = [
+			this.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.SPACE)
+    ];
+
+  }
+
+  update(){
+    if (this.inputKeys[0].isDown) {
+      this.scene.start('levelSelector'); 1
+    }
   }
 }
