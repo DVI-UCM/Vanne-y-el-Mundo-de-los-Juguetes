@@ -2,6 +2,8 @@ import Cupcake from '../sprites/cupcake.js';
 import ExitButton from '../components/exit-button.js';
 import FullScreenButton from '../components/fullScreen-button.js';
 import Player from '../sprites/player.js';
+import Slime from '../sprites/slime.js';
+
 
 
 /**
@@ -103,6 +105,9 @@ export default class Level5 extends Phaser.Scene {
     this.player = new Player(this, 150, 125);
     this.cameras.main.startFollow(this.player);
     //this.cupcake = new Cupcake(this, 100, 80); 
+
+    this.slime = new Slime(this, 630, 200, 860, 200);
+
     
     
     this.createColliders();
@@ -112,6 +117,8 @@ export default class Level5 extends Phaser.Scene {
     this.groundLayer.setCollisionByProperty({ colision: true });
     this.physics.add.collider(this.player, this.groundLayer);
     // this.physics.add.collider(this.monstruos, this.groundLayer);
+    this.physics.add.collider(this.slime, this.groundLayer);
+
 
 
     //codigo de @kittykatattack en https://phaser.discourse.group/t/riding-moving-platforms/7330/6
@@ -129,6 +136,34 @@ export default class Level5 extends Phaser.Scene {
     const isCollisionFromTop = (sprite, platform) => {
       return platform.body.y > sprite.body.y;
     };
+
+    this.physics.add.collider(
+      this.player,
+      this.slime,
+      collisionMovingPlatform,
+      isCollisionFromTop,
+      this
+    );
+    //-- 
+
+    this.physics.add.collider(this.player, this.slime, (player, slime) => {
+      //if(!player.body.touching.down){
+        if(player.anims.currentAnim.key == 'attack'){
+          slime.muere();
+        }
+        else{
+          slime.anims.play('idle', true);
+          slime.body.setVelocityX(0);
+          player.body.setOffset(29, 0);
+          player.muere();
+          this.endGame(); 
+        }
+        
+     /*  }
+      else {
+        slime.muere();
+      } */
+    });
 
 
 

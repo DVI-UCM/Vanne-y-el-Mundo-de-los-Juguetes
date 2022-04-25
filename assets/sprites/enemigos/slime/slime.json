@@ -1,7 +1,7 @@
 {
     "frames": [
         {
-            "filename": "idle_07",
+            "filename": "idle__7",
             "frame": {
                 "w": 480,
                 "h": 480,
@@ -14,7 +14,7 @@
             }
         },
         {
-            "filename": "idle_06",
+            "filename": "idle__6",
             "frame": {
                 "w": 480,
                 "h": 480,
@@ -27,7 +27,7 @@
             }
         },
         {
-            "filename": "idle_01",
+            "filename": "idle__1",
             "frame": {
                 "w": 480,
                 "h": 480,
@@ -40,7 +40,7 @@
             }
         },
         {
-            "filename": "idle_04",
+            "filename": "idle__4",
             "frame": {
                 "w": 480,
                 "h": 480,
@@ -53,7 +53,7 @@
             }
         },
         {
-            "filename": "idle_11",
+            "filename": "idle__11",
             "frame": {
                 "w": 480,
                 "h": 480,
@@ -66,7 +66,7 @@
             }
         },
         {
-            "filename": "idle_03",
+            "filename": "idle__3",
             "frame": {
                 "w": 480,
                 "h": 480,
@@ -79,7 +79,7 @@
             }
         },
         {
-            "filename": "idle_12",
+            "filename": "idle__12",
             "frame": {
                 "w": 480,
                 "h": 480,
@@ -92,7 +92,7 @@
             }
         },
         {
-            "filename": "idle_13",
+            "filename": "idle__13",
             "frame": {
                 "w": 480,
                 "h": 480,
@@ -105,7 +105,7 @@
             }
         },
         {
-            "filename": "idle_00",
+            "filename": "idle__0",
             "frame": {
                 "w": 480,
                 "h": 480,
@@ -118,7 +118,7 @@
             }
         },
         {
-            "filename": "idle_02",
+            "filename": "idle__2",
             "frame": {
                 "w": 480,
                 "h": 480,
@@ -131,7 +131,7 @@
             }
         },
         {
-            "filename": "idle_05",
+            "filename": "idle__5",
             "frame": {
                 "w": 480,
                 "h": 480,
@@ -144,7 +144,7 @@
             }
         },
         {
-            "filename": "idle_09",
+            "filename": "idle__9",
             "frame": {
                 "w": 480,
                 "h": 480,
@@ -157,7 +157,7 @@
             }
         },
         {
-            "filename": "idle_08",
+            "filename": "idle__8",
             "frame": {
                 "w": 480,
                 "h": 480,
@@ -170,7 +170,7 @@
             }
         },
         {
-            "filename": "idle_10",
+            "filename": "idle__10",
             "frame": {
                 "w": 480,
                 "h": 480,
@@ -183,7 +183,7 @@
             }
         },
         {
-            "filename": "walk_21",
+            "filename": "walk__21",
             "frame": {
                 "w": 480,
                 "h": 480,
@@ -196,7 +196,7 @@
             }
         },
         {
-            "filename": "walk_19",
+            "filename": "walk__19",
             "frame": {
                 "w": 480,
                 "h": 480,
@@ -209,7 +209,7 @@
             }
         },
         {
-            "filename": "walk_22",
+            "filename": "walk__22",
             "frame": {
                 "w": 480,
                 "h": 480,
@@ -222,7 +222,7 @@
             }
         },
         {
-            "filename": "walk_23",
+            "filename": "walk__23",
             "frame": {
                 "w": 480,
                 "h": 480,
@@ -235,7 +235,7 @@
             }
         },
         {
-            "filename": "walk_24",
+            "filename": "walk__24",
             "frame": {
                 "w": 480,
                 "h": 480,
@@ -248,7 +248,7 @@
             }
         },
         {
-            "filename": "walk_25",
+            "filename": "walk__25",
             "frame": {
                 "w": 480,
                 "h": 480,
@@ -261,7 +261,7 @@
             }
         },
         {
-            "filename": "walk_26",
+            "filename": "walk__26",
             "frame": {
                 "w": 480,
                 "h": 480,
@@ -274,7 +274,7 @@
             }
         },
         {
-            "filename": "walk_27",
+            "filename": "walk__27",
             "frame": {
                 "w": 480,
                 "h": 480,
@@ -287,7 +287,7 @@
             }
         },
         {
-            "filename": "walk_00",
+            "filename": "walk__0",
             "frame": {
                 "w": 480,
                 "h": 480,
@@ -300,7 +300,7 @@
             }
         },
         {
-            "filename": "walk_01",
+            "filename": "walk__1",
             "frame": {
                 "w": 480,
                 "h": 480,
@@ -313,7 +313,7 @@
             }
         },
         {
-            "filename": "walk_02",
+            "filename": "walk__2",
             "frame": {
                 "w": 480,
                 "h": 480,
@@ -326,7 +326,7 @@
             }
         },
         {
-            "filename": "walk_03",
+            "filename": "walk__3",
             "frame": {
                 "w": 480,
                 "h": 480,
@@ -339,7 +339,7 @@
             }
         },
         {
-            "filename": "walk_04",
+            "filename": "walk__4",
             "frame": {
                 "w": 480,
                 "h": 480,
@@ -352,7 +352,7 @@
             }
         },
         {
-            "filename": "walk_05",
+            "filename": "walk__5",
             "frame": {
                 "w": 480,
                 "h": 480,
@@ -365,7 +365,7 @@
             }
         },
         {
-            "filename": "walk_06",
+            "filename": "walk__6",
             "frame": {
                 "w": 480,
                 "h": 480,
@@ -378,7 +378,7 @@
             }
         },
         {
-            "filename": "walk_07",
+            "filename": "walk__7",
             "frame": {
                 "w": 480,
                 "h": 480,
@@ -391,7 +391,7 @@
             }
         },
         {
-            "filename": "walk_08",
+            "filename": "walk__8",
             "frame": {
                 "w": 480,
                 "h": 480,
@@ -404,7 +404,7 @@
             }
         },
         {
-            "filename": "walk_10",
+            "filename": "walk__10",
             "frame": {
                 "w": 480,
                 "h": 480,
@@ -417,7 +417,7 @@
             }
         },
         {
-            "filename": "walk_09",
+            "filename": "walk__9",
             "frame": {
                 "w": 480,
                 "h": 480,
@@ -430,7 +430,7 @@
             }
         },
         {
-            "filename": "walk_11",
+            "filename": "walk__11",
             "frame": {
                 "w": 480,
                 "h": 480,
@@ -443,7 +443,7 @@
             }
         },
         {
-            "filename": "walk_12",
+            "filename": "walk__12",
             "frame": {
                 "w": 480,
                 "h": 480,
@@ -456,7 +456,7 @@
             }
         },
         {
-            "filename": "walk_13",
+            "filename": "walk__13",
             "frame": {
                 "w": 480,
                 "h": 480,
@@ -469,7 +469,7 @@
             }
         },
         {
-            "filename": "walk_14",
+            "filename": "walk__14",
             "frame": {
                 "w": 480,
                 "h": 480,
@@ -482,7 +482,7 @@
             }
         },
         {
-            "filename": "walk_15",
+            "filename": "walk__15",
             "frame": {
                 "w": 480,
                 "h": 480,
@@ -495,7 +495,7 @@
             }
         },
         {
-            "filename": "walk_16",
+            "filename": "walk__16",
             "frame": {
                 "w": 480,
                 "h": 480,
@@ -508,7 +508,7 @@
             }
         },
         {
-            "filename": "walk_17",
+            "filename": "walk__17",
             "frame": {
                 "w": 480,
                 "h": 480,
@@ -521,7 +521,7 @@
             }
         },
         {
-            "filename": "walk_18",
+            "filename": "walk__18",
             "frame": {
                 "w": 480,
                 "h": 480,
@@ -534,7 +534,7 @@
             }
         },
         {
-            "filename": "walk_20",
+            "filename": "walk__20",
             "frame": {
                 "w": 480,
                 "h": 480,
@@ -547,7 +547,7 @@
             }
         },
         {
-            "filename": "damage_01",
+            "filename": "damage__1",
             "frame": {
                 "w": 480,
                 "h": 480,
@@ -560,7 +560,7 @@
             }
         },
         {
-            "filename": "damage_02",
+            "filename": "damage__2",
             "frame": {
                 "w": 480,
                 "h": 480,
@@ -573,7 +573,7 @@
             }
         },
         {
-            "filename": "damage_03",
+            "filename": "damage__3",
             "frame": {
                 "w": 480,
                 "h": 480,
@@ -586,7 +586,7 @@
             }
         },
         {
-            "filename": "damage_04",
+            "filename": "damage__4",
             "frame": {
                 "w": 480,
                 "h": 480,
@@ -599,7 +599,7 @@
             }
         },
         {
-            "filename": "damage_05",
+            "filename": "damage__5",
             "frame": {
                 "w": 480,
                 "h": 480,
@@ -612,7 +612,7 @@
             }
         },
         {
-            "filename": "damage_06",
+            "filename": "damage__6",
             "frame": {
                 "w": 480,
                 "h": 480,
@@ -625,7 +625,7 @@
             }
         },
         {
-            "filename": "damage_07",
+            "filename": "damage__7",
             "frame": {
                 "w": 480,
                 "h": 480,
@@ -638,7 +638,7 @@
             }
         },
         {
-            "filename": "damage_08",
+            "filename": "damage__8",
             "frame": {
                 "w": 480,
                 "h": 480,
@@ -651,7 +651,7 @@
             }
         },
         {
-            "filename": "damage_09",
+            "filename": "damage__9",
             "frame": {
                 "w": 480,
                 "h": 480,
@@ -664,7 +664,7 @@
             }
         },
         {
-            "filename": "damage_10",
+            "filename": "damage__10",
             "frame": {
                 "w": 480,
                 "h": 480,
@@ -677,7 +677,7 @@
             }
         },
         {
-            "filename": "damage_11",
+            "filename": "damage__11",
             "frame": {
                 "w": 480,
                 "h": 480,
@@ -690,7 +690,7 @@
             }
         },
         {
-            "filename": "damage_00",
+            "filename": "damage__0",
             "frame": {
                 "w": 480,
                 "h": 480,
@@ -703,7 +703,7 @@
             }
         },
         {
-            "filename": "down_00",
+            "filename": "down__0",
             "frame": {
                 "w": 480,
                 "h": 480,

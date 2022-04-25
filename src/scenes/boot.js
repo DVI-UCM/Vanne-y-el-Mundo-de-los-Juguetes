@@ -82,6 +82,8 @@ export default class Boot extends Phaser.Scene {
 
     this.load.setPath('/assets/sprites/enemigos/');
     this.load.atlas('calabaza', 'calabaza/calabaza.png', 'calabaza/calabaza.json');
+    this.load.atlas('slime', 'slime/slime.png', 'slime/slime.json');
+
     this.load.image('ghost','fantasma/ghost.png');
     this.load.image('ghost2','fantasma/ghost2.png');
     this.load.image('monstruoVolador','monstruo_volador/monstruoVolador.png');
