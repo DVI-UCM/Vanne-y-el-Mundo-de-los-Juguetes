@@ -66,6 +66,10 @@ export default class Level5 extends Phaser.Scene {
     this.load.setPath('assets/tiles/level5/');
     this.load.image('level5_tileset', 'iceWorld.png');
     this.load.tilemapTiledJSON('level5_map', 'iceWorld.json');
+
+    this.load.setPath('assets/sprites/enemigos/');
+    this.load.atlas('slime', 'slime/slime.png', 'slime/slime.json');
+
   }
   create() {
     //Fondo parallax
@@ -122,7 +126,7 @@ export default class Level5 extends Phaser.Scene {
 
 
     //codigo de @kittykatattack en https://phaser.discourse.group/t/riding-moving-platforms/7330/6
-    const collisionMovingPlatform = (sprite, platform) => {
+    /* const collisionMovingPlatform = (sprite, platform) => {
       if (platform.body.touching.up && sprite.body.touching.down) {
         sprite.isOnPlatform = true;
         sprite.currentPlatform = platform;      
@@ -130,10 +134,10 @@ export default class Level5 extends Phaser.Scene {
       else{
         //this.player.muere();
       }
-    };
+    }; */
 
     //Only allow collisions from top
-    const isCollisionFromTop = (sprite, platform) => {
+    /* const isCollisionFromTop = (sprite, platform) => {
       return platform.body.y > sprite.body.y;
     };
 
@@ -143,21 +147,21 @@ export default class Level5 extends Phaser.Scene {
       collisionMovingPlatform,
       isCollisionFromTop,
       this
-    );
+    ); */
     //-- 
 
     this.physics.add.collider(this.player, this.slime, (player, slime) => {
       //if(!player.body.touching.down){
-        if(player.anims.currentAnim.key == 'attack'){
+        /* if(player.anims.currentAnim.key == 'attack'){
           slime.muere();
         }
-        else{
+        else{ */
           slime.anims.play('idle', true);
           slime.body.setVelocityX(0);
           player.body.setOffset(29, 0);
           player.muere();
           this.endGame(); 
-        }
+        //}
         
      /*  }
       else {

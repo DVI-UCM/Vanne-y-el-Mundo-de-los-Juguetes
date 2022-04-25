@@ -25,7 +25,7 @@
   
   
       this.createAnims();
-      this.anims.play('idle', true);
+      this.anims.play('idle');
       
       this.die = false;
     
@@ -35,25 +35,29 @@
       this.setScale(.10);
       
       this.speed = 50;
-      this.body.setVelocityX(this.speed);
+      //this.body.setVelocityX(this.speed);
   
     }
   
     createAnims(){
       this.anims.create({
         key: 'idle',
-        frames: this.anims.generateFrameNames('slime', { prefix: 'idle__',
-        start: 0,
-        end: 13}),
+        frames: this.anims.generateFrameNames('slime', 
+        { prefix: 'idle__',
+          start: 0,
+          end: 13
+        }),
         frameRate: 10, // Velocidad de la animación
         repeat: -1    // Animación en bucle
       });
   
       this.anims.create({
         key: 'walk',
-        frames: this.anims.generateFrameNames('slime', { prefix: 'walk__',
-        start: 0,
-        end: 27}),
+        frames: this.anims.generateFrameNames('slime', 
+        { prefix: 'walk__',
+          start: 0,
+          end: 27
+        }),
         frameRate: 10, // Velocidad de la animación
         repeat: -1    // Animación en bucle
       });
