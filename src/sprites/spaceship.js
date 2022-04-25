@@ -94,6 +94,26 @@ export default class SpaceShip extends Phaser.GameObjects.Sprite {
         this.rotation = 0;
       }
     }
+    else{
+      let dir = "";
+      if(this.cursors.down.isDown){
+        dir = "down";
+      }
+      else if(this.cursors.left.isDown){
+        dir = "left";
+      }
+      else if(this.cursors.right.isDown){
+        dir = "right";
+      }
+      else if(this.cursors.up.isDown){
+        dir = "up";
+      }
+      // Get the first available sprite in the group
+      const laser = this.scene.lasers.getFirstDead(false);
+      if (laser) {
+        laser.shoot(this.scene.player.x, this.scene.player.y + 20, dir);
+      }
+    }
 
     if(this.muerte){
       //this.anims.play('dead', true);

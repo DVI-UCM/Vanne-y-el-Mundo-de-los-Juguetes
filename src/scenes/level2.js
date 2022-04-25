@@ -30,19 +30,11 @@ export default class Level2 extends Phaser.Scene {
    * Creación de los elementos de la escena principal de juego
    */
   create() {
-    
-  
-
-    
-
     let image = this.add.image(this.cameras.main.width / 2, this.cameras.main.height / 2, 'lego');
     let scaleX = this.cameras.main.width / image.width;
     let scaleY = this.cameras.main.height / image.height;
     let scale = Math.max(scaleX, scaleY);
     image.setScale(scale).setScrollFactor(0);
-    
-    //parallax aqui abajo
-    //this.parallax = this.add.tileSprite(0, 0, 2000, 1000, 'lego');
 
 
     this.exit = new ExitButton(this, this.cameras.main.width - 20, 20);
@@ -50,7 +42,6 @@ export default class Level2 extends Phaser.Scene {
     this.fullScreen = new FullScreenButton(this, this.cameras.main.width - 50, 20);
     this.fullScreen.setScrollFactor(0);
 
-    //this.keys = this.physics.add.staticGroup();
     this.ghosts = this.physics.add.group({
       allowGravity:false
     });
@@ -72,21 +63,22 @@ export default class Level2 extends Phaser.Scene {
     this.lasers.add(new Laser(this, this.player.x, this.player.y + 20));
 
 
-    var needKeyText = "Necesitas matar a\ntodos los fantasmas\ny desbloquear la llave\npara abrir la puerta";
+    let needKeyText = "Mata a todos los\n fantasmas para\n desbloquear la llave\n y abrir la puerta";
 
-    this.textKey = this.add.text(750, 220, needKeyText,  { font: "20px Arial", fill: '#000000', backgroundColor: 'rgba(255,255,255,1)' });
+    this.textKey = this.add.text(750, 220, needKeyText,  { font: "20px Arial", fill: '#000000', backgroundColor: 'rgba(255,255,255,0.8)' });
     this.textKey.lineSpacing = 30;
     this.textKey.depth = 1;
+    this.textKey.visible = false;
 
 
-    this.inputKeys = [
+    /* this.inputKeys = [
 			this.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.SPACE),
 			this.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.DOWN),
       this.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.LEFT),
       this.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.RIGHT),
       this.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.UP)
 		];
-
+ */
 
     this.map = this.make.tilemap({ 
         key: 'MAPA2',
@@ -136,11 +128,24 @@ createColliders(){
     });
 
     this.physics.add.overlap(this.player, this.door, (player, door)=>{
-        if(!door.close){//Si la puerta está abierta
-          this.player.body.setVelocityX(0);
-          this.endGame(true); //Termino el juego
+      if(!door.close){//Si la puerta está abierta
+        this.player.body.setVelocityX(0);
+        this.endGame(true); //Termino el juego
+      }
+      else{
+        this.textKey.visible = true;
+        /* if(this.player.x > 950){
         }
-      });
+        else {
+          this.textKey.visible = false;
+        } */
+      }
+    });
+
+    this.door.on('overlapend', () => {
+      if(this.door.close)
+        this.textKey.visible = false;
+    });
   }
 
   endGame(completed = false) {
@@ -157,34 +162,47 @@ createColliders(){
     laser.shoot(this.player.x, this.player.y, dir);
   }
 
-  keyPick(){
-    if(this.player.x == 450 && this.player.y == 380){
-      this.key.destroy();
-      this.door.setOpen();
-    }
-  }
-
   update(){
+    //this.textKey.visible = false;
     // If key was just pressed down, shoot the laser.
-      if (this.inputKeys[0].isDown) {
-        let dir = "";
-        if(this.inputKeys[1].isDown){
-          dir = "down";
-        }
-        else if(this.inputKeys[2].isDown){
-          dir = "left";
-        }
-        else if(this.inputKeys[3].isDown){
-          dir = "right";
-        }
-        else if(this.inputKeys[4].isDown){
-          dir = "up";
-        }
-        // Get the first available sprite in the group
-        const laser = this.lasers.getFirstDead(false);
-        if (laser) {
-          laser.shoot(this.player.x, this.player.y + 20, dir);
-        }
+    /* if (this.inputKeys[0].isDown) {
+      let dir = "";
+      if(this.inputKeys[1].isDown){
+        dir = "down";
+      }
+      else if(this.inputKeys[2].isDown){
+        dir = "left";
+      }
+      else if(this.inputKeys[3].isDown){
+        dir = "right";
+      }
+      else if(this.inputKeys[4].isDown){
+        dir = "up";
+      }
+      // Get the first available sprite in the group
+      const laser = this.lasers.getFirstDead(false);
+      if (laser) {
+        laser.shoot(this.player.x, this.player.y + 20, dir);
+      }
+    } */
+    /* if(this.door.close){
+      if(this.player.x > 950){
+        this.textKey.visible = true;
+      }
+      else {
+        this.textKey.visible = false;
+      }
+    } */
+/*
+    if(!this.player.muerte){
+      if(this.player.cursors.left.isDown){
+        this.parallax.tilePositionX -= 0.5;
+      }
+      else if (this.player.cursors.right.isDown){
+        this.parallax.tilePositionX += 0.5;
+      }
+      else if (this.player.cursors.down.isDown){
+        this.parallax.tilePositionY += 0.5;
       }
       if(this.door.close){
         if(this.player.x > 950){
@@ -194,7 +212,7 @@ createColliders(){
           this.textKey.visible = false;
         }
       }
-    
+    */
     
   }
 

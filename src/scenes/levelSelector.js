@@ -15,7 +15,6 @@ export default class LevelSelector extends Phaser.Scene {
         this.load.image('4', 'Number4.png');
         this.load.image('5', 'Number5.png');
         this.load.image('6', 'Number6.png');
-        this.load.image('lvlSelBoard', 'lvlSelectorBoard.png');
         this.load.image('sound_on', 'button_sound_on.png');
         this.load.image('sound_off', 'button_sound_off.png');
     }
@@ -23,12 +22,12 @@ export default class LevelSelector extends Phaser.Scene {
     create(){
 
         this.inputKeys = [
-			this.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.ONE),
-			this.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.TWO),
-            this.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.THREE),
-            this.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.FOUR),
-            this.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.FIVE),
-            this.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.SIX)
+          this.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.ONE),
+          this.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.TWO),
+          this.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.THREE),
+          this.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.FOUR),
+          this.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.FIVE),
+          this.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.SIX)
         ];
 
         this.levelThumbsGroup = this.physics.add.staticGroup();
