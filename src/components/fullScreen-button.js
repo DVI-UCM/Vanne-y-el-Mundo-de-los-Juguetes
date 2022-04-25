@@ -11,10 +11,14 @@ export default class FullScreenButton extends Phaser.GameObjects.Sprite {
         if (this.scene.scale.isFullscreen){
             this.setTexture("fullScreen");
             this.scene.scale.stopFullscreen();
+            this.scene.scale.scaleMode = Phaser.Scale.FIT;
+            this.scene.scale.autoCenter = Phaser.Scale.CENTER_BOTH;
         }
         else{
             this.setTexture("fullScreen2");
             this.scene.scale.startFullscreen();
+            this.scene.scale.scaleMode = Phaser.Scale.NONE;
+            this.scene.scale.autoCenter = Phaser.Scale.CENTER_HORIZONTALLY;
         }
     });
     }

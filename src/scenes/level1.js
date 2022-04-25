@@ -89,8 +89,10 @@ export default class Level1 extends Phaser.Scene {
     this.cameras.main.centerOn(0, 30);
 
 
-    this.exit = new ExitButton(this, this.cameras.main.width - 20, 20).setScrollFactor(0);
-    this.fullScreen = new FullScreenButton(this, this.cameras.main.width - 50, 20).setScrollFactor(0);
+    this.exit = new ExitButton(this, this.cameras.main.width - 20, 20);
+    this.exit.setScrollFactor(0);
+    this.fullScreen = new FullScreenButton(this, this.cameras.main.width - 50, 20);
+    this.fullScreen.setScrollFactor(0);
 
     const map = this.make.tilemap({key: 'level1_map'});
 

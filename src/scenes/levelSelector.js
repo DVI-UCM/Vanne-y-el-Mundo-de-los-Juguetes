@@ -50,7 +50,7 @@ export default class LevelSelector extends Phaser.Scene {
               let levelThumb = this.add.image(j*100 + this.lvlSelBoard_x, i*100 + this.lvlSelBoard_y, levelNumber).setOrigin(0).setInteractive();
               levelThumb.on('pointerdown', () => {
                 var level = "level" + levelNumber;
-                this.scene.start(level);
+                this.scene.start('prelevels' ,{_sceneKey: level });
               });
               this.levelThumbsGroup.add(levelThumb);
             }
@@ -77,7 +77,7 @@ export default class LevelSelector extends Phaser.Scene {
     update(){
         if (this.inputKeys[0].isDown) {
           var level = "level" + 1;
-          this.scene.start(level);
+          this.scene.start('prelevels' ,{_sceneKey: level });
         }
         if (this.inputKeys[1].isDown) {
           var level = "level" + 2;

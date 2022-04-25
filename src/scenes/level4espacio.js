@@ -100,8 +100,10 @@ export default class Level4 extends Phaser.Scene {
     this.groundLayer = this.map.createLayer("Capa de patrones 1", [tileset1, tileset2]);
     //------------------
 
-    this.exit = new ExitButton(this, this.cameras.main.width - 20, this.cameras.main.height -320);
-    this.fullScreen = new FullScreenButton(this, this.cameras.main.width - 50, this.cameras.main.height - 320);
+    this.exit = new ExitButton(this, this.cameras.main.width - 20, 20);
+    this.exit.setScrollFactor(0);
+    this.fullScreen = new FullScreenButton(this, this.cameras.main.width - 50, 20);
+    this.fullScreen.setScrollFactor(0);
 
     this.createColliders();
   }

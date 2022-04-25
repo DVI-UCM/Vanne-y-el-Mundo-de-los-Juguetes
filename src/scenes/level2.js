@@ -31,10 +31,7 @@ export default class Level2 extends Phaser.Scene {
    */
   create() {
     
-    /*let background = this.add.tileSprite(0, 0, 0, 0, "lego").setOrigin(0,0);
-    background.displayHeight = this.sys.game.config.height;
-    background.scaleX = background.scaleY; 
-    background.setScrollFactor(0);*/
+  
 
     
 
@@ -49,7 +46,9 @@ export default class Level2 extends Phaser.Scene {
 
 
     this.exit = new ExitButton(this, this.cameras.main.width - 20, 20);
+    this.exit.setScrollFactor(0);
     this.fullScreen = new FullScreenButton(this, this.cameras.main.width - 50, 20);
+    this.fullScreen.setScrollFactor(0);
 
     //this.keys = this.physics.add.staticGroup();
     this.ghosts = this.physics.add.group({
