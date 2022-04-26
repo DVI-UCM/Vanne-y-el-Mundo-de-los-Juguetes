@@ -69,12 +69,16 @@ export default class Level4 extends Phaser.Scene {
     this.player.body.setAllowGravity(false);
     this.ghost1 = new Ghost(this, 800, 370, 'ghost');
     this.ghost2 = new Ghost(this, 350, 160, 'ghost2');
+    this.ghost3 = new Ghost(this, 1800, 850, 'ghost3');
+    this.ghost4 = new Ghost(this, 1050, 600, 'ghost4');
     this.door = new Door(this, 1977, 450);
     this.key;
 
     this.cameras.main.startFollow(this.player);
     this.ghosts.add(this.ghost1);
     this.ghosts.add(this.ghost2);
+    this.ghosts.add(this.ghost3);
+    this.ghosts.add(this.ghost4);
     this.lasers.add(new Laser(this, this.player.x, this.player.y ));
 
     this.inputKeys = [
@@ -129,7 +133,7 @@ export default class Level4 extends Phaser.Scene {
       ghost.updateDie(true);
       ghost.destroy();
 
-      if(this.ghost1.die && this.ghost2.die){
+      if(this.ghost1.die && this.ghost2.die && this.ghost3.die && this.ghost4.die){
         this.key = new Key(this, 1725, 375);
         this.physics.add.overlap(this.player, this.key, (player, key) =>{
           this.door.setTexture('openDoor');
@@ -143,13 +147,6 @@ export default class Level4 extends Phaser.Scene {
     this.physics.add.overlap(this.player, this.door, (player, door)=>{
       if(!door.close){//Si la puerta está abierta
         this.endGame(true); //Termino el juego
-      }
-      else{
-        this.needKey = this.add.text(1777, 400, 'Necesitas matar a todos los fantasmas y desbloquear la llave para abrir la puerta', { 
-          fontSize: '20px', 
-          fill: '#fff', 
-          fontFamily: 'verdana, arial, sans-serif'
-        });
       }
     });
 }
@@ -231,7 +228,7 @@ endGame(completed = false) {
     } 
 
     if(this.door.close){
-      if(this.player.x > 950){
+      if(this.player.x > 1950){
         this.textKey.visible = true;
       }
       else {
