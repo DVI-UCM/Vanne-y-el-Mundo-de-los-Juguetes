@@ -70,7 +70,13 @@ export default class Level5 extends Phaser.Scene {
     this.load.setPath('assets/sprites/enemigos/slime/');
     //this.load.atlas('slime', 'slime/slime.png', 'slime/slime.json');
     this.load.spritesheet('slime_idle', 'idle_spritesheet.png', {frameWidth: 40, frameHeight: 33});
+    
+    this.load.setPath('assets/sounds/');
+    this.load.audio("fivemusic","5music.mp3");  
+  
   }
+
+
   create() {
     //Fondo parallax
     const width = this.scale.width;
@@ -95,6 +101,10 @@ export default class Level5 extends Phaser.Scene {
     this.exit.setScrollFactor(0);
     this.fullScreen = new FullScreenButton(this, this.cameras.main.width - 50, 20);
     this.fullScreen.setScrollFactor(0);
+
+    //musica
+    this.fivemusic = this.sound.add("fivemusic");
+    this.fivemusic.play();
 
     const map = this.make.tilemap({key: 'level5_map'});
 

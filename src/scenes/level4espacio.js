@@ -31,6 +31,11 @@ export default class Level4 extends Phaser.Scene {
     this.load.tilemapTiledJSON('MAPA4', 'assets/tiles/level4/MAPA4.json');
     this.load.image('portal', 'assets/tiles/level6/portal.png');
     this.load.image("fondoPantalla", "assets/backgrounds/fondoespacio.png");
+  
+    this.load.setPath('assets/sounds/');
+    this.load.audio("fourmusic","4music.mp3");
+    this.load.audio("disparonave","disparonave.mp3");
+    this.load.audio("muertenave","muertenave.mp3");
   }
   /**
    * Creación de los elementos de la escena principal de juego
@@ -58,6 +63,12 @@ export default class Level4 extends Phaser.Scene {
     this.textKey.lineSpacing = 30;
     this.textKey.depth = 1;
     
+    //musica
+    this.fourmusic = this.sound.add("fourmusic");
+    this.disparonave = this.sound.add("disparonave");
+    this.muertenave = this.sound.add("muertenave");
+    this.fourmusic.play();
+
     this.ghosts = this.physics.add.group({
       allowGravity:false
     });
@@ -125,6 +136,7 @@ export default class Level4 extends Phaser.Scene {
     this.physics.add.collider(this.player, this.ghosts, () => {
       this.player.body.setVelocityX(0);
       this.player.muere();
+      this.muertenave.play();
       this.endGame();
     });
 
@@ -156,6 +168,8 @@ export default class Level4 extends Phaser.Scene {
 
 endGame(completed = false) {
   this.scene.stop(this.scene.key)
+  this.fourmusic.stop();//musica
+
   if(! completed) {
     this.scene.launch('gameover', {_sceneKey: this.scene.key });
   } 
@@ -166,6 +180,7 @@ endGame(completed = false) {
 
   shoot(laser, dir){
     laser.shoot(this.player.x, this.player.y + 20, dir);
+    
   }
 
   keyPick(){
@@ -223,6 +238,7 @@ endGame(completed = false) {
       // Get the first available sprite in the group
       const laser = this.lasers.getFirstDead(false);
       if (laser) {
+        this.disparonave.play();
         laser.shoot(this.player.x, this.player.y, dir);
       }
     } 

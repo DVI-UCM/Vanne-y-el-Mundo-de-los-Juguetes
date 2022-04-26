@@ -17,18 +17,26 @@ export default class LevelSelector extends Phaser.Scene {
         this.load.image('6', 'Number6.png');
         this.load.image('sound_on', 'button_sound_on.png');
         this.load.image('sound_off', 'button_sound_off.png');
-    }
+   
+        this.load.setPath('assets/sounds/');
+        this.load.audio("lobbym","lobbymusic.mp3");
+      
+      }
 
     create(){
 
-        this.inputKeys = [
+          this.inputKeys = [
           this.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.ONE),
           this.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.TWO),
           this.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.THREE),
           this.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.FOUR),
           this.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.FIVE),
           this.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.SIX)
-        ];
+          ];
+
+        //musica
+        this.lobbym = this.sound.add("lobbym");
+        this.lobbym.play();
 
         this.levelThumbsGroup = this.physics.add.staticGroup();
         this.add.image(0,0, 'lvlSelBg').setOrigin(0);
@@ -65,10 +73,12 @@ export default class LevelSelector extends Phaser.Scene {
             if(this.isSounOn){
                 this.sound_OnOff.setTexture('sound_off');
                 this.isSounOn = false;
+                this.lobbym.stop();
             }
             else {
                 this.sound_OnOff.setTexture('sound_on');
                 this.isSounOn = true;
+                this.lobbym.play();
             }
           });
     }

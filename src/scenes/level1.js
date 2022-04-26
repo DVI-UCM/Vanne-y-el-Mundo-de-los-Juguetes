@@ -68,6 +68,10 @@ export default class Level1 extends Phaser.Scene {
     this.load.setPath('assets/tiles/level1/');
     this.load.image('level1_tileset', 'candy_world_tileset_resize.png');
     this.load.tilemapTiledJSON('level1_map', 'level1_map.json');
+  
+    this.load.setPath('assets/sounds/');
+    this.load.audio("onemusic","1music.mp3");
+
   }
   
   /**
@@ -78,6 +82,10 @@ export default class Level1 extends Phaser.Scene {
     const width = this.scale.width;
     const height = this.scale.height;
     const totalWidth = width * 2;
+
+
+    this.onemusic = this.sound.add("onemusic");
+    this.onemusic.play();
 
     createAligned(this, totalWidth, 'chuche1', 0.35, 0, 1);
     createAligned(this, totalWidth, 'chuche2', 0.45, 0, 1);
@@ -199,6 +207,7 @@ export default class Level1 extends Phaser.Scene {
   }
 
   endGame(completed = false) {
+    this.onemusic.stop();
     if(!completed) {
       this.scene.launch('gameover', {_sceneKey: this.scene.key });
     } else {

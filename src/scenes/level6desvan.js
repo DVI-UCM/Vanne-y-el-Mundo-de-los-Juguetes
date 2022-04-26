@@ -31,6 +31,11 @@ export default class Level6 extends Phaser.Scene {
     this.load.image('portal', 'assets/tiles/level6/portal.png');
     this.load.tilemapTiledJSON('MAPA6', 'assets/tiles/level6/MAPA6.json');
     this.load.image("fondoPantalla6", "assets/backgrounds/fondociudad.png");
+  
+    this.load.setPath('assets/sounds/');
+    this.load.audio("sixmusic","6music.mp3");
+    this.load.audio("disparonave","disparonave.mp3");
+    this.load.audio("muertenave","muertenave.mp3");
   }
   /**
    * Creación de los elementos de la escena principal de juego
@@ -50,7 +55,11 @@ export default class Level6 extends Phaser.Scene {
     this.cameras.main.setBounds(0,0, totalWidth, totalHeight);
     this.physics.world.setBounds(0,0, totalWidth, totalHeight);
 
-    
+    //musica
+    this.sixmusic = this.sound.add("sixmusic");
+    this.disparonave = this.sound.add("disparonave");
+    this.muertenave = this.sound.add("muertenave");
+    this.sixmusic.play();
    
     
     this.ghosts = this.physics.add.group({
@@ -173,6 +182,7 @@ export default class Level6 extends Phaser.Scene {
     this.physics.add.collider(this.player, this.ghosts, () => {
       this.player.body.setVelocityX(0);
       this.player.muere();
+      this.muertenave.play();
       this.endGame();
     });
 
@@ -291,6 +301,7 @@ endGame(completed = false) {
       // Get the first available sprite in the group
       const laser = this.lasers.getFirstDead(false);
       if (laser) {
+        this.disparonave.play();
         laser.shoot(this.player.x, this.player.y, dir);
       }
     } 

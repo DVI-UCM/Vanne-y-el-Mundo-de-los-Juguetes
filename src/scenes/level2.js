@@ -25,6 +25,11 @@ export default class Level2 extends Phaser.Scene {
     this.load.image('LEGO_LEVEL2', 'assets/tiles/level2/LEGO_LEVEL2.png');
     this.load.tilemapTiledJSON('MAPA2', 'assets/tiles/level2/MAPA2.json');
     this.load.image('lego', 'assets/backgrounds/LEGO_FONDO_1000x500.jpg');
+  
+    this.load.setPath('assets/sounds/');
+    this.load.audio("twomusic","2music.mp3");
+    this.load.audio("disparonave","disparonave.mp3");
+    this.load.audio("muertenave","muertenave.mp3");
   }
   /**
    * Creación de los elementos de la escena principal de juego
@@ -41,6 +46,12 @@ export default class Level2 extends Phaser.Scene {
     this.exit.setScrollFactor(0);
     this.fullScreen = new FullScreenButton(this, this.cameras.main.width - 50, 20);
     this.fullScreen.setScrollFactor(0);
+
+    //musica
+    this.twomusic = this.sound.add("twomusic");
+    this.disparonave = this.sound.add("disparonave");
+    this.muertenave = this.sound.add("muertenave");
+    this.twomusic.play();
 
     this.ghosts = this.physics.add.group({
       allowGravity:false
@@ -109,6 +120,7 @@ createColliders(){
     this.physics.add.collider(this.player, this.ghosts, () => {
       this.player.body.setVelocityX(0);
       this.player.muere();
+      this.muertenave.play();
       this.endGame();
     });
 
@@ -150,6 +162,7 @@ createColliders(){
 
   endGame(completed = false) {
     this.scene.stop(this.scene.key)
+    this.twomusic.stop();
     if(! completed) {
       this.scene.launch('gameover', {_sceneKey: this.scene.key });
     } 
@@ -163,6 +176,11 @@ createColliders(){
   }
 
   update(){
+    
+    const laser = this.lasers.getFirstDead(false);
+    if(laser){
+      this.disparonave.play();
+    }
     //this.textKey.visible = false;
     // If key was just pressed down, shoot the laser.
     /* if (this.inputKeys[0].isDown) {

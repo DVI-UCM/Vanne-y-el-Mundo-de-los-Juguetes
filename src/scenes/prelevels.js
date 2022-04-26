@@ -25,6 +25,7 @@ export default class prelevels extends Phaser.Scene {
     this.load.image('bgPreLv4', 'assets/backgrounds/prelevels/fondoEstandar.png');
     this.load.image('bgPreLv5', 'assets/backgrounds/prelevels/fondoEstandar.png');
     this.load.image('bgPreLv6', 'assets/backgrounds/prelevels/fondoEstandar.png');
+  
   }
 
   create() {
@@ -42,6 +43,7 @@ export default class prelevels extends Phaser.Scene {
     let scaleY = this.cameras.main.height / image.height;
     let scale = Math.max(scaleX, scaleY);
     image.setScale(scale).setScrollFactor(0);
+    
     
     //parallax aqui abajo
     //this.parallax = this.add.tileSprite(0, 0, 2000, 1000, 'lego');
@@ -92,7 +94,7 @@ export default class prelevels extends Phaser.Scene {
   }
 
   update(){
-    if (this.inputKeys[0].isDown) {
+    if (this.inputKeys[0].isDown) { 
         this.scene.stop('prelevels')
         this.scene.start(this.nextLevel);
       }
