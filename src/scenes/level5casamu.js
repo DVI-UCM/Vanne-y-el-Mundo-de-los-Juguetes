@@ -67,9 +67,9 @@ export default class Level5 extends Phaser.Scene {
     this.load.image('level5_tileset', 'iceWorld.png');
     this.load.tilemapTiledJSON('level5_map', 'iceWorld.json');
 
-    this.load.setPath('assets/sprites/enemigos/');
-    this.load.atlas('slime', 'slime/slime.png', 'slime/slime.json');
-
+    this.load.setPath('assets/sprites/enemigos/slime/');
+    //this.load.atlas('slime', 'slime/slime.png', 'slime/slime.json');
+    this.load.spritesheet('slime_idle', 'idle_spritesheet.png', {frameWidth: 40, frameHeight: 33});
   }
   create() {
     //Fondo parallax

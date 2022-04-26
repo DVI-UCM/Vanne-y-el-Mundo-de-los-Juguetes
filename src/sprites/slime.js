@@ -32,7 +32,7 @@
       // Queremos que el jugador no se salga de los límites del mundo
       this.body.setCollideWorldBounds(true, 0, 0);
       
-      this.setScale(.10);
+      //this.setScale(.10);
       
       this.speed = 50;
       //this.body.setVelocityX(this.speed);
@@ -40,7 +40,7 @@
     }
   
     createAnims(){
-      this.anims.create({
+      /* this.anims.create({
         key: 'idle',
         frames: this.anims.generateFrameNames('slime', 
         { prefix: 'idle__',
@@ -49,9 +49,16 @@
         }),
         frameRate: 10, // Velocidad de la animación
         repeat: -1    // Animación en bucle
-      });
+      }); */
   
       this.anims.create({
+          key: 'idle',
+          frames: 'slime_idle',
+          frameRate: 10,
+          repeat: -1
+      });
+
+      /* this.anims.create({
         key: 'walk',
         frames: this.anims.generateFrameNames('slime', 
         { prefix: 'walk__',
@@ -60,16 +67,16 @@
         }),
         frameRate: 10, // Velocidad de la animación
         repeat: -1    // Animación en bucle
-      });
+      }); */
 
-      this.anims.create({
+      /* this.anims.create({
         key: 'damage',
         frames: this.anims.generateFrameNames('slime', { prefix: 'damage__',
         start: 0,
         end: 11}),
         frameRate: 10, // Velocidad de la animación
         repeat: -1    // Animación en bucle
-      });
+      }); */
 
     //   this.anims.create({
     //     key: 'down',
