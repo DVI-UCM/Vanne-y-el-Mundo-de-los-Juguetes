@@ -84,8 +84,8 @@ export default class Level1 extends Phaser.Scene {
     const totalWidth = width * 2;
 
 
-    this.onemusic = this.sound.add("onemusic");
-    this.onemusic.play();
+    this.music = this.sound.add("onemusic");
+    if(localStorage.getItem('music') == 'true') { this.music.play(); }
 
     createAligned(this, totalWidth, 'chuche1', 0.35, 0, 1);
     createAligned(this, totalWidth, 'chuche2', 0.45, 0, 1);
@@ -207,7 +207,8 @@ export default class Level1 extends Phaser.Scene {
   }
 
   endGame(completed = false) {
-    this.onemusic.stop();
+    this.scene.stop(this.scene.key);
+    this.music.stop();
     if(!completed) {
       this.scene.launch('gameover', {_sceneKey: this.scene.key });
     } else {

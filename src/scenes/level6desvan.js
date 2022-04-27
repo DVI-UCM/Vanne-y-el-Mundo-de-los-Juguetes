@@ -46,7 +46,6 @@ export default class Level6 extends Phaser.Scene {
     let x = 0;
     let y = 0;
     this.add.image(x, y, 'fondoPantalla6').setOrigin(0);
-    //this.parallax = this.add.tileSprite(0, 0, 5000, 2500, 'fondoPantalla6');
 
     const totalWidth = this.textures.get('fondoPantalla6').getSourceImage().width;
     const totalHeight = this.textures.get('fondoPantalla6').getSourceImage().height;
@@ -56,12 +55,12 @@ export default class Level6 extends Phaser.Scene {
     this.physics.world.setBounds(0,0, totalWidth, totalHeight);
 
     //musica
-    this.sixmusic = this.sound.add("sixmusic");
+    this.music = this.sound.add("sixmusic");
     this.disparonave = this.sound.add("disparonave");
     this.muertenave = this.sound.add("muertenave");
-    this.sixmusic.play();
+    if(localStorage.getItem('music') == 'true') { this.music.play(); }
+
    
-    
     this.ghosts = this.physics.add.group({
       allowGravity:false
     });
@@ -76,7 +75,6 @@ export default class Level6 extends Phaser.Scene {
     this.ghost3 = new Ghost(this, 1650, 375, 'ghost');
     this.ghost4 = new Ghost(this, 1150, 900, 'ghost2');
     this.door = new Door(this, 1977, 600);
-    this.key;
 
     this.cameras.main.startFollow(this.player);
     this.ghosts.add(this.ghost1);
@@ -114,10 +112,8 @@ export default class Level6 extends Phaser.Scene {
     this.groundLayer = this.map.createLayer("Capa de patrones 1", [tileset1, tileset2]);
     //------------------
 
-    this.exit = new ExitButton(this, this.cameras.main.width - 20, 20);
-    this.exit.setScrollFactor(0);
-    this.fullScreen = new FullScreenButton(this, this.cameras.main.width - 50, 20);
-    this.fullScreen.setScrollFactor(0);
+    new ExitButton(this, this.cameras.main.width - 20, 20).setScrollFactor(0);
+    new FullScreenButton(this, this.cameras.main.width - 50, 20).setScrollFactor(0);
 
     this.createColliders();
      //CREAR LUCES
@@ -151,7 +147,7 @@ export default class Level6 extends Phaser.Scene {
 		this.cover.mask = new Phaser.Display.Masks.BitmapMask(this, maskImage)
 		this.cover.mask.invertAlpha = true
 
-//El 200 es el tamaño del circulo
+    //El 200 es el tamaño del circulo
 		this.light = this.add.circle(0, 0, 200, 0x000000, 1)
 		this.light.visible = false
 
@@ -182,7 +178,7 @@ export default class Level6 extends Phaser.Scene {
     this.physics.add.collider(this.player, this.ghosts, () => {
       this.player.body.setVelocityX(0);
       this.player.muere();
-      this.muertenave.play();
+      if(localStorage.getItem('music') == 'true') { this.muertenave.play(); }
       this.endGame();
     });
 
@@ -196,7 +192,7 @@ export default class Level6 extends Phaser.Scene {
         this.physics.add.overlap(this.player, this.key, (player, key) =>{
           this.door.setTexture('openDoor');
           this.door.setOpen();
-          key.destroy();
+          this.key.destroy();
         });
       }
     });
@@ -206,29 +202,19 @@ export default class Level6 extends Phaser.Scene {
         this.endGame(true); //Termino el juego
       }
     });
-}
-endGame(completed = false) {
-  this.scene.stop(this.scene.key)
-  if(! completed) {
-    this.scene.launch('gameover', {_sceneKey: this.scene.key });
-  } 
-  else {
-    this.scene.launch('congratulations', {_sceneKey: this.scene.key });
-  }
-}
-
-  shoot(laser, dir){
-    laser.shoot(this.player.x, this.player.y + 20, dir);
   }
 
-  keyPick(){
-    if(this.player.x == 450 && this.player.y == 380){
-      this.key.destroy();
-      this.door.setOpen();
+  endGame(completed = false) {
+    this.scene.stop(this.scene.key);
+    this.music.stop();
+    if(! completed) {
+      this.scene.launch('gameover', {_sceneKey: this.scene.key });
+    } 
+    else {
+      this.scene.launch('congratulations', {_sceneKey: this.scene.key });
     }
   }
 
-  
   checkTp(){
     //Inicial
     if(this.player.x >=60 && this.player.x <= 90 && this.player.y <= 90 && this.player.y >= 60){
@@ -279,32 +265,9 @@ endGame(completed = false) {
   }
 
   update(){
-    //this.exit.position(this.cameras.main.width - 20, this.cameras.main.height -320);
-    //this.fullScreen.position(this.cameras.main.width - 50, this.cameras.main.height -320);
     // If key was just pressed down, shoot the laser.
     this.checkTp();
     this.playerLightMove();
-    if (this.inputKeys[0].isDown) {
-      let dir = "";
-      if(this.inputKeys[1].isDown){
-        dir = "down";
-      }
-      else if(this.inputKeys[2].isDown){
-        dir = "left";
-      }
-      else if(this.inputKeys[3].isDown){
-        dir = "right";
-      }
-      else if(this.inputKeys[4].isDown){
-        dir = "up";
-      }
-      // Get the first available sprite in the group
-      const laser = this.lasers.getFirstDead(false);
-      if (laser) {
-        this.disparonave.play();
-        laser.shoot(this.player.x, this.player.y, dir);
-      }
-    } 
  
     if(this.door.close){
       if(this.player.x > 1950){
@@ -314,20 +277,6 @@ endGame(completed = false) {
         this.textKey.visible = false;
       }
     }
-  /*if(!this.player.muerte){
-    if(this.player.cursors.left.isDown){
-      this.parallax.tilePositionX -= 0.3;
-    }
-    else if (this.player.cursors.right.isDown){
-      this.parallax.tilePositionX += 0.3;
-    }
-    else if (this.player.cursors.down.isDown){
-      this.parallax.tilePositionY += 0.3;
-    }
-    else if (this.player.cursors.up.isDown){
-      this.parallax.tilePositionY -= 0.3;
-    }
-  }*/
   }
 }
   

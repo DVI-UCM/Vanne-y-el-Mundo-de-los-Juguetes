@@ -133,6 +133,9 @@ export default class Boot extends Phaser.Scene {
    * nivel del juego
    */
   create() {
+    //Para poder mutear el juego en todas las escenas
+    localStorage.setItem('music', 'true');
+
     this.add.image(0, 0, 'castillo_background').setOrigin(0).setDepth(0);
     this.startBox.fillStyle(0x222222, 0.8).fillRoundedRect(this.width / 2 - (280/2), this.height - 100, 280, 50, 10).setDepth(1);
     this.startText.setText('Pulsa espacio para empezar').setDepth(1);
@@ -158,7 +161,7 @@ export default class Boot extends Phaser.Scene {
 
   update(){
     if (this.inputKeys[0].isDown) {
-      this.scene.start('levelSelector'); 1
+      this.scene.start('levelSelector');
     }
   }
 }

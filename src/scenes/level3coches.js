@@ -1,6 +1,4 @@
-import Platform from '../sprites/platform.js';
 import Player from '../sprites/player.js';
-import Calabaza from '../sprites/calabaza.js';
 import ExitButton from '../components/exit-button.js';
 import FullScreenButton from '../components/fullScreen-button.js';
 
@@ -122,10 +120,8 @@ export default class Level3 extends Phaser.Scene {
     //this.bases = this.add.group();
     this.player = new Player(this, 500, 500);
     //this.calabaza = new Calabaza(this,0,500);
-    this.exit = new ExitButton(this, this.cameras.main.width - 20, 20);
-    this.exit.setScrollFactor(0);
-    this.fullScreen = new FullScreenButton(this, this.cameras.main.width - 50, 20);
-    this.fullScreen.setScrollFactor(0);
+    new ExitButton(this, this.cameras.main.width - 20, 20).setScrollFactor(0);
+    new FullScreenButton(this, this.cameras.main.width - 50, 20).setScrollFactor(0);
 
     //plataformas
     /* new Platform(this, this.player, 500, 350);

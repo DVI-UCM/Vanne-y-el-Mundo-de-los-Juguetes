@@ -97,14 +97,13 @@ export default class Level5 extends Phaser.Scene {
     this.cameras.main.centerOn(0, 30);
 
   
-    this.exit = new ExitButton(this, this.cameras.main.width - 20, 20);
-    this.exit.setScrollFactor(0);
-    this.fullScreen = new FullScreenButton(this, this.cameras.main.width - 50, 20);
-    this.fullScreen.setScrollFactor(0);
+    new ExitButton(this, this.cameras.main.width - 20, 20).setScrollFactor(0);
+    new FullScreenButton(this, this.cameras.main.width - 50, 20).setScrollFactor(0);
 
     //musica
-    this.fivemusic = this.sound.add("fivemusic");
-    this.fivemusic.play();
+    this.music = this.sound.add("fivemusic");
+    if(localStorage.getItem('music') == 'true') { this.music.play(); }
+
 
     const map = this.make.tilemap({key: 'level5_map'});
 
@@ -122,8 +121,6 @@ export default class Level5 extends Phaser.Scene {
 
     this.slime = new Slime(this, 630, 200, 860, 200);
 
-    
-    
     this.createColliders();
   }
 
@@ -178,12 +175,11 @@ export default class Level5 extends Phaser.Scene {
         slime.muere();
       } */
     });
-
-
-
   }
 
   endGame(completed = false) {
+    this.scene.stop(this.scene.key)
+    this.music.stop();
       if(!completed) {
         this.scene.launch('gameover', {_sceneKey: this.scene.key });
       } else {

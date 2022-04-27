@@ -111,6 +111,7 @@ export default class SpaceShip extends Phaser.GameObjects.Sprite {
       // Get the first available sprite in the group
       const laser = this.scene.lasers.getFirstDead(false);
       if (laser) {
+        if(localStorage.getItem('music') == 'true') { this.scene.disparonave.play(); }
         laser.shoot(this.scene.player.x, this.scene.player.y + 20, dir);
       }
     }

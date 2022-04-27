@@ -9,6 +9,7 @@ export default class ExitButton extends Phaser.GameObjects.Sprite {
 
         this.on('pointerdown', function (ptr) { this.setScale(0.9, 0.9) } );
         this.on('pointerup', () => {
+            if(this.scene.scene.scene.music){ this.scene.scene.scene.music.stop(); }
             this.scene.scene.start("levelSelector");
         });
     }

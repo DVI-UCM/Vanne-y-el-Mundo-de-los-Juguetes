@@ -25,18 +25,19 @@ export default class LevelSelector extends Phaser.Scene {
 
     create(){
 
-          this.inputKeys = [
-          this.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.ONE),
-          this.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.TWO),
-          this.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.THREE),
-          this.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.FOUR),
-          this.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.FIVE),
-          this.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.SIX)
-          ];
+        this.inputKeys = [
+        this.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.ONE),
+        this.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.TWO),
+        this.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.THREE),
+        this.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.FOUR),
+        this.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.FIVE),
+        this.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.SIX)
+        ];
 
         //musica
         this.lobbym = this.sound.add("lobbym");
-        this.lobbym.play();
+        if(localStorage.getItem('music') == 'true')
+          this.lobbym.play();
 
         this.levelThumbsGroup = this.physics.add.staticGroup();
         this.add.image(0,0, 'lvlSelBg').setOrigin(0);
@@ -57,57 +58,45 @@ export default class LevelSelector extends Phaser.Scene {
               let levelThumb = this.add.image(j*100 + this.lvlSelBoard_x, i*100 + this.lvlSelBoard_y, levelNumber).setOrigin(0).setInteractive();
               levelThumb.on('pointerdown', () => {
                 var level = "level" + levelNumber;
+                this.lobbym.stop();
                 this.scene.start('prelevels' ,{_sceneKey: level });
               });
               this.levelThumbsGroup.add(levelThumb);
             }
         }
 
-        this.sound_OnOff = this.add.image(965, 35, 'sound_on').setInteractive();
-        this.isSounOn = true;
+        let texture = 'sound_on'
+        if(localStorage.getItem('music') == 'false'){
+          texture = 'sound_off';
+        }
+        this.sound_OnOff = this.add.image(965, 35, texture).setInteractive();
+        
         this.sound_OnOff.on('pointerdown', () => {
-            this.sound_OnOff.setScale(0.9);
-          });
+          this.sound_OnOff.setScale(0.9);
+        });
         this.sound_OnOff.on('pointerup', () => {
-            this.sound_OnOff.setScale(1);
-            if(this.isSounOn){
-                this.sound_OnOff.setTexture('sound_off');
-                this.isSounOn = false;
-                this.lobbym.stop();
-            }
-            else {
-                this.sound_OnOff.setTexture('sound_on');
-                this.isSounOn = true;
-                this.lobbym.play();
-            }
-          });
+          this.sound_OnOff.setScale(1);
+          if(localStorage.getItem('music') == 'true'){
+            this.sound_OnOff.setTexture('sound_off');
+            localStorage.setItem('music', 'false');
+            this.lobbym.stop();
+          }
+          else {
+            this.sound_OnOff.setTexture('sound_on');
+            localStorage.setItem('music', 'true');
+            this.lobbym.play();
+          }
+        });
     }
 
     update(){
-        if (this.inputKeys[0].isDown) {
-          var level = "level" + 1;
+      for(let i = 0; i < this.inputKeys.length; i++){
+        if(this.inputKeys[i].isDown){
+          let levelNum = i + 1
+          let level = "level" + levelNum;
+          this.lobbym.stop();
           this.scene.start('prelevels' ,{_sceneKey: level });
         }
-        if (this.inputKeys[1].isDown) {
-          var level = "level" + 2;
-          this.scene.start(level);
-        }
-        if (this.inputKeys[2].isDown) {
-          var level = "level" + 3;
-          this.scene.start(level);
-        }
-        if (this.inputKeys[3].isDown) {
-          var level = "level" + 4;
-          this.scene.start(level);
-        }
-        if (this.inputKeys[4].isDown) {
-          var level = "level" + 5;
-          this.scene.start(level);
-        }
-        if (this.inputKeys[5].isDown) {
-          var level = "level" + 6;
-          this.scene.start(level);
-        }
       }
-
+    }
 }

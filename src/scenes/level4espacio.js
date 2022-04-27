@@ -41,33 +41,28 @@ export default class Level4 extends Phaser.Scene {
    * Creación de los elementos de la escena principal de juego
    */
   create() {
-    const width = this.scale.width;
-    const height = this.scale.height;
     let x = 0;
     let y = 0;
     this.add.image(x, y, 'fondoPantalla').setOrigin(0);
-   // this.add.image(x, y, 'fondoPantalla').setOrigin(0);
-   // const w = this.textures.get('castillo_background').getSourceImage().width;
-    //const h = this.textures.get('castillo_background').getSourceImage().height;
     const totalWidth = this.textures.get('fondoPantalla').getSourceImage().width;
     const totalHeight = this.textures.get('fondoPantalla').getSourceImage().height;
-    //this.parallax = this.add.tileSprite(0, 0, 5000, 2500, 'fondoPantalla');
 
     this.cameras.main.setBounds(0,0, totalWidth, totalHeight);
     this.physics.world.setBounds(0,0, totalWidth, totalHeight);
     //this.cameras.main.setBounds(0, 0, image.displayWidth, image.displayHeight);
     
-    var needKeyText = "Necesitas matar a\ntodos los fantasmas\ny desbloquear la llave\npara abrir la puerta";
+    var needKeyText = "Mata a todos los\n fantasmas para\n desbloquear la llave\n y abrir la puerta";
 
     this.textKey = this.add.text(1750, 570, needKeyText,  { font: "20px Arial", fill: '#000000', backgroundColor: 'rgba(255,255,255,1)' });
     this.textKey.lineSpacing = 30;
     this.textKey.depth = 1;
     
     //musica
-    this.fourmusic = this.sound.add("fourmusic");
+    this.music = this.sound.add("fourmusic");
     this.disparonave = this.sound.add("disparonave");
     this.muertenave = this.sound.add("muertenave");
-    this.fourmusic.play();
+    if(localStorage.getItem('music') == 'true') { this.music.play(); }
+
 
     this.ghosts = this.physics.add.group({
       allowGravity:false
@@ -115,10 +110,8 @@ export default class Level4 extends Phaser.Scene {
     this.groundLayer = this.map.createLayer("Capa de patrones 1", [tileset1, tileset2]);
     //------------------
 
-    this.exit = new ExitButton(this, this.cameras.main.width - 20, 20);
-    this.exit.setScrollFactor(0);
-    this.fullScreen = new FullScreenButton(this, this.cameras.main.width - 50, 20);
-    this.fullScreen.setScrollFactor(0);
+    new ExitButton(this, this.cameras.main.width - 20, 20).setScrollFactor(0);
+    new FullScreenButton(this, this.cameras.main.width - 50, 20).setScrollFactor(0);
 
     this.createColliders();
   }
@@ -136,7 +129,7 @@ export default class Level4 extends Phaser.Scene {
     this.physics.add.collider(this.player, this.ghosts, () => {
       this.player.body.setVelocityX(0);
       this.player.muere();
-      this.muertenave.play();
+      if(localStorage.getItem('music') == 'true') { this.muertenave.play(); }
       this.endGame();
     });
 
@@ -161,35 +154,19 @@ export default class Level4 extends Phaser.Scene {
         this.endGame(true); //Termino el juego
       }
     });
-}
-
-
-  
-
-endGame(completed = false) {
-  this.scene.stop(this.scene.key)
-  this.fourmusic.stop();//musica
-
-  if(! completed) {
-    this.scene.launch('gameover', {_sceneKey: this.scene.key });
-  } 
-  else {
-    this.scene.launch('congratulations', {_sceneKey: this.scene.key });
-  }
-}
-
-  shoot(laser, dir){
-    laser.shoot(this.player.x, this.player.y + 20, dir);
-    
   }
 
-  keyPick(){
-    if(this.player.x == 450 && this.player.y == 380){
-      this.key.destroy();
-      this.door.setOpen();
+  endGame(completed = false) {
+    this.scene.stop(this.scene.key)
+    this.music.stop();//musica
+
+    if(! completed) {
+      this.scene.launch('gameover', {_sceneKey: this.scene.key });
+    } 
+    else {
+      this.scene.launch('congratulations', {_sceneKey: this.scene.key });
     }
   }
-
 
   checkTp(){
     //Inicial 1
@@ -216,33 +193,9 @@ endGame(completed = false) {
       this.player.x = 1825;
     }
   }
+  
   update(){
     this.checkTp();
-    //this.exit.position(this.cameras.main.width - 20, this.cameras.main.height -320);
-    //this.fullScreen.position(this.cameras.main.width - 50, this.cameras.main.height -320);
-    // If key was just pressed down, shoot the laser.
-    if (this.inputKeys[0].isDown) {
-      let dir = "";
-      if(this.inputKeys[1].isDown){
-        dir = "down";
-      }
-      else if(this.inputKeys[2].isDown){
-        dir = "left";
-      }
-      else if(this.inputKeys[3].isDown){
-        dir = "right";
-      }
-      else if(this.inputKeys[4].isDown){
-        dir = "up";
-      }
-      // Get the first available sprite in the group
-      const laser = this.lasers.getFirstDead(false);
-      if (laser) {
-        this.disparonave.play();
-        laser.shoot(this.player.x, this.player.y, dir);
-      }
-    } 
-
     if(this.door.close){
       if(this.player.x > 1950){
         this.textKey.visible = true;
@@ -251,21 +204,5 @@ endGame(completed = false) {
         this.textKey.visible = false;
       }
     }
- /*
-   if(!this.player.muerte){
-    if(this.player.cursors.left.isDown){
-      this.parallax.tilePositionX -= 0.5;
-    }
-    else if (this.player.cursors.right.isDown){
-      this.parallax.tilePositionX += 0.5;
-    }
-    else if (this.player.cursors.down.isDown){
-      this.parallax.tilePositionY += 0.5;
-    }
-    else if (this.player.cursors.up.isDown){
-      this.parallax.tilePositionY -= 0.5;
-    }
-    }*/
-
   }
 }
