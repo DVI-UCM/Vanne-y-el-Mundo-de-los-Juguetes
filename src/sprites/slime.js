@@ -26,31 +26,18 @@
   
       this.createAnims();
       this.anims.play('idle');
+      this.flipX = true;
       
       this.die = false;
     
       // Queremos que el jugador no se salga de los límites del mundo
-      this.body.setCollideWorldBounds(true, 0, 0);
+      //this.body.setCollideWorldBounds(true, 0, 0);
       
-      //this.setScale(.10);
-      
-      this.speed = 50;
-      //this.body.setVelocityX(this.speed);
-  
+      this.vel = {x: 150, y: -400};
+      this.body.setVelocityX(this.vel.x);
     }
   
     createAnims(){
-      /* this.anims.create({
-        key: 'idle',
-        frames: this.anims.generateFrameNames('slime', 
-        { prefix: 'idle__',
-          start: 0,
-          end: 13
-        }),
-        frameRate: 10, // Velocidad de la animación
-        repeat: -1    // Animación en bucle
-      }); */
-  
       this.anims.create({
           key: 'idle',
           frames: 'slime_idle',
@@ -106,16 +93,23 @@
       this.scene.physics.world.on('worldbounds', (body, up, down, left, right) => {
         if(left || right){
           this.flipX = !this.flipX;
-          this.speed = -this.speed;
-          this.body.setVelocityX(this.speed);
+          this.vel.x = -this.vel.x;
+          this.body.setVelocityX(this.vel.x);
         }
       });
   
       if(this.x < this.fromX || this.x >= this.toX) {
         this.flipX = !this.flipX;
-        this.speed = -this.speed;
-        this.body.setVelocityX(this.speed);
+        this.vel.x = -this.vel.x;
+        this.body.setVelocityX(this.vel.x);
       }
+
+      if(this.body.onFloor()){
+        this.body.setVelocityY(this.vel.y);
+      }
+      /* else{
+        this.body.setVelocityY(0);
+      } */
     } 
     
   }
