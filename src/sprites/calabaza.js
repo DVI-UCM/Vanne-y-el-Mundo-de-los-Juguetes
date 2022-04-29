@@ -71,17 +71,6 @@ export default class Calabaza extends Phaser.GameObjects.Sprite {
    */
   preUpdate(t,dt) {
     super.preUpdate(t,dt);
-    this.body.collideWorldBounds=true;
-    this.body.onWorldBounds=true;
-
-    this.scene.physics.world.on('worldbounds', (body, up, down, left, right) => {
-      if(left || right){
-        this.flipX = !this.flipX;
-        this.speed = -this.speed;
-        this.body.setVelocityX(this.speed);
-      }
-    });
-
     if(this.x < this.fromX || this.x >= this.toX) {
       this.flipX = !this.flipX;
       this.speed = -this.speed;

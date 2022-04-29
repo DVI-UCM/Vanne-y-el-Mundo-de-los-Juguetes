@@ -22,7 +22,7 @@ export default class ContinueButton extends Phaser.GameObjects.Sprite {
             this.scene.scene.start('levelSelector');
         }
         else{
-            this.scene.scene.start(this.name);
+            this.scene.scene.start('prelevels', {_sceneKey: this.name });
             this.scene.scene.remove('congratulations')
         }
       });

@@ -43,20 +43,24 @@ export default class prelevels extends Phaser.Scene {
     let scaleY = this.cameras.main.height / image.height;
     let scale = Math.max(scaleX, scaleY);
     image.setScale(scale).setScrollFactor(0);
-    
-    
-    //parallax aqui abajo
-    //this.parallax = this.add.tileSprite(0, 0, 2000, 1000, 'lego');
-
 
     new ExitButton(this, this.cameras.main.width - 20, 20);
     new FullScreenButton(this, this.cameras.main.width - 50, 20);
 
     var generalText = "Pulsa espacio para continuar";
 
-    this.generalTextShow = this.add.text(200, 400, generalText,  { font: "20px Arial", fill: '#000000',  align: 'center' });
+    this.generalTextShow = this.add.text(370, 400, generalText,  { fontFamily: 'Franklin Gothic Medium, "Arial Narrow", Arial, sans-serif', fontSize:"20px", fill: '#000000',  align: 'center' });
     this.generalTextShow.lineSpacing = 30;
     this.generalTextShow.depth = 1;
+
+    this.tweens.add({
+      targets: [this.generalTextShow],
+      alpha: 0,
+      ease: 'Cubic.easeIn',
+      duration: 500,
+      repeat: -1,
+      yoyo: true
+    });
 
 
     this.inputKeys = [
@@ -69,33 +73,33 @@ export default class prelevels extends Phaser.Scene {
   showTextLevel(){
       
     if(this.nextLevel == "level1"){
-        this.levelText = "El proximo nivel 1 sera: \n Un nivel de plataformas "
+        this.levelText = "Vanne: Recoge todos los fragmentos del amuleto."
     }
     else if(this.nextLevel == "level2"){
-        this.levelText = "El proximo nivel 2 sera: \n Un nivel de laberintos \n en el que tendras que abrir la puerta"
+        this.levelText = "Xin: Navega por el laberinto. Mata a todos los fantasmas para desbloquear la llave que abre la puerta."
     }
     else if(this.nextLevel == "level3"){
-        this.levelText = "El proximo nivel 3 sera: \n Un nivel de plataformas "
+        this.levelText = "Vanne: Recoge todos los fragmentos del amuleto."
     }
     else if(this.nextLevel == "level4"){
-        this.levelText = "El proximo nivel 4 sera: \n Un nivel de laberintos \n en el que tendras que explorar y buscar la puerta"
+        this.levelText = "Xin: Navega por el laberinto. Mata a todos los fantasmas para desbloquear la llave que abre la puerta."
     }
     else if(this.nextLevel == "level5"){
-        this.levelText = "El proximo nivel 5 sera: \n Un nivel de plataformas "
+        this.levelText = "Vanne: Recoge todos los fragmentos del amuleto."
     }
     else if(this.nextLevel == "level6"){
-        this.levelText = "El proximo nivel 6 sera: \n Un nivel de laberintos \n en el que no hay apenas luz "
+        this.levelText = "Xin: Navega por el laberinto. Esta vez solo verás iluminado a tu alrededor. Mata a todos los fantasmas para desbloquear la llave que abre la puerta."
     }
 
-    this.levelTextShow = this.add.text(200, 100, this.levelText,  { font: "40px Arial", fill: '#000000', align: 'center'});
+    this.levelTextShow = this.add.text(100, 100, this.levelText,  { fontFamily: 'Franklin Gothic Medium, "Arial Narrow", Arial, sans-serif', fontSize: "35px", fill: '#000000', align: 'center'});
     this.levelTextShow.lineSpacing = 30;
+    this.levelTextShow.setWordWrapWidth(800, true);
     this.levelTextShow.depth = 1;
 
   }
 
   update(){
     if (this.inputKeys[0].isDown) { 
-        //this.scene.stop('prelevels')
         this.scene.start(this.nextLevel);
       }
   }
