@@ -29,11 +29,11 @@ export default class Player extends Phaser.GameObjects.Sprite {
     this.cursors = this.scene.input.keyboard.createCursorKeys(); 
 
     this.body.setCollideWorldBounds(true);
-    this.scene.physics.world.setBoundsCollision(true, true, true, true);
+    this.scene.physics.world.setBoundsCollision(true, true, false, true);
     this.body.onWorldBounds = true;
     this.body.world.on('worldbounds', (body, up, down, left, right) => {
       if(body.gameObject == this && down){
-        this.scene.physics.world.setBoundsCollision(true, true, true, false);
+        this.scene.physics.world.setBoundsCollision(true, true, false, false);
         this.muere();
         this.scene.endGame();
       }
