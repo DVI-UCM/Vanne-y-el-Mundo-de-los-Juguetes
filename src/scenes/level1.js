@@ -4,6 +4,7 @@ import ExitButton from '../components/exit-button.js';
 import FullScreenButton from '../components/fullScreen-button.js';
 import MonstruoVolador from '../sprites/monstruoVolador.js';
 import Player from '../sprites/player.js';
+import Amuleto from '../sprites/amuleto.js';
 
 
 /**
@@ -54,7 +55,7 @@ export default class Level1 extends Phaser.Scene {
 
   preload(){
     this.load.setPath('assets/sprites/');
-    this.load.image('cristales','cristales.png');
+    this.load.image('amulet_piece1', 'amulet_piece1.png');
     this.load.image('cupcake','cupcake.png');
 
     this.load.setPath('assets/backgrounds/level1/');
@@ -83,6 +84,7 @@ export default class Level1 extends Phaser.Scene {
 
 
     this.music = this.sound.add("onemusic");
+    this.music.loop = true;
     if(localStorage.getItem('music') == 'true') { this.music.play(); }
 
     createAligned(this, totalWidth, 'chuche1', 0.35, 0, 1);
@@ -94,11 +96,8 @@ export default class Level1 extends Phaser.Scene {
     this.cameras.main.setBounds(0, 0, totalWidth, height);
     this.cameras.main.centerOn(0, 30);
 
-
-    this.exit = new ExitButton(this, this.cameras.main.width - 20, 20);
-    this.exit.setScrollFactor(0);
-    this.fullScreen = new FullScreenButton(this, this.cameras.main.width - 50, 20);
-    this.fullScreen.setScrollFactor(0);
+    new ExitButton(this, this.cameras.main.width - 20, 20).setScrollFactor(0);
+    new FullScreenButton(this, this.cameras.main.width - 50, 20).setScrollFactor(0);
 
     const map = this.make.tilemap({key: 'level1_map'});
 
@@ -114,10 +113,8 @@ export default class Level1 extends Phaser.Scene {
     this.cameras.main.startFollow(this.player);
 
     this.calabaza = new Calabaza(this, 630, 200, 860, 200);
+
     this.monstruos = this.physics.add.group({allowGravity: false, immovable: true});
-    //this.plataformas = this.physics.add.staticGroup();
-    //this.cristales = this.physics.add.staticGroup();
-    
     this.monstruos.add(new MonstruoVolador(this, 100, 250));
     
     var _this = this;
@@ -142,8 +139,9 @@ export default class Level1 extends Phaser.Scene {
       });
     });
     
-    this.cupcake = new Cupcake(this, 100, 80); 
-    
+    //this.cupcake = new Cupcake(this, 100, 80); 
+    this.amuletos = this.physics.add.staticGroup({allowGravity: false, immovable: true});
+    this.amuletos.add(new Amuleto(this, 100, 80, 'amulet_piece1'));
     
     this.createColliders();
   }
@@ -159,9 +157,6 @@ export default class Level1 extends Phaser.Scene {
       if (platform.body.touching.up && sprite.body.touching.down) {
         sprite.isOnPlatform = true;
         sprite.currentPlatform = platform;      
-      }
-      else{
-        //this.player.muere();
       }
     };
 
@@ -191,8 +186,8 @@ export default class Level1 extends Phaser.Scene {
       }
     });
 
-    this.physics.add.collider(this.cupcake, this.player, () => {
-      this.cupcake.destroy();
+    this.physics.add.collider(this.amuletos, this.player, () => {
+      //this.cupcake.destroy();
       this.endGame(true)
     });
   }
