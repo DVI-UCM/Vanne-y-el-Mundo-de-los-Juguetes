@@ -47,6 +47,7 @@ export default class Level2 extends Phaser.Scene {
 
     //musica
     this.music = this.sound.add("twomusic");
+    this.music.loop = true;
     this.disparonave = this.sound.add("disparonave");
     this.muertenave = this.sound.add("muertenave");
 

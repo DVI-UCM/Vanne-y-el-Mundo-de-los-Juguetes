@@ -102,6 +102,7 @@ export default class Level5 extends Phaser.Scene {
 
     //musica
     this.music = this.sound.add("fivemusic");
+    this.music.loop = true;
     if(localStorage.getItem('music') == 'true') { this.music.play(); }
 
     //mapa

@@ -36,6 +36,8 @@ export default class LevelSelector extends Phaser.Scene {
 
         //musica
         this.lobbym = this.sound.add("lobbym");
+        this.lobbym.loop = true;
+
         if(localStorage.getItem('music') == 'true')
           this.lobbym.play();
 
@@ -44,7 +46,8 @@ export default class LevelSelector extends Phaser.Scene {
         this.lvlSelBoard = this.add.graphics({x: 300, y: 100 }).fillRoundedRect(0, 0, 400, 300, 32).fillStyle(0xE2AB4B, 0.8);
         
         this.pageText = this.add.text(this.game.config.width/2, this.lvlSelBoard.y + 35, "Selecciona un nivel", {
-            font: "22px Franklin Gothic Medium  ",
+            fontFamily: 'Franklin Gothic Medium, "Arial Narrow", Arial, sans-serif',
+            fontSize: "22px",
             fill: "#ffffff",
             align: "center"
         });
