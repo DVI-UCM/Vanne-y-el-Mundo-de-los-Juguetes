@@ -70,7 +70,6 @@ export default class Boot extends Phaser.Scene {
     this.load.image("laser", "shoot_blue.png");
     this.load.image('lego_verde', 'lego_verde.png');
     this.load.image('openDoor','openDoor.png');
-    this.load.image('platform', 'platform.png');
     
     this.load.setPath('assets/sprites/gui');
     this.load.image("fullScreen", "full_screen.png");
@@ -99,6 +98,7 @@ export default class Boot extends Phaser.Scene {
     this.load.spritesheet('player_dead', 'dead_spritesheet.png', {frameWidth: 116, frameHeight: 120});
     this.load.spritesheet('player_idle', 'idle_spritesheet.png', {frameWidth: 58, frameHeight: 100});
     this.load.spritesheet('player_jump', 'jump_spritesheet.png', {frameWidth: 80, frameHeight: 109});
+    this.load.spritesheet('player_jump_attack', 'jump_attack_spritesheet.png', {frameWidth: 99, frameHeight: 117});
     this.load.spritesheet('player_run', 'run_spritesheet.png', {frameWidth: 75, frameHeight: 104});
     this.load.spritesheet('player_slide', 'slide_spritesheet.png', {frameWidth: 79, frameHeight: 80});
 

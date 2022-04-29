@@ -1,10 +1,8 @@
 import Calabaza from '../sprites/calabaza.js';
-//import Cristales from '../sprites/cristales.js';
 import Cupcake from '../sprites/cupcake.js';
 import ExitButton from '../components/exit-button.js';
 import FullScreenButton from '../components/fullScreen-button.js';
 import MonstruoVolador from '../sprites/monstruoVolador.js';
-//import Platform from '../sprites/platform.js';
 import Player from '../sprites/player.js';
 
 
@@ -182,22 +180,15 @@ export default class Level1 extends Phaser.Scene {
     //-- 
 
     this.physics.add.collider(this.player, this.calabaza, (player, calabaza) => {
-      //if(!player.body.touching.down){
-        if(player.anims.currentAnim.key == 'attack'){
-          calabaza.muere();
-        }
-        else{
-          calabaza.anims.play('idle', true);
-          calabaza.body.setVelocityX(0);
-          player.body.setOffset(29, 0);
-          player.muere();
-          this.endGame(); 
-        }
-        
-     /*  }
-      else {
+      if(player.anims.currentAnim.key == 'attack' || player.anims.currentAnim.key == 'jump_attack'){
         calabaza.muere();
-      } */
+      }
+      else{
+        calabaza.anims.play('idle', true);
+        calabaza.body.setVelocityX(0);
+        player.muere();
+        //this.endGame(); 
+      }
     });
 
     this.physics.add.collider(this.cupcake, this.player, () => {
@@ -207,11 +198,12 @@ export default class Level1 extends Phaser.Scene {
   }
 
   endGame(completed = false) {
-    this.scene.stop(this.scene.key);
     this.music.stop();
     if(!completed) {
+      this.scene.stop(this.scene.key);
       this.scene.launch('gameover', {_sceneKey: this.scene.key });
     } else {
+      this.scene.stop(this.scene.key);
       this.scene.launch('congratulations', {_sceneKey: this.scene.key });
     }
   }

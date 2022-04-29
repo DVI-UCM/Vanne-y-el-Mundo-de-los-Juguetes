@@ -22,12 +22,22 @@ export default class Player extends Phaser.GameObjects.Sprite {
     this.anims.play('idle', true);
     
     // Queremos que el jugador no se salga de los límites del mundo
-    this.body.setCollideWorldBounds(true, 0, 0);
     this.speed = 300;
     this.jumpSpeed = -500;
     this.attacking = false;
     this.sliding = false;
-    this.cursors = this.scene.input.keyboard.createCursorKeys();  
+    this.cursors = this.scene.input.keyboard.createCursorKeys(); 
+
+    this.body.setCollideWorldBounds(true);
+    this.scene.physics.world.setBoundsCollision(true, true, true, true);
+    this.body.onWorldBounds = true;
+    this.body.world.on('worldbounds', (body, up, down, left, right) => {
+      if(body.gameObject == this && down){
+        this.scene.physics.world.setBoundsCollision(true, true, true, false);
+        this.muere();
+        this.scene.endGame();
+      }
+    });
   } 
 
   createAnims(){
@@ -66,13 +76,11 @@ export default class Player extends Phaser.GameObjects.Sprite {
       repeat:0
     });
 
-    /* this.anims.create({
+    this.anims.create({
       key: 'jump_attack',
-      frames: this.anims.generateFrameNames('player', { prefix: 'jump_attack__00',
-      start: 0,
-      end: 9}),
+      frames: 'player_jump_attack',
       frameRate: 15 , // Velocidad de la animación
-    }); */
+    });
 
     this.anims.create({
       key: 'dead',
@@ -90,10 +98,22 @@ export default class Player extends Phaser.GameObjects.Sprite {
       this.attacking = false;
       this.body.setSize(58, 100, 0, 0);
     });
+
+    this.on(Phaser.Animations.Events.ANIMATION_COMPLETE_KEY + 'jump_attack',  () => {
+      this.attacking = false;
+      this.body.setSize(58, 100, 0, 0);
+    });
+
+    this.on(Phaser.Animations.Events.ANIMATION_COMPLETE_KEY + 'dead',  () => {
+      this.scene.endGame();
+    });
   }
 
   muere(){
     this.body.setVelocity(0);
+    this.body.setSize(10, 100, 0, 0);
+
+    //this.body.setOffset(29, 0);
     this.muerte = true;
     this.anims.play('dead');
   }
@@ -143,6 +163,7 @@ export default class Player extends Phaser.GameObjects.Sprite {
         }
         else{
           if(spaceJustPressed){
+            this.body.setVelocityX(0);
             this.attacking = true;
             this.body.setSize(85, 100);
             this.body.setOffset(10, 0); 
@@ -180,6 +201,7 @@ export default class Player extends Phaser.GameObjects.Sprite {
         }
         else{
           if(spaceJustPressed){
+            this.body.setVelocityX(0);
             this.attacking = true;
             this.body.setSize(85, 100);
             this.body.setOffset(10, 0); 
@@ -194,9 +216,11 @@ export default class Player extends Phaser.GameObjects.Sprite {
       }
       else if (spaceJustPressed){
         this.attacking = true;
+        this.body.setVelocityX(0);
+        this.body.setSize(85, 100);
+        this.body.setOffset(10, 0); 
+
         if(this.body.onFloor()){
-          this.body.setSize(85, 100);
-          this.body.setOffset(10, 0); 
           this.anims.play('attack');
         }
         else{
@@ -233,5 +257,6 @@ export default class Player extends Phaser.GameObjects.Sprite {
       this.currentPlatform = null;
     }
     //--
+
   }
 }
