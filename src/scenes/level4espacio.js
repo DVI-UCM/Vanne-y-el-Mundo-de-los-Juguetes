@@ -86,7 +86,7 @@ export default class Level4 extends Phaser.Scene {
     this.ghosts.add(this.ghost2);
     this.ghosts.add(this.ghost3);
     this.ghosts.add(this.ghost4);
-    this.lasers.add(new Laser(this, this.player.x, this.player.y ));
+    this.lasers.add(new Laser(this, this.player.x, this.player.y));
 
     this.inputKeys = [
 			this.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.SPACE),

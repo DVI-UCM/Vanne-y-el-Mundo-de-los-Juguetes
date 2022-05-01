@@ -70,7 +70,7 @@ export default class Level2 extends Phaser.Scene {
     
     this.ghosts.add(this.ghost1);
     this.ghosts.add(this.ghost2);
-    this.lasers.add(new Laser(this, this.player.x, this.player.y + 20));
+    this.lasers.add(new Laser(this, this.player.x, this.player.y));
 
 
     let needKeyText = "Mata a todos los\n fantasmas para\n desbloquear la llave\n y abrir la puerta";

@@ -16,7 +16,7 @@ export default class Laser extends Phaser.GameObjects.Sprite {
 
     shoot(x, y, dir) {
         if(dir != ""){
-            this.body.reset(x, y);
+            this.body.reset(x, y-20);
 
             this.setActive(true).setVisible(true);
             this.speed = 500;
