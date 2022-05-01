@@ -72,9 +72,10 @@ export default class Level6 extends Phaser.Scene {
     this.player = new SpaceShip(this, 0, 200).setDepth(1);
     this.player.body.setAllowGravity(false);
     this.ghost1 = new Ghost(this, 600, 150, 'ghost');
-    this.ghost2 = new Ghost(this, 200, 375, 'ghost2');
-    this.ghost3 = new Ghost(this, 1650, 375, 'ghost');
-    this.ghost4 = new Ghost(this, 1150, 900, 'ghost2');
+    this.ghost2 = new Ghost(this, 200, 475, 'ghost2');
+    this.ghost3 = new Ghost(this, 1650, 375, 'ghost3');
+    this.ghost4 = new Ghost(this, 1150, 900, 'ghost4');
+    this.ghost5 = new Ghost(this, 380, 200, 'ghost', "vertical");
     this.door = new Door(this, 1977, 600);
 
     this.cameras.main.startFollow(this.player);
@@ -82,6 +83,7 @@ export default class Level6 extends Phaser.Scene {
     this.ghosts.add(this.ghost2);
     this.ghosts.add(this.ghost3);
     this.ghosts.add(this.ghost4);
+    this.ghosts.add(this.ghost5);
     this.lasers.add(new Laser(this, this.player.x, this.player.y ));
 
     var needKeyText = "Necesitas matar a\ntodos los fantasmas\ny desbloquear la llave\npara abrir la puerta";

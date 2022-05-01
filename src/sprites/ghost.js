@@ -9,9 +9,11 @@ export default class Ghost extends Phaser.GameObjects.Sprite {
    * @param {Phaser.Scene} scene Escena a la que pertenece el jugador
    * @param {number} x Coordenada X
    * @param {number} y Coordenada Y
+   * @param {number} dir Direccion del fantasma por defecto horizontal
    */
-  constructor(scene, x, y, key) {
+  constructor(scene, x, y, key, dir = "horizontal") {
     super(scene, x, y, key);
+    this.dir = dir;
 
     this.die = false;
     this.scene.add.existing(this);
@@ -20,8 +22,13 @@ export default class Ghost extends Phaser.GameObjects.Sprite {
     this.body.setCollideWorldBounds();
     this.speed = 200;
     this.setScale(.06);
+    if(this.dir == "horizontal"){
+      this.body.setVelocityX(this.speed);
+    }
 
-    this.body.setVelocityX(this.speed);
+    if(this.dir == "vertical"){
+      this.body.setVelocityY(this.speed);
+    }
   }
 
   
@@ -30,9 +37,16 @@ export default class Ghost extends Phaser.GameObjects.Sprite {
   }
 
   onCollision(){
-    this.flipX = !this.flipX;
-    this.speed = -this.speed;
-    this.body.setVelocityX(this.speed);
+    if(this.dir == "horizontal"){
+      this.flipX = !this.flipX;
+      this.speed = -this.speed;
+      this.body.setVelocityX(this.speed);
+    }
+    if(this.dir == "vertical"){
+      this.speed = -this.speed;
+      this.body.setVelocityY(this.speed);
+    }
+
   }
 
   /**
@@ -43,7 +57,13 @@ export default class Ghost extends Phaser.GameObjects.Sprite {
    */
   preUpdate(t,dt) {
     super.preUpdate(t,dt);
-    this.body.setVelocityX(this.speed);
+    if(this.dir == "horizontal"){
+      this.body.setVelocityX(this.speed);
+    }
+
+    if(this.dir == "vertical"){
+      this.body.setVelocityY(this.speed);
+    }
   }
   
 }
