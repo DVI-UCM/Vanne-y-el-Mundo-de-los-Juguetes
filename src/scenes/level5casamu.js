@@ -147,10 +147,10 @@ export default class Level5 extends Phaser.Scene {
     this.music.stop();
     if(!completed) {
         this.scene.stop(this.scene.key)
-        this.scene.launch('gameover', {_sceneKey: this.scene.key });
+        this.scene.start('gameover', {_sceneKey: this.scene.key });
       } else {
         this.scene.stop(this.scene.key)
-        this.scene.launch('congratulations', {_sceneKey: this.scene.key });
+        this.scene.start('congratulations', {_sceneKey: this.scene.key });
       }
   }
   

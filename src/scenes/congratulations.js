@@ -18,8 +18,8 @@ export default class Congratulations extends Phaser.Scene {
   }
   
   create() {
-    this.add.image(410, 250, 'backGroundConcratulations');
-    this.congratulationsImage = this.add.image(400, 90, 'congratulations');
+    this.add.image(500, 244, 'backGroundConcratulations');
+    this.congratulationsImage = this.add.image(500, 50, 'congratulations');
     this.continueButton = new ContinueButton(this, this.keyData);
     this.returnButton = new ReturnButton(this);
   }
