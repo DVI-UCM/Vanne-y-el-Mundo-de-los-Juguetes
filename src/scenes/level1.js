@@ -56,6 +56,10 @@ export default class Level1 extends Phaser.Scene {
   preload(){
     this.load.setPath('assets/sprites/');
     this.load.image('amulet_piece1', 'amulet_piece1.png');
+    this.load.image('amulet_piece2', 'amulet_piece2.png');
+    this.load.image('amulet_piece3', 'amulet_piece3.png');
+    this.load.image('amulet', 'amulet.png');
+
     this.load.image('cupcake','cupcake.png');
 
     this.load.setPath('assets/backgrounds/level1/');
@@ -112,7 +116,7 @@ export default class Level1 extends Phaser.Scene {
     this.player = new Player(this, 50, 425);
     this.cameras.main.startFollow(this.player);
 
-    this.calabaza = new Calabaza(this, 630, 200, 860, 200);
+    this.calabaza = new Calabaza(this, 680, 200, 928, 200);
 
     this.monstruos = this.physics.add.group({allowGravity: false, immovable: true});
     this.monstruos.add(new MonstruoVolador(this, 100, 250));
@@ -139,10 +143,13 @@ export default class Level1 extends Phaser.Scene {
       });
     });
     
-    //this.cupcake = new Cupcake(this, 100, 80); 
+    this.amuletCount = 0;
     this.amuletos = this.physics.add.staticGroup({allowGravity: false, immovable: true});
     this.amuletos.add(new Amuleto(this, 100, 80, 'amulet_piece1'));
-    
+    this.amuletos.add(new Amuleto(this, 1056, 336, 'amulet_piece2'));
+    this.amuletos.add(new Amuleto(this, 1632, 224, 'amulet_piece3'));
+    //this.amuletFinal = this.add.image(this.cameras.main., this.cameras.main.centerY, 'amuleto').setVisible(false);
+
     this.createColliders();
   }
   
@@ -151,6 +158,7 @@ export default class Level1 extends Phaser.Scene {
     this.physics.add.collider(this.player, this.groundLayer);
     this.physics.add.collider(this.calabaza, this.groundLayer);
     this.physics.add.collider(this.monstruos, this.groundLayer);
+
 
     //codigo de @kittykatattack en https://phaser.discourse.group/t/riding-moving-platforms/7330/6
     const collisionMovingPlatform = (sprite, platform) => {
@@ -186,9 +194,27 @@ export default class Level1 extends Phaser.Scene {
       }
     });
 
-    this.physics.add.collider(this.amuletos, this.player, () => {
-      //this.cupcake.destroy();
-      this.endGame(true)
+    this.physics.add.overlap(this.player, this.amuletos, (player, amuleto) => {
+      amuleto.destroy();
+      this.amuletCount++;
+      if(this.amuletCount == 3){
+        this.cameras.main.fadeOut(1000, 0, 0, 0);
+        this.cameras.main.once(Phaser.Cameras.Scene2D.Events.FADE_OUT_COMPLETE, (cam, effect) => {
+          this.amuletFinal.setVisible(true);
+          this.tweens.add({
+            targets: this.amuletFinal,
+            scaleX: 1.5,
+            scaleY: 1.5,
+            ease: 'Sine.easeInOut',
+            duration: 2000,
+            repeat: 1,
+            yoyo: false,
+            onComplete: function () {
+              this.endGame(true);
+            }
+          });
+        });
+      }
     });
   }
 
