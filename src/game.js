@@ -20,6 +20,9 @@ import PreLevel from './scenes/prelevels.js'
  */
 let config = {
     type: Phaser.AUTO,
+
+    parent:'parent',
+    
     width: 1000,
     height: 500,
     backgroundColor: "#253529",
