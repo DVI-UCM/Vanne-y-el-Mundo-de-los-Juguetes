@@ -57,10 +57,10 @@ export default class Level5 extends Phaser.Scene {
   preload(){
     this.load.setPath('assets/sprites/');
     this.load.image('amulet2_piece1', 'amulet2_piece1.png');
-    // this.load.image('amulet2_piece2', 'amulet2_piece2.png');
-    // this.load.image('amulet2_piece3', 'amulet2_piece3.png');
+    this.load.image('amulet2_piece2', 'amulet2_piece2.png');
+    this.load.image('amulet2_piece3', 'amulet2_piece3.png');
     // this.load.image('amulet2_piece4', 'amulet2_piece4.png');
-    // this.load.image('amulet2', 'amulet2.png');
+    this.load.image('amulet2', 'amulet2.png');
 
     
     this.load.setPath('assets/backgrounds/level5/');
@@ -133,8 +133,13 @@ export default class Level5 extends Phaser.Scene {
     this.slime2 = new Slime(this, 1280, 124, 1550, 124);
     this.slime3 = new Slime(this, 1300, 80, 1550, 124);
 
+    this.amuletCount = 0;
     this.amuletos2 = this.physics.add.staticGroup({allowGravity: false, immovable: true});
-    this.amuletos2.add(new Amuleto2(this, 800, 130, 'amulet2_piece1'));
+    this.amuletos2.add(new Amuleto2(this, 800, 110, 'amulet2_piece1'));
+    this.amuletos2.add(new Amuleto2(this, 1160, 116, 'amulet2_piece2'));
+    this.amuletos2.add(new Amuleto2(this, 1800, 324, 'amulet2_piece3'));
+    //this.amuletFinal = this.add.image(this.cameras.main., this.cameras.main.centerY, 'amulet2').setVisible(false);
+
 
     this.createColliders();
   }
@@ -188,8 +193,27 @@ export default class Level5 extends Phaser.Scene {
       }
     });
 
-    this.physics.add.collider(this.amuletos2, this.player, () => {
-      this.endGame(true)
+    this.physics.add.overlap(this.player, this.amuletos2, (player, amuleto2) => {
+      amuleto2.destroy();
+      this.amuletCount++;
+      if(this.amuletCount == 3){
+        this.cameras.main.fadeOut(1000, 0, 0, 0);
+        this.cameras.main.once(Phaser.Cameras.Scene2D.Events.FADE_OUT_COMPLETE, (cam, effect) => {
+          this.amuletFinal.setVisible(true);
+          this.tweens.add({
+            targets: this.amuletFinal,
+            scaleX: 1.5,
+            scaleY: 1.5,
+            ease: 'Sine.easeInOut',
+            duration: 2000,
+            repeat: 1,
+            yoyo: false,
+            onComplete: function () {
+              this.endGame(true);
+            }
+          });
+        });
+      }
     });
 
   }
