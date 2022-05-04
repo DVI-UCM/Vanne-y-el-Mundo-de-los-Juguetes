@@ -3,6 +3,8 @@ import ExitButton from '../components/exit-button.js';
 import FullScreenButton from '../components/fullScreen-button.js';
 import Player from '../sprites/player.js';
 import Slime from '../sprites/slime.js';
+import Amuleto2 from '../sprites/amuleto2.js';
+
 
 
 
@@ -53,6 +55,14 @@ export default class Level5 extends Phaser.Scene {
   }
 
   preload(){
+    this.load.setPath('assets/sprites/');
+    this.load.image('amulet2_piece1', 'amulet2_piece1.png');
+    // this.load.image('amulet2_piece2', 'amulet2_piece2.png');
+    // this.load.image('amulet2_piece3', 'amulet2_piece3.png');
+    // this.load.image('amulet2_piece4', 'amulet2_piece4.png');
+    // this.load.image('amulet2', 'amulet2.png');
+
+    
     this.load.setPath('assets/backgrounds/level5/');
     this.load.image("hielo1", "hielo6.png");
     this.load.image("hielo2", "hielo7.png");
@@ -123,7 +133,8 @@ export default class Level5 extends Phaser.Scene {
     this.slime2 = new Slime(this, 1280, 124, 1550, 124);
     this.slime3 = new Slime(this, 1300, 80, 1550, 124);
 
-
+    this.amuletos2 = this.physics.add.staticGroup({allowGravity: false, immovable: true});
+    this.amuletos2.add(new Amuleto2(this, 800, 130, 'amulet2_piece1'));
 
     this.createColliders();
   }
@@ -175,6 +186,10 @@ export default class Level5 extends Phaser.Scene {
         player.muere();
         //this.endGame(); 
       }
+    });
+
+    this.physics.add.collider(this.amuletos2, this.player, () => {
+      this.endGame(true)
     });
 
   }
