@@ -10,6 +10,7 @@ import Level6 from './scenes/level6desvan.js'
 import Congratulations from './scenes/congratulations.js';
 import GameOver from './scenes/gameover.js';
 import PreLevel from './scenes/prelevels.js'
+import CompleteAmulet from './scenes/completeAmulet.js';
 
 
 
@@ -31,7 +32,7 @@ let config = {
         autoCenter: Phaser.Scale.CENTER_HORIZONTALLY
     },
     pixelArt: true,
-    scene: [Boot, LevelSelector,Level1, Level2, Level3, Level4, Level5, Level6, PreLevel,End, Congratulations,GameOver],
+    scene: [Boot, LevelSelector, Level1, Level2, Level3, Level4, Level5, Level6, PreLevel, End, Congratulations, GameOver, CompleteAmulet],
     physics: {
         default: 'arcade',
         arcade: {
