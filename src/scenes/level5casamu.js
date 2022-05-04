@@ -120,6 +120,10 @@ export default class Level5 extends Phaser.Scene {
     this.cameras.main.startFollow(this.player);
 
     this.slime = new Slime(this, 417, 224, 640, 224);
+    this.slime2 = new Slime(this, 1280, 124, 1550, 124);
+    this.slime3 = new Slime(this, 1300, 80, 1550, 124);
+
+
 
     this.createColliders();
   }
@@ -128,6 +132,11 @@ export default class Level5 extends Phaser.Scene {
     this.groundLayer.setCollisionByProperty({ colision: true });
     this.physics.add.collider(this.player, this.groundLayer);
     this.physics.add.collider(this.slime, this.groundLayer);
+    this.physics.add.collider(this.slime2, this.groundLayer);
+    this.physics.add.collider(this.slime3, this.groundLayer);
+
+
+
 
     this.physics.add.collider(this.player, this.slime, (player, slime) => {
         if(player.anims.currentAnim.key == 'attack' || player.anims.currentAnim.key == 'jump_attack'){
@@ -141,6 +150,33 @@ export default class Level5 extends Phaser.Scene {
           //this.endGame(); 
         }
     });
+
+    this.physics.add.collider(this.player, this.slime2, (player, slime2) => {
+      if(player.anims.currentAnim.key == 'attack' || player.anims.currentAnim.key == 'jump_attack'){
+        slime2.muere();
+      }
+      else{
+        slime2.anims.play('idle', true);
+        slime2.body.setVelocityX(0);
+        //player.body.setOffset(29, 0);
+        player.muere();
+        //this.endGame(); 
+      }
+    });
+
+    this.physics.add.collider(this.player, this.slime3, (player, slime3) => {
+      if(player.anims.currentAnim.key == 'attack' || player.anims.currentAnim.key == 'jump_attack'){
+        slime3.muere();
+      }
+      else{
+        slime3.anims.play('idle', true);
+        slime3.body.setVelocityX(0);
+        //player.body.setOffset(29, 0);
+        player.muere();
+        //this.endGame(); 
+      }
+    });
+
   }
 
   endGame(completed = false) {
