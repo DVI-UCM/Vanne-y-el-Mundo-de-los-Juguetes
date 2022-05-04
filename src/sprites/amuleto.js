@@ -24,7 +24,7 @@
         duration: 1000,
         repeat: -1,
         yoyo: true
-    });
+     });
     }
   
   }
