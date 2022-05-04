@@ -1,6 +1,6 @@
 export default class ContinueButton extends Phaser.GameObjects.Sprite {
     constructor(scene, data) {
-      super(scene, 400, 230, 'continueButton');
+      super(scene, 500, 230, 'continueButton');
       this.scene.add.existing(this);
       this.name = data._sceneKey
       this.numero = this.name[5]

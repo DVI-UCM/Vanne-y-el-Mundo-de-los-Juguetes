@@ -1,6 +1,6 @@
 export default class ReturnButton extends Phaser.GameObjects.Sprite {
     constructor(scene, data) {
-      super(scene, 400, 300, 'buttonReturnLobby');
+      super(scene, 500, 300, 'buttonReturnLobby');
       
       //this.name = data._sceneKey;
       this.scene.add.existing(this);
