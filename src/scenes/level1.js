@@ -58,7 +58,6 @@ export default class Level1 extends Phaser.Scene {
     this.load.image('amulet_piece1', 'amulet_piece1.png');
     this.load.image('amulet_piece2', 'amulet_piece2.png');
     this.load.image('amulet_piece3', 'amulet_piece3.png');
-    this.load.image('amulet', 'amulet.png');
 
     this.load.image('cupcake','cupcake.png');
 
@@ -148,7 +147,6 @@ export default class Level1 extends Phaser.Scene {
     this.amuletos.add(new Amuleto(this, 100, 80, 'amulet_piece1'));
     this.amuletos.add(new Amuleto(this, 1056, 336, 'amulet_piece2'));
     this.amuletos.add(new Amuleto(this, 1632, 224, 'amulet_piece3'));
-    //this.amuletFinal = this.add.image(this.cameras.main., this.cameras.main.centerY, 'amuleto').setVisible(false);
 
     this.createColliders();
   }
@@ -200,19 +198,9 @@ export default class Level1 extends Phaser.Scene {
       if(this.amuletCount == 3){
         this.cameras.main.fadeOut(1000, 0, 0, 0);
         this.cameras.main.once(Phaser.Cameras.Scene2D.Events.FADE_OUT_COMPLETE, (cam, effect) => {
-          this.amuletFinal.setVisible(true);
-          this.tweens.add({
-            targets: this.amuletFinal,
-            scaleX: 1.5,
-            scaleY: 1.5,
-            ease: 'Sine.easeInOut',
-            duration: 2000,
-            repeat: 1,
-            yoyo: false,
-            onComplete: function () {
-              this.endGame(true);
-            }
-          });
+          this.music.stop();
+          this.scene.stop(this.scene.key);
+          this.scene.launch('completeAmulet', {_sceneKey: this.scene.key });
         });
       }
     });
