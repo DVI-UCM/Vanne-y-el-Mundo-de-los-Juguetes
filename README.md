@@ -1,13 +1,10 @@
-- _El nombre del proyecto:_
+## Vanne y el mundo de los juguetes.
+### Creado por el grupo **Los peluchitos** en el que estamos: David Lago Hernandez, 
 
-**Vanne y el mundo de los juguetes.**
+![alt text](https://github.com/DVI-UCM/Vanne-y-el-mundo-de-los-Juguetes/blob/509fa2050674bc7cc41bab48bfac276ccff8606b/captura%20de%20pantalla.png)
 
-- _Un captura de pantalla del juego._
+## [Enlace a la página pública del juego](https://dvi-ucm.github.io/Vanne-y-el-mundo-de-los-Juguetes/)
 
-- _El nombre del grupo._
-**Los peluchitos**
-
-- _Un enlace a la página pública del juego._
 - _El GDD extendido, que tiene que contener, al menos:_
 - _Datos generales (género, plataforma, PEGI, descripción)_
 - _Historia (lore) y contexto cultural._
