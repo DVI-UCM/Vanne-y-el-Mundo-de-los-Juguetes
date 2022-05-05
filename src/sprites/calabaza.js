@@ -33,6 +33,7 @@ export default class Calabaza extends Phaser.GameObjects.Sprite {
     this.body.setCollideWorldBounds(true, 0, 0);
     
     this.setScale(.15);
+    this.body.setSize(450, 700);
     
     this.speed = 100;
     this.body.setVelocityX(this.speed);

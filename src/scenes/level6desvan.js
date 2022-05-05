@@ -31,7 +31,9 @@ export default class Level6 extends Phaser.Scene {
     this.load.image('portal', 'assets/tiles/level6/portal.png');
     this.load.tilemapTiledJSON('MAPA6', 'assets/tiles/level6/MAPA6.json');
     this.load.image("fondoPantalla6", "assets/backgrounds/fondociudad.png");
-  
+    this.load.image("white", "assets/backgrounds/fondolvl6.jpg");
+
+    
     this.load.setPath('assets/sounds/');
     this.load.audio("sixmusic","6music.mp3");
     this.load.audio("disparonave","disparonave.mp3");
@@ -127,9 +129,9 @@ export default class Level6 extends Phaser.Scene {
     const x = 1000
 		const y = 500
 
-		this.cover = this.add.image(x, y, 'fondoPantalla6') //Capa de encima
-		this.cover.setTint(0x004c99)
-
+		this.cover = this.add.image(x, y, 'white') //Capa de encima
+		this.cover.setTint(0x36454F)
+    this.cameras.main.setTint();
 
 		const width = this.cover.width
 		const height = this.cover.height
