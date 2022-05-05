@@ -7,6 +7,7 @@ import Level3 from './scenes/level3coches.js'
 import Level4 from './scenes/level4espacio.js'
 import Level5 from './scenes/level5casamu.js'
 import Level6 from './scenes/level6desvan.js'
+import Final from './scenes/final.js'
 import Congratulations from './scenes/congratulations.js';
 import GameOver from './scenes/gameover.js';
 import PreLevel from './scenes/prelevels.js'
@@ -32,7 +33,7 @@ let config = {
         autoCenter: Phaser.Scale.CENTER_HORIZONTALLY
     },
     pixelArt: true,
-    scene: [Boot, LevelSelector, Level1, Level2, Level3, Level4, Level5, Level6, PreLevel, End, Congratulations, GameOver, CompleteAmulet],
+    scene: [Boot, LevelSelector, Level1, Level2, Level3, Level4, Level5, Level6, PreLevel, End, Final, Congratulations, GameOver, CompleteAmulet],
     physics: {
         default: 'arcade',
         arcade: {

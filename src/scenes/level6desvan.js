@@ -217,7 +217,7 @@ export default class Level6 extends Phaser.Scene {
     } 
     else {
       this.scene.stop(this.scene.key);
-      this.scene.start('congratulations', {_sceneKey: this.scene.key });
+      this.scene.start('final', {_sceneKey: this.scene.key });
     }
   }
 
