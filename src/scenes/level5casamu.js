@@ -199,19 +199,9 @@ export default class Level5 extends Phaser.Scene {
       if(this.amuletCount == 3){
         this.cameras.main.fadeOut(1000, 0, 0, 0);
         this.cameras.main.once(Phaser.Cameras.Scene2D.Events.FADE_OUT_COMPLETE, (cam, effect) => {
-          this.amuletFinal.setVisible(true);
-          this.tweens.add({
-            targets: this.amuletFinal,
-            scaleX: 1.5,
-            scaleY: 1.5,
-            ease: 'Sine.easeInOut',
-            duration: 2000,
-            repeat: 1,
-            yoyo: false,
-            onComplete: function () {
-              this.endGame(true);
-            }
-          });
+          this.music.stop();
+          this.scene.stop(this.scene.key);
+          this.scene.launch('completeAmulet2', {_sceneKey: this.scene.key });
         });
       }
     });
