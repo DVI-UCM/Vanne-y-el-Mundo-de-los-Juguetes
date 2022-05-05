@@ -1,6 +1,7 @@
 import Player from '../sprites/player.js';
 import ExitButton from '../components/exit-button.js';
 import FullScreenButton from '../components/fullScreen-button.js';
+import FantasmaVolador from '../sprites/fantasmaVolador.js';
 
 
 const createAligned = (scene, totalWidth, texture, scrollFactor) => {
@@ -46,6 +47,10 @@ export default class Level3 extends Phaser.Scene {
     this.load.setPath('assets/tiles/level3/');
     this.load.image('level3_tileset', 'tilemap_packed.png');
     this.load.tilemapTiledJSON('level3_map', 'level3_map.json');
+
+    this.load.setPath('assets/sprites/enemigos/fantasmaV/');
+    this.load.spritesheet('fantasmaV', 'fantasmaV.png', {frameWidth: 6240, frameHeight: 420});
+
    }
 
   /**
@@ -65,18 +70,27 @@ export default class Level3 extends Phaser.Scene {
     this.cameras.main.setBounds(0, 0, totalWidth, height);
     this.cameras.main.centerOn(0, 30);
 
+    
+    
+    new ExitButton(this, this.cameras.main.width - 20, 20).setScrollFactor(0);
+    new FullScreenButton(this, this.cameras.main.width - 50, 20).setScrollFactor(0);
+    
+    const map = this.make.tilemap({key: 'level3_map'});
+    
+    const tileset = map.addTilesetImage('tilemap_packed', 'level3_tileset');
+    
+    this.groundLayer = map.createStaticLayer("Suelo", tileset);
+    map.createStaticLayer("Decoracion_1", tileset);
+    
+
+
+    
     this.player = new Player(this, 500, 450);
     this.cameras.main.startFollow(this.player);
 
-    new ExitButton(this, this.cameras.main.width - 20, 20).setScrollFactor(0);
-    new FullScreenButton(this, this.cameras.main.width - 50, 20).setScrollFactor(0);
+    this.fantasma = new FantasmaVolador(this, 417, 224, 640, 224);
 
-    const map = this.make.tilemap({key: 'level3_map'});
 
-    const tileset = map.addTilesetImage('tilemap_packed', 'level3_tileset');
-      
-    this.groundLayer = map.createStaticLayer("Suelo", tileset);
-    map.createStaticLayer("Decoracion_1", tileset);
 
     this.createColliders();
 
@@ -87,6 +101,16 @@ export default class Level3 extends Phaser.Scene {
     this.physics.add.collider(this.player, this.groundLayer);
   }
 
+  endGame(completed = false) {
+    this.music.stop();
+    if(!completed) {
+        this.scene.stop(this.scene.key)
+        this.scene.start('gameover', {_sceneKey: this.scene.key });
+      } else {
+        this.scene.stop(this.scene.key)
+        this.scene.start('congratulations', {_sceneKey: this.scene.key });
+      }
+  }
   update(){
 
   }
