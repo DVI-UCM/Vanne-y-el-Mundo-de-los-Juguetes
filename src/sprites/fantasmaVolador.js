@@ -26,29 +26,28 @@
   
       this.createAnims();
       this.anims.play('walk', true);
+
       
       this.die = false;
     
       // Queremos que el jugador no se salga de los límites del mundo
-      this.body.setCollideWorldBounds(true, 0, 0);
-      
-      this.setScale(.05);
-      this.body.setSize(450, 700);
-      
-      this.speed = 100;
-      this.body.setVelocityX(this.speed);
+      this.vel = {x: 150, y: -400};
+      this.body.setVelocityX(this.vel.x);
+      this.setScale(.30);
+      this.body.setSize(194, 278);
   
+      this.body.setCollideWorldBounds(true, 0, 0);
+      this.speed = 200;
+      this.body.setVelocityX(this.speed);
     }
   
     createAnims(){
       this.anims.create({
         key: 'walk',
-        frames: this.anims.generateFrameNames('fantasmaV', { prefix: 'walk__',
-        start: 0,
-        end: 12}),
-        frameRate: 10, // Velocidad de la animación
-        repeat: -1    // Animación en bucle
-      });
+        frames: 'fantasmaV_walk',
+        frameRate: 10,
+        repeat: -1
+    });
   
       
     }
@@ -63,7 +62,7 @@
      * ya son gestionadas por la estrella (no gestionar las colisiones dos veces)
      * @override
      */
-    preUpdate(t,dt) {
+     preUpdate(t,dt) {
       super.preUpdate(t,dt);
       if(this.x < this.fromX || this.x >= this.toX) {
         this.flipX = !this.flipX;
