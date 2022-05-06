@@ -54,7 +54,7 @@ export default class Level1 extends Phaser.Scene {
   }
 
   preload(){
-    this.load.setPath('assets/sprites/');
+    this.load.setPath('assets/sprites/amuletos');
     this.load.image('amulet_piece1', 'amulet_piece1.png');
     this.load.image('amulet_piece2', 'amulet_piece2.png');
     this.load.image('amulet_piece3', 'amulet_piece3.png');

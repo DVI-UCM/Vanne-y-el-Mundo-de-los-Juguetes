@@ -45,7 +45,7 @@ export default class Level3 extends Phaser.Scene {
     this.load.setPath('assets/sprites/enemigos/fantasmaV/');
     this.load.spritesheet('fantasmaV_walk', 'fantasmaV.png', {frameWidth: 194, frameHeight: 278});
 
-    this.load.setPath('assets/sprites/');
+    this.load.setPath('assets/sprites/amuletos');
     this.load.image('amulet3_piece1', 'amulet3_piece1.png');
     this.load.image('amulet3_piece2', 'amulet3_piece2.png');
     this.load.image('amulet3_piece3', 'amulet3_piece3.png');

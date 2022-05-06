@@ -52,7 +52,7 @@ export default class Level5 extends Phaser.Scene {
   }
 
   preload(){
-    this.load.setPath('assets/sprites/');
+    this.load.setPath('assets/sprites/amuletos');
     this.load.image('amulet2_piece1', 'amulet2_piece1.png');
     this.load.image('amulet2_piece2', 'amulet2_piece2.png');
     this.load.image('amulet2_piece3', 'amulet2_piece3.png');
@@ -118,7 +118,7 @@ export default class Level5 extends Phaser.Scene {
     
     //movimiento horizontal
     this.movingPlatforms_h = this.physics.add.group({allowGravity: false, immovable: true});
-    this.movingPlatform_h = this.add.sprite(1365, 399, 'moving_platform');
+    this.movingPlatform_h = this.add.sprite(1345, 399, 'moving_platform').setScale(1.2);
     this.movingPlatforms_h.add(this.movingPlatform_h);
     
     let _this = this;
@@ -127,7 +127,7 @@ export default class Level5 extends Phaser.Scene {
         targets: child,
         x: 1113,
         ease: 'Linear',
-        duration: 1500,
+        duration: 2000,
         yoyo: true,
         flipX: true,
         repeat: -1,
@@ -145,7 +145,7 @@ export default class Level5 extends Phaser.Scene {
 
     //movimiento vertical
     this.movingPlatforms_v = this.physics.add.group({allowGravity: false, immovable: true});
-    this.movingPlatform_v = this.add.sprite(1365, 399, 'moving_platform');
+    this.movingPlatform_v = this.add.sprite(1365, 399, 'moving_platform').setScale(1.2);
     this.movingPlatforms_v.add(this.movingPlatform_v);
 
     this.movingPlatforms_v.children.iterate(function (child) {
@@ -153,7 +153,7 @@ export default class Level5 extends Phaser.Scene {
         targets: child,
         y: 252,
         ease: 'Linear',
-        duration: 1500,
+        duration: 2000,
         yoyo: true,
         repeat: -1,
         //codigo de @kittykatattack en https://phaser.discourse.group/t/riding-moving-platforms/7330/6

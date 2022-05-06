@@ -9,7 +9,7 @@ export default class FantasmaVolador extends Phaser.GameObjects.Sprite {
      * @param {number} toY Coordenada Y final. Si el sprite cambia de sentido lo hará en este punto.
      */
      constructor(scene, fromX, fromY, toX, toY) {
-      super(scene, fromX, fromY, 'fantasmaV');
+      super(scene, fromX, fromY, 'fantasmaV_walk');
       
       this.scene.add.existing(this);
       this.scene.physics.add.existing(this);
@@ -27,17 +27,12 @@ export default class FantasmaVolador extends Phaser.GameObjects.Sprite {
   
       this.body.setCollideWorldBounds(true, 0, 0);
       this.speed = 150;
-      this.body.setVelocityX(this.speed);
-   
-      // Queremos que el jugador no se salga de los límites del mundo
-      this.body.setCollideWorldBounds(true, 0, 0);
   }
 
   createAnims(){
-    
     this.anims.create({
       key: 'walk',
-      frames: 'fantasmaV',
+      frames: 'fantasmaV_walk',
       frameRate: 10, // Velocidad de la animación
       repeat: -1    
     });
@@ -47,12 +42,6 @@ export default class FantasmaVolador extends Phaser.GameObjects.Sprite {
     this.destroy();
   }
   
-  /**
-   * Métodos preUpdate de Phaser. En este caso solo se encarga del movimiento del jugador.
-   * Como se puede ver, no se tratan las colisiones con las estrellas, ya que estas colisiones 
-   * ya son gestionadas por la estrella (no gestionar las colisiones dos veces)
-   * @override
-   */
   preUpdate(t,dt) {
     super.preUpdate(t,dt);
     if(this.x < this.fromX || this.x >= this.toX) {
