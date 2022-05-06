@@ -154,14 +154,12 @@ export default class Level3 extends Phaser.Scene {
   }
 
   endGame(completed = false) {
-    // this.music.stop();
+    this.music.stop();
     if(!completed) {
         this.scene.stop(this.scene.key)
-        this.music.stop();
         this.scene.start('gameover', {_sceneKey: this.scene.key });
       } else {
         this.scene.stop(this.scene.key)
-        this.music.stop();
         this.scene.start('congratulations', {_sceneKey: this.scene.key });
       }
   }
