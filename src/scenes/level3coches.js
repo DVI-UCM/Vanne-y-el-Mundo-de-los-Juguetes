@@ -144,7 +144,7 @@ export default class Level3 extends Phaser.Scene {
       if(this.amuletCount == 4){
         this.cameras.main.fadeOut(1000, 0, 0, 0);
         this.cameras.main.once(Phaser.Cameras.Scene2D.Events.FADE_OUT_COMPLETE, (cam, effect) => {
-          //this.music.stop();
+          this.music.stop();
           this.scene.stop(this.scene.key);
           this.scene.launch('completeAmulet', {_sceneKey: this.scene.key, _amuletKey: 'amulet3' });
         });

@@ -4,9 +4,9 @@ export default class CompleteAmulet extends Phaser.Scene {
     }
   
     preload() {
-        this.load.image('amulet', 'assets/sprites/amulet.png');
-        this.load.image('amulet2', 'assets/sprites/amulet2.png');
-        this.load.image('amulet3', 'assets/sprites/amulet3.png');
+        this.load.image('amulet', 'assets/sprites/amuletos/amulet.png');
+        this.load.image('amulet2', 'assets/sprites/amuletos/amulet2.png');
+        this.load.image('amulet3', 'assets/sprites/amuletos/amulet3.png');
     }
 
     init(data) {
