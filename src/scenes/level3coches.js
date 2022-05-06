@@ -50,8 +50,8 @@ export default class Level3 extends Phaser.Scene {
     this.load.image('amulet3_piece3', 'amulet3_piece3.png');
     this.load.image('amulet3_piece4', 'amulet3_piece4.png');
  
-    // this.load.setPath('assets/sounds/');
-    // this.load.audio("fivemusic","5music.mp3"); 
+    this.load.setPath('assets/sounds/');
+    this.load.audio("threemusic","3music.mp3"); 
    }
 
   /**
@@ -74,10 +74,11 @@ export default class Level3 extends Phaser.Scene {
     new ExitButton(this, this.cameras.main.width - 20, 20).setScrollFactor(0);
 
     //musica
-    // this.music = this.sound.add("fivemusic");
-    // this.music.loop = true;
-    // if(localStorage.getItem('music') == 'true') { this.music.play(); }
-    
+  
+    this.music = this.sound.add("threemusic");
+    this.music.loop = true;
+    if(localStorage.getItem('music') == 'true') { this.music.play(); }
+
     //mapa
     const map = this.make.tilemap({key: 'level3_map'});
     const tileset = map.addTilesetImage('tilemap_packed', 'level3_tileset');
@@ -156,9 +157,11 @@ export default class Level3 extends Phaser.Scene {
     // this.music.stop();
     if(!completed) {
         this.scene.stop(this.scene.key)
+        this.music.stop();
         this.scene.start('gameover', {_sceneKey: this.scene.key });
       } else {
         this.scene.stop(this.scene.key)
+        this.music.stop();
         this.scene.start('congratulations', {_sceneKey: this.scene.key });
       }
   }
