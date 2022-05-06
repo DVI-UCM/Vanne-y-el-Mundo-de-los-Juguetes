@@ -28,7 +28,6 @@
       this.anims.play('idle');
       this.flipX = true;
       
-    
       // Queremos que el jugador no se salga de los límites del mundo
       //this.body.setCollideWorldBounds(true, 0, 0);
       
@@ -43,35 +42,6 @@
           frameRate: 10,
           repeat: -1
       });
-
-      /* this.anims.create({
-        key: 'walk',
-        frames: this.anims.generateFrameNames('slime', 
-        { prefix: 'walk__',
-          start: 0,
-          end: 27
-        }),
-        frameRate: 10, // Velocidad de la animación
-        repeat: -1    // Animación en bucle
-      }); */
-
-      /* this.anims.create({
-        key: 'damage',
-        frames: this.anims.generateFrameNames('slime', { prefix: 'damage__',
-        start: 0,
-        end: 11}),
-        frameRate: 10, // Velocidad de la animación
-        repeat: -1    // Animación en bucle
-      }); */
-
-    //   this.anims.create({
-    //     key: 'down',
-    //     frames: this.anims.generateFrameNames('slime', { prefix: 'down__',
-    //     start: 0,
-    //     end: 0}),
-    //     frameRate: 10, // Velocidad de la animación
-    //     repeat: -1    // Animación en bucle
-    //   });
     }
   
     muere(){
@@ -106,9 +76,6 @@
       if(this.body.onFloor()){
         this.body.setVelocityY(this.vel.y);
       }
-      /* else{
-        this.body.setVelocityY(0);
-      } */
     } 
     
   }
