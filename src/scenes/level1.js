@@ -1,7 +1,6 @@
 import Calabaza from '../sprites/calabaza.js';
 import Cupcake from '../sprites/cupcake.js';
 import ExitButton from '../components/exit-button.js';
-import FullScreenButton from '../components/fullScreen-button.js';
 import MonstruoVolador from '../sprites/monstruoVolador.js';
 import Player from '../sprites/player.js';
 import Amuleto from '../sprites/amuleto.js';
@@ -100,7 +99,6 @@ export default class Level1 extends Phaser.Scene {
     this.cameras.main.centerOn(0, 30);
 
     new ExitButton(this, this.cameras.main.width - 20, 20).setScrollFactor(0);
-    new FullScreenButton(this, this.cameras.main.width - 50, 20).setScrollFactor(0);
 
     const map = this.make.tilemap({key: 'level1_map'});
 

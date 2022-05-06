@@ -72,8 +72,6 @@ export default class Boot extends Phaser.Scene {
     this.load.image('openDoor','openDoor.png');
     
     this.load.setPath('assets/sprites/gui');
-    this.load.image("fullScreen", "full_screen.png");
-    this.load.image("fullScreen2", "full_screen2.png");
     this.load.image("exit", "grey_crossGrey.png");
 
     this.load.setPath('/assets/backgrounds/');

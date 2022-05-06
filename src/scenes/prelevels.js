@@ -1,6 +1,5 @@
 
 import ExitButton from '../components/exit-button.js';
-import FullScreenButton from '../components/fullScreen-button.js';
 
 /**
  * @extends Phaser.Scene
@@ -45,7 +44,7 @@ export default class prelevels extends Phaser.Scene {
     image.setScale(scale).setScrollFactor(0);
 
     new ExitButton(this, this.cameras.main.width - 20, 20);
-    new FullScreenButton(this, this.cameras.main.width - 50, 20);
+  
 
     var generalText = "Pulsa espacio para continuar";
 
