@@ -200,7 +200,7 @@ export default class Level1 extends Phaser.Scene {
         this.cameras.main.once(Phaser.Cameras.Scene2D.Events.FADE_OUT_COMPLETE, (cam, effect) => {
           this.music.stop();
           this.scene.stop(this.scene.key);
-          this.scene.launch('completeAmulet', {_sceneKey: this.scene.key });
+          this.scene.launch('completeAmulet', {_sceneKey: this.scene.key, _amuletKey: 'amulet' });
         });
       }
     });

@@ -16,11 +16,6 @@ export default class MonstruoVolador extends Phaser.GameObjects.Sprite {
     this.scene.add.existing(this);
     this.scene.physics.add.existing(this);
     this.body.setSize(50, 49);
-    
-   /*  this.scene.physics.add.collider(this.scene.player, this, (player) => {
-      if(!this.body.touching.up && !player.body.touching.down){
-        player.muere(); 
-      }
-    }); */
+  
   }
 }

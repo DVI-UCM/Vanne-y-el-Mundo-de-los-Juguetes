@@ -80,17 +80,13 @@ export default class Level3 extends Phaser.Scene {
     const tileset = map.addTilesetImage('tilemap_packed', 'level3_tileset');
     
     this.groundLayer = map.createStaticLayer("Suelo", tileset);
+    this.pinchos = map.createStaticLayer("Pinchos", tileset);
     map.createStaticLayer("Decoracion_1", tileset);
-    
 
-
-    
     this.player = new Player(this, 500, 450);
     this.cameras.main.startFollow(this.player);
 
     this.fantasma = new FantasmaVolador(this, 417, 224, 640, 224);
-
-
 
     this.createColliders();
 
@@ -99,6 +95,9 @@ export default class Level3 extends Phaser.Scene {
   createColliders(){
     this.groundLayer.setCollisionByExclusion([-1]);
     this.physics.add.collider(this.player, this.groundLayer);
+
+    this.pinchos.setCollisionByExclusion([-1]);
+    this.physics.add.collider(this.player, this.pinchos);
   }
 
   endGame(completed = false) {

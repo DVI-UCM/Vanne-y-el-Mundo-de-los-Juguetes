@@ -33,7 +33,7 @@
       // Queremos que el jugador no se salga de los límites del mundo
       //this.body.setCollideWorldBounds(true, 0, 0);
       
-      this.vel = {x: 150, y: -400};
+      this.vel = {x: 150, y: -350};
       this.body.setVelocityX(this.vel.x);
     }
   

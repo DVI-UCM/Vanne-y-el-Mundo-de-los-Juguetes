@@ -23,7 +23,7 @@ export default class Player extends Phaser.GameObjects.Sprite {
     
     // Queremos que el jugador no se salga de los límites del mundo
     this.speed = 300;
-    this.jumpSpeed = -500;
+    this.jumpSpeed = -400;
     this.attacking = false;
     this.sliding = false;
     this.cursors = this.scene.input.keyboard.createCursorKeys(); 
