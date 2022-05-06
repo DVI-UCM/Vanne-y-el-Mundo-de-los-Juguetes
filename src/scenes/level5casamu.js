@@ -57,7 +57,6 @@ export default class Level5 extends Phaser.Scene {
     this.load.image('amulet2_piece2', 'amulet2_piece2.png');
     this.load.image('amulet2_piece3', 'amulet2_piece3.png');
     this.load.image('amulet2_piece4', 'amulet2_piece4.png');
-    this.load.image('amulet2', 'amulet2.png');
 
     
     this.load.setPath('assets/backgrounds/level5/');
@@ -180,11 +179,11 @@ export default class Level5 extends Phaser.Scene {
 
     //amuletos
     this.amuletCount = 0;
-    this.amuletos2 = this.physics.add.staticGroup({allowGravity: false, immovable: true});
-    this.amuletos2.add(new Amuleto(this, 346, 136, 'amulet2_piece1'));
-    this.amuletos2.add(new Amuleto(this, 1170, 116, 'amulet2_piece2'));
-    this.amuletos2.add(new Amuleto(this, 1150, 294, 'amulet2_piece3'));
-    this.amuletos2.add(new Amuleto(this, 1932, 378, 'amulet2_piece4'));
+    this.amuletos = this.physics.add.staticGroup({allowGravity: false, immovable: true});
+    this.amuletos.add(new Amuleto(this, 346, 136, 'amulet2_piece1'));
+    this.amuletos.add(new Amuleto(this, 1170, 116, 'amulet2_piece2'));
+    this.amuletos.add(new Amuleto(this, 1150, 294, 'amulet2_piece3'));
+    this.amuletos.add(new Amuleto(this, 1932, 378, 'amulet2_piece4'));
 
     this.createColliders();
   }
@@ -230,10 +229,10 @@ export default class Level5 extends Phaser.Scene {
       }
     });
 
-    this.physics.add.overlap(this.player, this.amuletos2, (player, amuleto2) => {
-      amuleto2.destroy();
+    this.physics.add.overlap(this.player, this.amuletos, (player, amuleto) => {
+      amuleto.destroy();
       this.amuletCount++;
-      if(this.amuletCount == 1){
+      if(this.amuletCount == 4){
         this.cameras.main.fadeOut(1000, 0, 0, 0);
         this.cameras.main.once(Phaser.Cameras.Scene2D.Events.FADE_OUT_COMPLETE, (cam, effect) => {
           this.music.stop();

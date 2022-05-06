@@ -23,12 +23,9 @@ export default class Calabaza extends Phaser.GameObjects.Sprite {
     this.toX = toX;
     this.toY = toY;
 
-
     this.createAnims();
     this.anims.play('run', true);
-    
-    this.die = false;
-  
+      
     // Queremos que el jugador no se salga de los límites del mundo
     this.body.setCollideWorldBounds(true, 0, 0);
     

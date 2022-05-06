@@ -12,11 +12,6 @@ import Congratulations from './scenes/congratulations.js';
 import GameOver from './scenes/gameover.js';
 import PreLevel from './scenes/prelevels.js'
 import CompleteAmulet from './scenes/completeAmulet.js';
-import CompleteAmulet2 from './scenes/completeAmulet2.js';
-
-
-
-
 
 /**
  * Inicio del juego en Phaser. Creamos el archivo de configuración del juego y creamos
@@ -35,7 +30,7 @@ let config = {
         autoCenter: Phaser.Scale.CENTER_HORIZONTALLY
     },
     pixelArt: true,
-    scene: [Boot, LevelSelector, Level1, Level2, Level3, Level4, Level5, Level6, PreLevel, End, Final, Congratulations, GameOver, CompleteAmulet, CompleteAmulet2],
+    scene: [Boot, LevelSelector, Level1, Level2, Level3, Level4, Level5, Level6, PreLevel, End, Final, Congratulations, GameOver, CompleteAmulet],
     physics: {
         default: 'arcade',
         arcade: {

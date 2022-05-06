@@ -113,7 +113,7 @@ export default class Player extends Phaser.GameObjects.Sprite {
     this.body.setVelocity(0);
     this.body.setSize(10, 100, 0, 0);
 
-    //this.body.setOffset(29, 0);
+    if(this.flipX){ this.body.setOffset(50, 0); }
     this.muerte = true;
     this.anims.play('dead');
   }

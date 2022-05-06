@@ -23,21 +23,14 @@
       this.toX = toX;
       this.toY = toY;
   
-  
       this.createAnims();
       this.anims.play('walk', true);
-
       
-      this.die = false;
-    
-      // Queremos que el jugador no se salga de los límites del mundo
-      this.vel = {x: 150, y: -400};
-      this.body.setVelocityX(this.vel.x);
       this.setScale(.30);
       this.body.setSize(194, 278);
   
       this.body.setCollideWorldBounds(true, 0, 0);
-      this.speed = 200;
+      this.speed = 150;
       this.body.setVelocityX(this.speed);
     }
   

@@ -1,3 +1,4 @@
+import Amuleto from '../sprites/amuleto.js';
 import Player from '../sprites/player.js';
 import ExitButton from '../components/exit-button.js';
 import FullScreenButton from '../components/fullScreen-button.js';
@@ -44,7 +45,12 @@ export default class Level3 extends Phaser.Scene {
     this.load.setPath('assets/sprites/enemigos/fantasmaV/');
     this.load.spritesheet('fantasmaV_walk', 'fantasmaV.png', {frameWidth: 194, frameHeight: 278});
 
-
+    this.load.setPath('assets/sprites/');
+    this.load.image('amulet3_piece1', 'amulet3_piece1.png');
+    this.load.image('amulet3_piece2', 'amulet3_piece2.png');
+    this.load.image('amulet3_piece3', 'amulet3_piece3.png');
+    this.load.image('amulet3_piece4', 'amulet3_piece4.png');
+ 
     // this.load.setPath('assets/sounds/');
     // this.load.audio("fivemusic","5music.mp3"); 
    }
@@ -82,11 +88,31 @@ export default class Level3 extends Phaser.Scene {
     this.pinchos = map.createStaticLayer("Pinchos", tileset);
     map.createStaticLayer("Decoracion_1", tileset);
 
-    this.player = new Player(this, 500, 450);
+    //amuletos
+    this.amuletCount = 0;
+    this.amuletos = this.physics.add.staticGroup({allowGravity: false, immovable: true});
+    this.amuletos.add(new Amuleto(this, 42, 105, 'amulet3_piece1'));
+    this.amuletos.add(new Amuleto(this, 756, 84, 'amulet3_piece2'));
+    this.amuletos.add(new Amuleto(this, 1932, 315, 'amulet3_piece3'));
+    this.amuletos.add(new Amuleto(this, 2751, 84, 'amulet3_piece4'));
+
+    //personajes
+    this.player = new Player(this, 100, 450);
     this.cameras.main.startFollow(this.player);
-    this.fantasmaV = new FantasmaVolador(this, 700, 110, 850, 110);
-    this.fantasmaV2 = new FantasmaVolador(this, 50, 400, 190, 400);
-    this.fantasmaV3 = new FantasmaVolador(this, 1500, 160, 1860, 160);
+    
+    this.fantasmasV = this.physics.add.group();
+
+    this.fantasmasV.add(new FantasmaVolador(this, 370, 420, 589, 420));
+    this.fantasmasV.add(new FantasmaVolador(this, 750, 110, 830, 110));
+    this.fantasmasV.add(new FantasmaVolador(this, 1530, 420, 1713, 420));
+    this.fantasmasV.add(new FantasmaVolador(this, 1857, 420, 2049, 420));
+    this.fantasmasV.add(new FantasmaVolador(this, 2172, 420, 2364, 420));
+    this.fantasmasV.add(new FantasmaVolador(this, 2487, 420, 2553, 420));
+    this.fantasmasV.add(new FantasmaVolador(this, 2697, 420, 2868, 420));
+
+    this.fantasmasV.children.iterate( function (child) {
+      child.body.setVelocityX(150);
+    });
 
     this.createColliders();
 
@@ -94,53 +120,35 @@ export default class Level3 extends Phaser.Scene {
 
   createColliders(){
     this.groundLayer.setCollisionByExclusion([-1]);
-    this.groundLayer.setCollisionByProperty({ colisiona: true });
     this.physics.add.collider(this.player, this.groundLayer);
     this.pinchos.setCollisionByExclusion([-1]);
-    this.physics.add.collider(this.player, this.pinchos);
-    
-    this.physics.add.collider(this.fantasmaV, this.groundLayer);
-    this.physics.add.collider(this.fantasmaV2, this.groundLayer);
-    this.physics.add.collider(this.fantasmaV3, this.groundLayer);
+    this.physics.add.collider(this.player, this.pinchos, () => {
+      this.player.muere();
+    });
 
+    this.physics.add.collider(this.fantasmasV, this.groundLayer);
+    this.physics.add.collider(this.fantasmasV, this.pinchos);
 
-
-    this.physics.add.collider(this.player, this.fantasmaV, (player, fantasmaV) => {
+    this.physics.add.collider(this.player, this.fantasmasV, (player, fantasmaV) => {
       if(player.anims.currentAnim.key == 'attack' || player.anims.currentAnim.key == 'jump_attack'){
         fantasmaV.muere();
       }
       else{
-        //fantasmaV.anims.play('walk', true);
         fantasmaV.body.setVelocityX(0);
-        //player.body.setOffset(29, 0);
         player.muere();
-        //this.endGame(); 
       }
     });
 
-    this.physics.add.collider(this.player, this.fantasmaV2, (player, fantasmaV2) => {
-      if(player.anims.currentAnim.key == 'attack' || player.anims.currentAnim.key == 'jump_attack'){
-        fantasmaV2.muere();
-      }
-      else{
-        //fantasmaV.anims.play('walk', true);
-        fantasmaV2.body.setVelocityX(0);
-        //player.body.setOffset(29, 0);
-        player.muere();
-        //this.endGame(); 
-      }
-    });
-
-    this.physics.add.collider(this.player, this.fantasmaV3, (player, fantasmaV3) => {
-      if(player.anims.currentAnim.key == 'attack' || player.anims.currentAnim.key == 'jump_attack'){
-        fantasmaV3.muere();
-      }
-      else{
-        //fantasmaV.anims.play('walk', true);
-        fantasmaV3.body.setVelocityX(0);
-        //player.body.setOffset(29, 0);
-        player.muere();
-        //this.endGame(); 
+    this.physics.add.overlap(this.player, this.amuletos, (player, amuleto) => {
+      amuleto.destroy();
+      this.amuletCount++;
+      if(this.amuletCount == 4){
+        this.cameras.main.fadeOut(1000, 0, 0, 0);
+        this.cameras.main.once(Phaser.Cameras.Scene2D.Events.FADE_OUT_COMPLETE, (cam, effect) => {
+          //this.music.stop();
+          this.scene.stop(this.scene.key);
+          this.scene.launch('completeAmulet', {_sceneKey: this.scene.key, _amuletKey: 'amulet3' });
+        });
       }
     });
 
