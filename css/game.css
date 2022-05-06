@@ -18,7 +18,7 @@ h3 {
   font-size: 20px;
 }
 
-h4 {
+h4, th {
   font-family: 'Franklin Gothic Medium', 'Arial Narrow', Arial, sans-serif;
   color:rgb(0, 0, 0);
   text-align: left;
@@ -31,4 +31,10 @@ h5 {
   text-align: left;
   font-size: 20px;
   line-height: 30px;
+}
+
+.footer {
+  font-family: 'Franklin Gothic Medium', 'Arial Narrow', Arial, sans-serif;
+  color: grey;
+  text-align: center;
 }
