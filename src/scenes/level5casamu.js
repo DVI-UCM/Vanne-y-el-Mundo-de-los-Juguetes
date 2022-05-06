@@ -117,7 +117,6 @@ export default class Level5 extends Phaser.Scene {
 
     //mapa
     const map = this.make.tilemap({key: 'level5_map'});
-
     const tileset = map.addTilesetImage('IceWorld', 'level5_tileset');
     
     map.createLayer("Agua", tileset);

@@ -17,13 +17,7 @@ const createAligned = (scene, totalWidth, texture, scrollFactor) => {
   }
 }
 
-
 /**
- * Escena principal del juego. La escena se compone de una serie de plataformas 
- * sobre las que se sitúan las bases en las podrán aparecer las estrellas. 
- * El juego comienza generando aleatoriamente una base sobre la que generar una estrella. 
- * Cada vez que el jugador recoge la estrella, aparece una nueva en otra base.
- * El juego termina cuando el jugador ha recogido 10 estrellas.
  * @extends Phaser.Scene
  */
 export default class Level3 extends Phaser.Scene {
@@ -33,7 +27,6 @@ export default class Level3 extends Phaser.Scene {
   constructor() {
     super({ key: 'level3' });
   }
-
 
   init(){
 
@@ -49,8 +42,11 @@ export default class Level3 extends Phaser.Scene {
     this.load.tilemapTiledJSON('level3_map', 'level3_map.json');
 
     this.load.setPath('assets/sprites/enemigos/fantasmaV/');
-    this.load.spritesheet('fantasmaV', 'fantasmaV.png', {frameWidth: 6240, frameHeight: 420});
+    this.load.spritesheet('fantasmaV_walk', 'fantasmaV.png', {frameWidth: 194, frameHeight: 278});
 
+
+    // this.load.setPath('assets/sounds/');
+    // this.load.audio("fivemusic","5music.mp3"); 
    }
 
   /**
@@ -69,26 +65,29 @@ export default class Level3 extends Phaser.Scene {
     this.physics.world.setBounds(0, 0, totalWidth, height);
     this.cameras.main.setBounds(0, 0, totalWidth, height);
     this.cameras.main.centerOn(0, 30);
-
-    
     
     new ExitButton(this, this.cameras.main.width - 20, 20).setScrollFactor(0);
     new FullScreenButton(this, this.cameras.main.width - 50, 20).setScrollFactor(0);
+
+    //musica
+    // this.music = this.sound.add("fivemusic");
+    // this.music.loop = true;
+    // if(localStorage.getItem('music') == 'true') { this.music.play(); }
     
+    //mapa
     const map = this.make.tilemap({key: 'level3_map'});
-    
     const tileset = map.addTilesetImage('tilemap_packed', 'level3_tileset');
     
-    this.groundLayer = map.createStaticLayer("Suelo", tileset);
-    map.createStaticLayer("Decoracion_1", tileset);
+    this.groundLayer = map.createLayer("Suelo", tileset);
+    map.createLayer("Decoracion_1", tileset);
     
 
-
-    
+    //personajes
     this.player = new Player(this, 500, 450);
     this.cameras.main.startFollow(this.player);
-
-    this.fantasma = new FantasmaVolador(this, 417, 224, 640, 224);
+    this.fantasmaV = new FantasmaVolador(this, 700, 110, 850, 110);
+    this.fantasmaV2 = new FantasmaVolador(this, 50, 400, 190, 400);
+    this.fantasmaV3 = new FantasmaVolador(this, 1500, 160, 1860, 160);
 
 
 
@@ -98,11 +97,57 @@ export default class Level3 extends Phaser.Scene {
 
   createColliders(){
     this.groundLayer.setCollisionByExclusion([-1]);
+    this.groundLayer.setCollisionByProperty({ colisiona: true });
     this.physics.add.collider(this.player, this.groundLayer);
+    this.physics.add.collider(this.fantasmaV, this.groundLayer);
+    this.physics.add.collider(this.fantasmaV2, this.groundLayer);
+    this.physics.add.collider(this.fantasmaV3, this.groundLayer);
+
+
+
+    this.physics.add.collider(this.player, this.fantasmaV, (player, fantasmaV) => {
+      if(player.anims.currentAnim.key == 'attack' || player.anims.currentAnim.key == 'jump_attack'){
+        fantasmaV.muere();
+      }
+      else{
+        //fantasmaV.anims.play('walk', true);
+        fantasmaV.body.setVelocityX(0);
+        //player.body.setOffset(29, 0);
+        player.muere();
+        //this.endGame(); 
+      }
+    });
+
+    this.physics.add.collider(this.player, this.fantasmaV2, (player, fantasmaV2) => {
+      if(player.anims.currentAnim.key == 'attack' || player.anims.currentAnim.key == 'jump_attack'){
+        fantasmaV2.muere();
+      }
+      else{
+        //fantasmaV.anims.play('walk', true);
+        fantasmaV2.body.setVelocityX(0);
+        //player.body.setOffset(29, 0);
+        player.muere();
+        //this.endGame(); 
+      }
+    });
+
+    this.physics.add.collider(this.player, this.fantasmaV3, (player, fantasmaV3) => {
+      if(player.anims.currentAnim.key == 'attack' || player.anims.currentAnim.key == 'jump_attack'){
+        fantasmaV3.muere();
+      }
+      else{
+        //fantasmaV.anims.play('walk', true);
+        fantasmaV3.body.setVelocityX(0);
+        //player.body.setOffset(29, 0);
+        player.muere();
+        //this.endGame(); 
+      }
+    });
+
   }
 
   endGame(completed = false) {
-    this.music.stop();
+    // this.music.stop();
     if(!completed) {
         this.scene.stop(this.scene.key)
         this.scene.start('gameover', {_sceneKey: this.scene.key });
