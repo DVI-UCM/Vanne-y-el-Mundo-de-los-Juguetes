@@ -1,7 +1,6 @@
 import Amuleto from '../sprites/amuleto.js';
 import Player from '../sprites/player.js';
 import ExitButton from '../components/exit-button.js';
-import FullScreenButton from '../components/fullScreen-button.js';
 import FantasmaVolador from '../sprites/fantasmaVolador.js';
 
 
@@ -73,7 +72,6 @@ export default class Level3 extends Phaser.Scene {
     this.cameras.main.centerOn(0, 30);
     
     new ExitButton(this, this.cameras.main.width - 20, 20).setScrollFactor(0);
-    new FullScreenButton(this, this.cameras.main.width - 50, 20).setScrollFactor(0);
 
     //musica
     // this.music = this.sound.add("fivemusic");

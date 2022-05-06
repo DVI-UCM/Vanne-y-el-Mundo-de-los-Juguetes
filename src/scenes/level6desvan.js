@@ -4,7 +4,6 @@ import Key from '../sprites/key.js';
 import Door from '../sprites/door.js';
 import SpaceShip from '../sprites/spaceship.js';
 import ExitButton from '../components/exit-button.js';
-import FullScreenButton from '../components/fullScreen-button.js';
 
 /**
  * Escena principal del juego. La escena se compone de una serie de plataformas 
@@ -118,7 +117,6 @@ export default class Level6 extends Phaser.Scene {
     //------------------
 
     new ExitButton(this, this.cameras.main.width - 20, 20).setScrollFactor(0);
-    new FullScreenButton(this, this.cameras.main.width - 50, 20).setScrollFactor(0);
 
     this.createColliders();
      //CREAR LUCES

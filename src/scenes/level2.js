@@ -4,7 +4,6 @@ import Key from '../sprites/key.js';
 import Door from '../sprites/door.js';
 import SpaceShip from '../sprites/spaceship.js';
 import ExitButton from '../components/exit-button.js';
-import FullScreenButton from '../components/fullScreen-button.js';
 
 /**
  * @extends Phaser.Scene
@@ -43,7 +42,6 @@ export default class Level2 extends Phaser.Scene {
 
 
     new ExitButton(this, this.cameras.main.width - 20, 20).setScrollFactor(0);
-    new FullScreenButton(this, this.cameras.main.width - 50, 20).setScrollFactor(0);
 
     //musica
     this.music = this.sound.add("twomusic");
