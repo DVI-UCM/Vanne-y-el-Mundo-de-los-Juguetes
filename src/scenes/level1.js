@@ -1,5 +1,4 @@
 import Calabaza from '../sprites/calabaza.js';
-import Cupcake from '../sprites/cupcake.js';
 import ExitButton from '../components/exit-button.js';
 import MonstruoVolador from '../sprites/monstruoVolador.js';
 import Player from '../sprites/player.js';
@@ -57,8 +56,6 @@ export default class Level1 extends Phaser.Scene {
     this.load.image('amulet_piece1', 'amulet_piece1.png');
     this.load.image('amulet_piece2', 'amulet_piece2.png');
     this.load.image('amulet_piece3', 'amulet_piece3.png');
-
-    this.load.image('cupcake','cupcake.png');
 
     this.load.setPath('assets/backgrounds/level1/');
     this.load.image("chuche1", "Far_Layer_Background.png");
