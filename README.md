@@ -11,7 +11,6 @@
 
 Género: Acción, aventuras, puzzle
 
-Plataforma: Navegador web
 
 PEGI: +7
 
@@ -111,7 +110,6 @@ Empleo de Photoshop para los fondos y Tiled para la generación de los mapas.
 Hemos intentado ajustar los tilesets y sprites de forma que tuvieran armonía entre ellos. Nos hemos ayudado de las siguientes herramientas online:
 https://coolors.co/e5d9f2-f5efff-cdc1ff-b9abfc-a594f9-7371fc
 https://color.adobe.com/es/create/color-wheel
-
 
 
 ### Música:
