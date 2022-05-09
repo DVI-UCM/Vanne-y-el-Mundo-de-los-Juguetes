@@ -74,10 +74,10 @@ export default class Boot extends Phaser.Scene {
     this.load.setPath('assets/sprites/gui');
     this.load.image("exit", "grey_crossGrey.png");
 
-    this.load.setPath('/assets/backgrounds/');
+    this.load.setPath('assets/backgrounds/');
     this.load.image("castillo_background", "castillo.png");
 
-    this.load.setPath('/assets/sprites/enemigos/');
+    this.load.setPath('assets/sprites/enemigos/');
     this.load.atlas('calabaza', 'calabaza/calabaza.png', 'calabaza/calabaza.json');
 
     this.load.image('ghost','fantasma/ghost.png');
@@ -87,11 +87,11 @@ export default class Boot extends Phaser.Scene {
     this.load.image('monstruoVolador','monstruo_volador/monstruoVolador.png');
 
     
-    this.load.setPath('/assets/sprites/nave/');
+    this.load.setPath('assets/sprites/nave/');
     this.load.image('spaceshipUp', 'spaceshipUp.png');
     this.load.image('spaceshipRight', 'spaceshipRight.png');
     
-    this.load.setPath('/assets/sprites/player/');
+    this.load.setPath('assets/sprites/player/');
     this.load.spritesheet('player_attack', 'attack_spritesheet.png', {frameWidth: 105, frameHeight: 113});
     this.load.spritesheet('player_dead', 'dead_spritesheet.png', {frameWidth: 116, frameHeight: 120});
     this.load.spritesheet('player_idle', 'idle_spritesheet.png', {frameWidth: 58, frameHeight: 100});
